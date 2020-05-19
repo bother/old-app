@@ -3,7 +3,7 @@ import { StyleSheet, Text } from 'react-native'
 import Image from 'react-native-fast-image'
 
 import { img_hero_location } from '../assets'
-import { layout, typography } from '../styles'
+import { colors, layout, typography } from '../styles'
 import { Layout } from './layout'
 
 interface Props {
@@ -29,7 +29,9 @@ const styles = StyleSheet.create({
   },
   message: {
     ...typography.regular,
+    color: colors.foreground,
     marginHorizontal: layout.margin * 2,
-    marginTop: layout.margin
+    marginTop: layout.margin,
+    textAlign: 'center'
   }
 })
