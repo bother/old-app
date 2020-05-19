@@ -8,7 +8,9 @@ import Image from 'react-native-fast-image'
 
 import { img_ui_heart } from '../../assets'
 import { Post } from '../../graphql/types'
+import { usePost } from '../../hooks'
 import { colors, layout, typography } from '../../styles'
+import { Spinner } from '../spinner'
 import { Touchable } from '../touchable'
 
 interface Props {
@@ -19,20 +21,26 @@ interface Props {
 export const PostCard: FunctionComponent<Props> = ({ link = true, post }) => {
   const { navigate } = useNavigation()
 
+  const { likePost, liking } = usePost()
+
   const Main = link ? Touchable : View
 
   return (
     <View style={styles.main}>
-      <Touchable style={styles.likes}>
+      <Touchable onPress={() => likePost(post.id)} style={styles.likes}>
         <Text style={styles.label}>
           {millify(post.likes, {
             precision: 0
           })}
         </Text>
-        <Image
-          source={img_ui_heart}
-          style={[styles.heart, post.liked && styles.liked]}
-        />
+        {liking ? (
+          <Spinner />
+        ) : (
+          <Image
+            source={img_ui_heart}
+            style={[styles.heart, post.liked && styles.liked]}
+          />
+        )}
       </Touchable>
       <Main
         onPress={() =>

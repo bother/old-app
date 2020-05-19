@@ -75,7 +75,7 @@ export type User = {
 export type Mutation = {
   __typename?: 'Mutation';
   createPost: Post;
-  likePost: Scalars['Int'];
+  likePost: Post;
   createComment: Comment;
   signUp: AuthResult;
 };

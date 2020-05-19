@@ -7,6 +7,7 @@ import {
   Comment,
   MutationCreateCommentArgs,
   MutationCreatePostArgs,
+  MutationLikePostArgs,
   Post,
   QueryFetchPostArgs
 } from '../graphql/types'
@@ -17,6 +18,7 @@ const FETCH_POST = gql`
     fetchPost(id: $id) {
       id
       body
+      liked
       likes
       location {
         city
@@ -41,6 +43,21 @@ const FETCH_POST = gql`
 
 interface QueryFetchPostPayload {
   fetchPost: Post
+}
+
+const LIKE_POST = gql`
+  mutation likePost($id: String!) {
+    likePost(id: $id) {
+      id
+      liked
+      likes
+      __typename
+    }
+  }
+`
+
+interface MutationLikePostPayload {
+  likePost: Post
 }
 
 const CREATE_POST = gql`
@@ -68,7 +85,7 @@ const CREATE_COMMENT = gql`
   }
 `
 
-interface MutationCreateComment {
+interface MutationCreateCommentPayload {
   createComment: Comment
 }
 
@@ -78,13 +95,18 @@ export const usePost = () => {
     QueryFetchPostArgs
   >(FETCH_POST)
 
+  const [like, likeMutation] = useMutation<
+    MutationLikePostPayload,
+    MutationLikePostArgs
+  >(LIKE_POST)
+
   const [create, createMutation] = useMutation<
     MutationCreatePostPayload,
     MutationCreatePostArgs
   >(CREATE_POST)
 
   const [createComment, replyMutation] = useMutation<
-    MutationCreateComment,
+    MutationCreateCommentPayload,
     MutationCreateCommentArgs
   >(CREATE_COMMENT)
 
@@ -96,6 +118,16 @@ export const usePost = () => {
         }
       }),
     [fetch]
+  )
+
+  const likePost = useCallback(
+    (id: string) =>
+      like({
+        variables: {
+          id
+        }
+      }),
+    [like]
   )
 
   const createPost = useCallback(
@@ -168,6 +200,8 @@ export const usePost = () => {
     creating: createMutation.loading,
     fetchPost,
     fetching: fetchQuery.loading,
+    likePost,
+    liking: likeMutation.loading,
     post: fetchQuery.data?.fetchPost,
     refetch: fetchQuery.refetch,
     reply,

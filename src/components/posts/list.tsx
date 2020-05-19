@@ -10,8 +10,8 @@ import { Touchable } from '../touchable'
 import { PostCard } from './card'
 
 interface Props {
-  posts: Post[]
   loading: boolean
+  posts: Post[]
 
   fetchNext?: () => void
   refetch: () => void
