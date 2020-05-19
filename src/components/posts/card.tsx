@@ -13,10 +13,13 @@ import { Touchable } from '../touchable'
 
 interface Props {
   post: Post
+  link?: boolean
 }
 
-export const PostCard: FunctionComponent<Props> = ({ post }) => {
+export const PostCard: FunctionComponent<Props> = ({ link = true, post }) => {
   const { navigate } = useNavigation()
+
+  const Main = link ? Touchable : View
 
   return (
     <View style={styles.main}>
@@ -31,7 +34,7 @@ export const PostCard: FunctionComponent<Props> = ({ post }) => {
           style={[styles.heart, post.liked && styles.liked]}
         />
       </Touchable>
-      <Touchable
+      <Main
         onPress={() =>
           navigate('Post', {
             id: post.id
@@ -49,7 +52,7 @@ export const PostCard: FunctionComponent<Props> = ({ post }) => {
           </Text>
           <Text style={styles.time}>{moment(post.createdAt).fromNow()}</Text>
         </View>
-      </Touchable>
+      </Main>
     </View>
   )
 }

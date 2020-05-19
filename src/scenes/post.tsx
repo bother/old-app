@@ -37,7 +37,7 @@ export const Post: FunctionComponent<Props> = ({
     <>
       <Header post={post} />
       <ScrollLayout style={styles.main}>
-        <PostCard post={post} />
+        <PostCard link={false} post={post} />
       </ScrollLayout>
     </>
   )
