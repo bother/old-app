@@ -27,6 +27,7 @@
     "graphql": "^15.0.0",
     "immutability-helper": "^3.0.2",
     "lodash": "^4.17.15",
+    "millify": "^3.2.1",
     "moment": "^2.25.3",
     "prop-types": "^15.7.2",
     "react": "16.11.0",
