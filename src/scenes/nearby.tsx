@@ -14,8 +14,9 @@ interface Props {
 }
 
 export const Nearby: FunctionComponent<Props> = () => {
-  const { fetchNext, fetchPosts, loading, posts, refetch } = useNearby()
   const { allowed, coordinates, fetchLocation, fetching } = useLocation()
+
+  const { fetchNext, fetchPosts, loading, posts, refetch } = useNearby()
 
   useEffect(() => {
     fetchLocation()

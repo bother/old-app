@@ -24,8 +24,9 @@ interface Props {
 export const Create: FunctionComponent<Props> = ({
   navigation: { navigate, setOptions }
 }) => {
-  const { createPost, creating } = usePost()
   const { allowed, coordinates, fetchLocation, fetching } = useLocation()
+
+  const { createPost, creating } = usePost()
 
   const [body, setBody] = useState<string>()
 
