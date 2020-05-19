@@ -1,0 +1,1 @@
+export { MainNavigator } from './main'
