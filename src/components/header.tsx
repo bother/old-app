@@ -1,16 +1,21 @@
 import { StackHeaderProps } from '@react-navigation/stack'
-import React, { FunctionComponent } from 'react'
-import { Animated, StyleSheet, View } from 'react-native'
-import FastImage from 'react-native-fast-image'
+import React, { FunctionComponent, ReactChild } from 'react'
+import { Animated, StyleProp, StyleSheet, View, ViewStyle } from 'react-native'
+import Image, { Source } from 'react-native-fast-image'
 import { useSafeArea } from 'react-native-safe-area-context'
 
 import { img_ui_back } from '../assets'
 import { colors, layout, typography } from '../styles'
 import { Touchable } from './touchable'
 
-export const Header: FunctionComponent<StackHeaderProps> = ({
+interface Props {
+  right?: ReactChild
+}
+
+export const Header: FunctionComponent<Props & StackHeaderProps> = ({
   navigation: { goBack },
   previous,
+  right,
   scene: {
     descriptor: {
       options: { title }
@@ -25,29 +30,22 @@ export const Header: FunctionComponent<StackHeaderProps> = ({
     outputRange: [0, 1, 0]
   })
 
-  const Image = Animated.createAnimatedComponent(FastImage)
-
   return (
-    <View
+    <Animated.View
       style={[
         styles.main,
         {
           height: layout.header + top,
+          opacity,
           paddingTop: top
         }
       ]}>
       {previous && (
-        <Touchable onPress={() => goBack()} style={styles.back}>
-          <Image
-            source={img_ui_back}
-            style={[
-              styles.icon,
-              {
-                opacity
-              }
-            ]}
-          />
-        </Touchable>
+        <HeaderButton
+          icon={img_ui_back}
+          onPress={() => goBack()}
+          style={[styles.action, styles.back]}
+        />
       )}
       <Animated.Text
         style={[
@@ -58,19 +56,39 @@ export const Header: FunctionComponent<StackHeaderProps> = ({
         ]}>
         {title}
       </Animated.Text>
-    </View>
+      {right && <View style={[styles.action, styles.right]}>{right}</View>}
+    </Animated.View>
   )
 }
 
+interface HeaderButtonProps {
+  icon: Source
+  style?: StyleProp<ViewStyle>
+
+  onPress: () => void
+}
+
+export const HeaderButton: FunctionComponent<HeaderButtonProps> = ({
+  icon,
+  onPress,
+  style
+}) => (
+  <Touchable onPress={onPress} style={style}>
+    <Image source={icon} style={styles.icon} />
+  </Touchable>
+)
+
 const styles = StyleSheet.create({
-  back: {
+  action: {
     alignItems: 'center',
     bottom: 0,
     height: layout.header,
     justifyContent: 'center',
-    left: 0,
     position: 'absolute',
     width: layout.header
+  },
+  back: {
+    left: 0
   },
   icon: {
     height: layout.icon,
@@ -81,6 +99,9 @@ const styles = StyleSheet.create({
     backgroundColor: colors.primary,
     flexDirection: 'row',
     justifyContent: 'center'
+  },
+  right: {
+    right: 0
   },
   title: {
     ...typography.regular,

@@ -1,6 +1,6 @@
 export { Avatar } from './avatar'
 export { Button } from './button'
-export { Header } from './header'
+export { Header, HeaderButton } from './header'
 export { KeyboardView } from './keyboard-view'
 export { Layout, ScrollLayout } from './layout'
 export { LocationError } from './location-error'

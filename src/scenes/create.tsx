@@ -3,8 +3,10 @@ import { StackNavigationProp } from '@react-navigation/stack'
 import React, { FunctionComponent, useEffect, useState } from 'react'
 import { StyleSheet } from 'react-native'
 
+import { img_ui_check } from '../assets'
 import {
-  Button,
+  Header,
+  HeaderButton,
   LocationError,
   ScrollLayout,
   Spinner,
@@ -20,12 +22,44 @@ interface Props {
 }
 
 export const Create: FunctionComponent<Props> = ({
-  navigation: { navigate }
+  navigation: { navigate, setOptions }
 }) => {
   const { createPost, creating } = usePost()
   const { allowed, coordinates, fetchLocation, fetching } = useLocation()
 
   const [body, setBody] = useState('')
+
+  useEffect(() => {
+    setOptions({
+      header: (props) => (
+        <Header
+          {...props}
+          right={
+            creating ? (
+              <Spinner />
+            ) : (
+              <HeaderButton
+                icon={img_ui_check}
+                onPress={async () => {
+                  if (!body || !coordinates) {
+                    return
+                  }
+
+                  const { id } = await createPost(body, coordinates)
+
+                  navigate('Post', {
+                    id
+                  })
+
+                  setBody('')
+                }}
+              />
+            )
+          }
+        />
+      )
+    })
+  }, [body, coordinates, createPost, creating, navigate, setOptions])
 
   useEffect(() => {
     fetchLocation()
@@ -47,30 +81,11 @@ export const Create: FunctionComponent<Props> = ({
         placeholder="What bothers you?"
         value={body}
       />
-      <Button
-        label="Create"
-        loading={creating}
-        onPress={async () => {
-          if (body && coordinates) {
-            const { id } = await createPost(body, coordinates)
-
-            setBody('')
-
-            navigate('Post', {
-              id
-            })
-          }
-        }}
-        style={styles.button}
-      />
     </ScrollLayout>
   )
 }
 
 const styles = StyleSheet.create({
-  button: {
-    marginTop: layout.margin
-  },
   main: {
     padding: layout.margin
   }
