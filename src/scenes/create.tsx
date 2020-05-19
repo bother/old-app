@@ -1,3 +1,4 @@
+import { RouteProp } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import React, { FunctionComponent, useEffect, useState } from 'react'
 import { StyleSheet } from 'react-native'
@@ -14,7 +15,8 @@ import { CreateParams } from '../navigators/create'
 import { layout } from '../styles'
 
 interface Props {
-  navigation: StackNavigationProp<CreateParams>
+  navigation: StackNavigationProp<CreateParams, 'Create'>
+  route: RouteProp<CreateParams, 'Create'>
 }
 
 export const Create: FunctionComponent<Props> = ({

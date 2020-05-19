@@ -1,3 +1,4 @@
+import { RouteProp } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import React, { FunctionComponent } from 'react'
 import { Button, StyleSheet } from 'react-native'
@@ -9,7 +10,8 @@ import { ProfileParams } from '../navigators/profile'
 import { layout } from '../styles'
 
 interface Props {
-  navigation: StackNavigationProp<ProfileParams>
+  navigation: StackNavigationProp<ProfileParams, 'Profile'>
+  route: RouteProp<ProfileParams, 'Profile'>
 }
 
 export const Profile: FunctionComponent<Props> = ({
