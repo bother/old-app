@@ -11,7 +11,7 @@ interface Props {
   posts: Post[]
   loading: boolean
 
-  fetchMore: () => void
+  fetchMore?: () => void
   refetch: () => void
 }
 
@@ -28,7 +28,7 @@ export const PostList: FunctionComponent<Props> = ({
       </View>
     }
     ListFooterComponent={
-      posts.length > 0 ? (
+      fetchMore ? (
         <Touchable onPress={fetchMore} style={styles.button}>
           <Text style={styles.more}>More</Text>
         </Touchable>

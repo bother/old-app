@@ -12,18 +12,11 @@ interface Props {
 }
 
 export const Popular: FunctionComponent<Props> = () => {
-  const { fetch, fetchMore, loading, posts, refetch } = usePopular()
+  const { fetch, loading, posts, refetch } = usePopular()
 
   useEffect(() => {
     fetch()
   }, [fetch])
 
-  return (
-    <PostList
-      fetchMore={fetchMore}
-      loading={loading}
-      posts={posts}
-      refetch={refetch}
-    />
-  )
+  return <PostList loading={loading} posts={posts} refetch={refetch} />
 }

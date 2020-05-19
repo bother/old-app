@@ -11,7 +11,7 @@ export type Scalars = {
 };
 
 export type Query = {
-   __typename?: 'Query';
+  __typename?: 'Query';
   nearby: Array<Post>;
   latest: Array<Post>;
   popular: Array<Post>;
@@ -33,11 +33,6 @@ export type QueryLatestArgs = {
 };
 
 
-export type QueryPopularArgs = {
-  before?: Maybe<Scalars['String']>;
-};
-
-
 export type QueryFetchPostArgs = {
   id: Scalars['String'];
 };
@@ -54,7 +49,7 @@ export type QueryCreateCommentArgs = {
 };
 
 export type Post = {
-   __typename?: 'Post';
+  __typename?: 'Post';
   id: Scalars['ID'];
   body: Scalars['String'];
   location: Location;
@@ -67,14 +62,14 @@ export type Post = {
 };
 
 export type Location = {
-   __typename?: 'Location';
+  __typename?: 'Location';
   city: Scalars['String'];
   state: Scalars['String'];
   country: Scalars['String'];
 };
 
 export type Comment = {
-   __typename?: 'Comment';
+  __typename?: 'Comment';
   id: Scalars['ID'];
   body: Scalars['String'];
   post: Post;
@@ -83,7 +78,7 @@ export type Comment = {
 };
 
 export type User = {
-   __typename?: 'User';
+  __typename?: 'User';
   id: Scalars['ID'];
   createdAt: Scalars['DateTime'];
   updatedAt: Scalars['DateTime'];
@@ -91,7 +86,7 @@ export type User = {
 
 
 export type Mutation = {
-   __typename?: 'Mutation';
+  __typename?: 'Mutation';
   createPost: Post;
   signUp: AuthResult;
 };
@@ -103,7 +98,7 @@ export type MutationCreatePostArgs = {
 };
 
 export type AuthResult = {
-   __typename?: 'AuthResult';
+  __typename?: 'AuthResult';
   token: Scalars['String'];
   user: User;
 };
