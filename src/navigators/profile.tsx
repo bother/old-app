@@ -40,11 +40,7 @@ export const ProfileNavigator: FunctionComponent = () => {
         options={{
           ...TransitionPresets.ModalPresentationIOS,
           cardOverlayEnabled: true,
-          header: (props) => <Header {...props} />,
-          headerStyle: {
-            height: layout.header + top
-          },
-          title: 'Post'
+          headerShown: false
         }}
       />
     </Navigator>

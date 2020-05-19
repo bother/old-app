@@ -38,13 +38,9 @@ export const CreateNavigator: FunctionComponent = () => {
         component={Post}
         name="Post"
         options={{
+          headerShown: false,
           ...TransitionPresets.ModalPresentationIOS,
-          cardOverlayEnabled: true,
-          header: (props) => <Header {...props} />,
-          headerStyle: {
-            height: layout.header + top
-          },
-          title: 'Post'
+          cardOverlayEnabled: true
         }}
       />
     </Navigator>
