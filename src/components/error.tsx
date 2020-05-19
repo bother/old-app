@@ -1,18 +1,18 @@
 import React, { FunctionComponent } from 'react'
 import { StyleSheet, Text } from 'react-native'
-import Image from 'react-native-fast-image'
+import Image, { Source } from 'react-native-fast-image'
 
-import { img_hero_location } from '../assets'
 import { colors, layout, typography } from '../styles'
 import { Layout } from './layout'
 
 interface Props {
+  image: Source
   message: string
 }
 
-export const LocationError: FunctionComponent<Props> = ({ message }) => (
+export const Error: FunctionComponent<Props> = ({ image, message }) => (
   <Layout style={styles.main}>
-    <Image source={img_hero_location} style={styles.image} />
+    <Image source={image} style={styles.image} />
     <Text style={styles.message}>{message}</Text>
   </Layout>
 )

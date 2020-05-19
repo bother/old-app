@@ -19,7 +19,14 @@ export const Profile: FunctionComponent<Props> = ({
 }) => (
   <Layout style={styles.main}>
     <Image source={img_bother} style={styles.logo} />
-    <Button onPress={() => navigate('Post')} title="Post" />
+    <Button
+      onPress={() =>
+        navigate('Post', {
+          id: 'foo'
+        })
+      }
+      title="Post"
+    />
   </Layout>
 )
 

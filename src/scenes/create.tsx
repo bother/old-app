@@ -3,11 +3,11 @@ import { StackNavigationProp } from '@react-navigation/stack'
 import React, { FunctionComponent, useEffect, useState } from 'react'
 import { StyleSheet } from 'react-native'
 
-import { img_ui_check } from '../assets'
+import { img_hero_location, img_ui_check } from '../assets'
 import {
+  Error,
   Header,
   HeaderButton,
-  LocationError,
   ScrollLayout,
   Spinner,
   TextBox
@@ -70,7 +70,12 @@ export const Create: FunctionComponent<Props> = ({
   }
 
   if (!allowed) {
-    return <LocationError message="You need to share your location to post." />
+    return (
+      <Error
+        image={img_hero_location}
+        message="You need to share your location to post"
+      />
+    )
   }
 
   return (

@@ -2,7 +2,8 @@ import { RouteProp } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import React, { FunctionComponent, useEffect } from 'react'
 
-import { LocationError, Spinner } from '../components'
+import { img_hero_location } from '../assets'
+import { Error, Spinner } from '../components'
 import { PostList } from '../components/posts'
 import { useLocation, useNearby } from '../hooks'
 import { PostsParams } from '../navigators/posts'
@@ -32,7 +33,10 @@ export const Nearby: FunctionComponent<Props> = () => {
 
   if (!allowed) {
     return (
-      <LocationError message="You need to share your location to view nearby posts." />
+      <Error
+        image={img_hero_location}
+        message="You need to share your location to view nearby posts"
+      />
     )
   }
 

@@ -1,9 +1,10 @@
 import { RouteProp } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import React, { FunctionComponent, useEffect } from 'react'
-import { StyleSheet, Text } from 'react-native'
+import { StyleSheet } from 'react-native'
 
-import { ScrollLayout, Spinner } from '../components'
+import { img_hero_not_found } from '../assets'
+import { Error, ScrollLayout, Spinner } from '../components'
 import { Header, PostCard } from '../components/posts'
 import { usePost } from '../hooks'
 import { FeedParams } from '../navigators/feed'
@@ -30,7 +31,7 @@ export const Post: FunctionComponent<Props> = ({
   }
 
   if (!post) {
-    return <Text>Post not found</Text>
+    return <Error image={img_hero_not_found} message="Post not found" />
   }
 
   return (
