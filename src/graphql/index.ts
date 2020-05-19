@@ -1,8 +1,6 @@
 import AsyncStorage from '@react-native-community/async-storage'
 import ApolloClient, { InMemoryCache } from 'apollo-boost'
-// import { API_URI } from 'react-native-dotenv'
-
-const API_URI = 'http://192.168.86.26:4005'
+import { API_URI } from 'react-native-dotenv'
 
 export const client = new ApolloClient({
   cache: new InMemoryCache(),

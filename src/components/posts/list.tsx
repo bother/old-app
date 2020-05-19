@@ -11,12 +11,12 @@ interface Props {
   posts: Post[]
   loading: boolean
 
-  fetchMore?: () => void
+  fetchNext?: () => void
   refetch: () => void
 }
 
 export const PostList: FunctionComponent<Props> = ({
-  fetchMore,
+  fetchNext,
   loading,
   posts,
   refetch
@@ -28,8 +28,8 @@ export const PostList: FunctionComponent<Props> = ({
       </View>
     }
     ListFooterComponent={
-      fetchMore ? (
-        <Touchable onPress={fetchMore} style={styles.button}>
+      fetchNext ? (
+        <Touchable onPress={fetchNext} style={styles.button}>
           <Text style={styles.more}>More</Text>
         </Touchable>
       ) : null

@@ -28,13 +28,13 @@ interface QueryPopularPayload {
 }
 
 export const usePopular = () => {
-  const [fetch, { data, loading, refetch }] = useLazyQuery<
+  const [fetchPosts, { data, loading, refetch }] = useLazyQuery<
     QueryPopularPayload,
     QueryPopularArgs
   >(POPULAR_POSTS)
 
   return {
-    fetch,
+    fetchPosts,
     loading,
     posts: data ? data.popular : [],
     refetch

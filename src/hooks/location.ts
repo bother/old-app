@@ -6,7 +6,7 @@ import { Coordinates } from '../types'
 
 export const useLocation = () => {
   const [allowed, setAllowed] = useState(true)
-  const [loading, setLoading] = useState(true)
+  const [fetching, setFetching] = useState(true)
 
   const [coordinates, setCoordinates] = useState<Coordinates>()
 
@@ -14,8 +14,8 @@ export const useLocation = () => {
     Geolocation.requestAuthorization()
   }
 
-  const fetch = useCallback(() => {
-    setLoading(true)
+  const fetchLocation = useCallback(() => {
+    setFetching(true)
 
     Geolocation.getCurrentPosition(
       ({ coords: { latitude, longitude } }) => {
@@ -24,10 +24,10 @@ export const useLocation = () => {
           longitude
         })
 
-        setLoading(false)
+        setFetching(false)
       },
       (error) => {
-        setLoading(false)
+        setFetching(false)
 
         if (error.code === error.PERMISSION_DENIED) {
           setAllowed(false)
@@ -41,7 +41,7 @@ export const useLocation = () => {
   return {
     allowed,
     coordinates,
-    fetch,
-    loading
+    fetchLocation,
+    fetching
   }
 }

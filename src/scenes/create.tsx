@@ -21,15 +21,15 @@ export const Create: FunctionComponent<Props> = ({
   navigation: { navigate }
 }) => {
   const { createPost, creating } = usePost()
-  const { allowed, coordinates, fetch, loading } = useLocation()
+  const { allowed, coordinates, fetchLocation, fetching } = useLocation()
 
   const [body, setBody] = useState('')
 
   useEffect(() => {
-    fetch()
-  }, [fetch])
+    fetchLocation()
+  }, [fetchLocation])
 
-  if (loading) {
+  if (fetching) {
     return <Spinner full />
   }
 
