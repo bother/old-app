@@ -13,7 +13,7 @@ export const Avatar: FunctionComponent<Props> = ({ seed, size, style }) => (
     source={{
       uri: `https://api.adorable.io/avatar/${seed}`
     }}
-    style={[styles.main, style, size === 'large' ? styles.large : styles.small]}
+    style={[style, size === 'large' ? styles.large : styles.small]}
   />
 )
 
@@ -23,10 +23,9 @@ const styles = StyleSheet.create({
     height: 100,
     width: 100
   },
-  main: {},
   small: {
-    borderRadius: 20,
-    height: 20,
-    width: 20
+    borderRadius: 30,
+    height: 30,
+    width: 30
   }
 })

@@ -1,8 +1,11 @@
 import { useLazyQuery, useMutation } from '@apollo/react-hooks'
 import { gql } from 'apollo-boost'
+import update from 'immutability-helper'
 import { useCallback } from 'react'
 
 import {
+  Comment,
+  MutationCreateCommentArgs,
   MutationCreatePostArgs,
   Post,
   QueryFetchPostArgs
@@ -52,6 +55,23 @@ interface MutationCreatePostPayload {
   createPost: Post
 }
 
+const CREATE_COMMENT = gql`
+  mutation createComment($postId: String!, $body: String!) {
+    createComment(postId: $postId, body: $body) {
+      id
+      body
+      user {
+        id
+      }
+      createdAt
+    }
+  }
+`
+
+interface MutationCreateComment {
+  createComment: Comment
+}
+
 export const usePost = () => {
   const [fetch, fetchQuery] = useLazyQuery<
     QueryFetchPostPayload,
@@ -62,6 +82,11 @@ export const usePost = () => {
     MutationCreatePostPayload,
     MutationCreatePostArgs
   >(CREATE_POST)
+
+  const [createComment, replyMutation] = useMutation<
+    MutationCreateComment,
+    MutationCreateCommentArgs
+  >(CREATE_COMMENT)
 
   const fetchPost = useCallback(
     (id: string) =>
@@ -78,9 +103,11 @@ export const usePost = () => {
       new Promise((resolve) =>
         create({
           update(proxy, response) {
-            if (response.data?.createPost) {
-              resolve(response.data.createPost)
+            if (!response.data?.createPost) {
+              return
             }
+
+            resolve(response.data.createPost)
           },
           variables: {
             body,
@@ -91,11 +118,59 @@ export const usePost = () => {
     [create]
   )
 
+  const reply = useCallback(
+    (postId: string, body: string) =>
+      createComment({
+        update(proxy, response) {
+          if (!response.data?.createComment) {
+            return
+          }
+
+          const options = {
+            query: FETCH_POST,
+            variables: {
+              id: postId
+            }
+          }
+
+          const post = proxy.readQuery<
+            QueryFetchPostPayload,
+            QueryFetchPostArgs
+          >(options)
+
+          if (!post) {
+            return
+          }
+
+          const data = update(post, {
+            fetchPost: {
+              comments: {
+                $push: [response.data.createComment]
+              }
+            }
+          })
+
+          proxy.writeQuery<QueryFetchPostPayload, QueryFetchPostArgs>({
+            ...options,
+            data
+          })
+        },
+        variables: {
+          body,
+          postId
+        }
+      }),
+    [createComment]
+  )
+
   return {
     createPost,
     creating: createMutation.loading,
     fetchPost,
     fetching: fetchQuery.loading,
-    post: fetchQuery.data?.fetchPost
+    post: fetchQuery.data?.fetchPost,
+    refetch: fetchQuery.refetch,
+    reply,
+    replying: replyMutation.loading
   }
 }

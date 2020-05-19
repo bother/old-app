@@ -43,14 +43,14 @@ const styles = StyleSheet.create({
   main: {
     backgroundColor: colors.backgroundDark,
     borderRadius: layout.radius,
-    paddingVertical: layout.padding
+    paddingVertical: layout.padding * 1.5
   },
   multiline: {
-    ...typography.regular,
+    ...typography.base,
     height: height / 4
   },
   textBox: {
-    ...typography.regular,
+    ...typography.base,
     backgroundColor: colors.backgroundDark,
     borderRadius: layout.radius,
     color: colors.foreground,

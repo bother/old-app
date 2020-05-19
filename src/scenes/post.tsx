@@ -4,7 +4,8 @@ import React, { FunctionComponent, useEffect } from 'react'
 import { StyleSheet } from 'react-native'
 
 import { img_hero_not_found } from '../assets'
-import { Error, ScrollLayout, Spinner } from '../components'
+import { Error, Layout, Spinner } from '../components'
+import { Comments } from '../components/comments'
 import { Header, PostCard } from '../components/posts'
 import { usePost } from '../hooks'
 import { FeedParams } from '../navigators/feed'
@@ -20,7 +21,7 @@ export const Post: FunctionComponent<Props> = ({
     params: { id }
   }
 }) => {
-  const { fetchPost, fetching, post } = usePost()
+  const { fetchPost, fetching, post, refetch, reply, replying } = usePost()
 
   useEffect(() => {
     fetchPost(id)
@@ -37,9 +38,16 @@ export const Post: FunctionComponent<Props> = ({
   return (
     <>
       <Header post={post} />
-      <ScrollLayout style={styles.main}>
+      <Layout style={styles.main}>
         <PostCard link={false} post={post} />
-      </ScrollLayout>
+        <Comments
+          comments={post.comments}
+          loading={fetching}
+          onReply={(body) => reply(id, body)}
+          refetch={refetch}
+          replying={replying}
+        />
+      </Layout>
     </>
   )
 }

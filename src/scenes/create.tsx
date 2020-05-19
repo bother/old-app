@@ -27,7 +27,7 @@ export const Create: FunctionComponent<Props> = ({
   const { createPost, creating } = usePost()
   const { allowed, coordinates, fetchLocation, fetching } = useLocation()
 
-  const [body, setBody] = useState('')
+  const [body, setBody] = useState<string>()
 
   useEffect(() => {
     setOptions({
@@ -51,7 +51,7 @@ export const Create: FunctionComponent<Props> = ({
                     id
                   })
 
-                  setBody('')
+                  setBody(undefined)
                 }}
               />
             )
