@@ -1,7 +1,7 @@
 import { useLazyQuery } from '@apollo/react-hooks'
 import { gql } from 'apollo-boost'
 
-import { Post, QueryPopularArgs } from '../graphql/types'
+import { Post } from '../graphql/types'
 
 const POPULAR_POSTS = gql`
   query popular {
@@ -29,8 +29,7 @@ interface QueryPopularPayload {
 
 export const usePopular = () => {
   const [fetchPosts, { data, loading, refetch }] = useLazyQuery<
-    QueryPopularPayload,
-    QueryPopularArgs
+    QueryPopularPayload
   >(POPULAR_POSTS)
 
   return {
