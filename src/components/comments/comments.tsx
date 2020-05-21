@@ -4,6 +4,7 @@ import { FlatList, StyleSheet, Text, View } from 'react-native'
 
 import { img_hero_not_found } from '../../assets'
 import { Comment } from '../../graphql/types'
+import { useAuth } from '../../store'
 import { colors, layout, typography } from '../../styles'
 import { Avatar } from '../avatar'
 import { Error } from '../error'
@@ -27,6 +28,8 @@ export const Comments: FunctionComponent<Props> = ({
   refetch,
   replying
 }) => {
+  const [{ userId }] = useAuth()
+
   const list = useRef<FlatList>(null)
 
   const [replied, setReplied] = useState(false)
@@ -54,7 +57,11 @@ export const Comments: FunctionComponent<Props> = ({
         renderItem={({ item }) => (
           <View style={styles.item}>
             <Touchable>
-              <Avatar seed={item.id + item.user.id} style={styles.avatar} />
+              <Avatar
+                seed={item.user.id + item.id}
+                style={styles.avatar}
+                user={userId}
+              />
             </Touchable>
             <View style={styles.details}>
               <View style={styles.comment}>

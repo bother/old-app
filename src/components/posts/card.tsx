@@ -9,6 +9,7 @@ import Image from 'react-native-fast-image'
 import { img_ui_heart } from '../../assets'
 import { Post } from '../../graphql/types'
 import { usePost } from '../../hooks'
+import { useAuth } from '../../store'
 import { colors, layout, typography } from '../../styles'
 import { Avatar } from '../avatar'
 import { Spinner } from '../spinner'
@@ -21,6 +22,8 @@ interface Props {
 
 export const PostCard: FunctionComponent<Props> = ({ link = true, post }) => {
   const { navigate } = useNavigation()
+
+  const [{ userId }] = useAuth()
 
   const { likePost, liking } = usePost()
 
@@ -45,7 +48,11 @@ export const PostCard: FunctionComponent<Props> = ({ link = true, post }) => {
           )}
         </Touchable>
         <Touchable>
-          <Avatar seed={post.id + post.user.id} style={styles.avatar} />
+          <Avatar
+            seed={post.user.id + post.id}
+            style={styles.avatar}
+            user={userId}
+          />
         </Touchable>
       </View>
       <Details

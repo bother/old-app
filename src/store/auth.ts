@@ -5,18 +5,6 @@ import { createHook, createStore, StoreActionApi } from 'react-sweet-state'
 import { client } from '../graphql'
 import { AuthResult } from '../graphql/types'
 
-interface State {
-  initialising: boolean
-  signedIn: boolean
-}
-
-const initialState: State = {
-  initialising: true,
-  signedIn: false
-}
-
-type StoreApi = StoreActionApi<State>
-
 export const SIGN_UP = gql`
   mutation signUp {
     signUp {
@@ -28,14 +16,29 @@ export const SIGN_UP = gql`
   }
 `
 
+interface State {
+  initialising: boolean
+  signedIn: boolean
+  userId?: string
+}
+
+const initialState: State = {
+  initialising: true,
+  signedIn: false
+}
+
+type StoreApi = StoreActionApi<State>
+
 const actions = {
   initialise: () => async ({ setState }: StoreApi) => {
     const token = await AsyncStorage.getItem('@token')
+    const userId = await AsyncStorage.getItem('@userId')
 
-    if (token) {
+    if (token && userId) {
       setState({
         initialising: false,
-        signedIn: true
+        signedIn: true,
+        userId
       })
     } else {
       const { data } = await client.mutate<{
@@ -46,10 +49,12 @@ const actions = {
 
       if (data) {
         await AsyncStorage.setItem('@token', data.signUp.token)
+        await AsyncStorage.setItem('@userId', data.signUp.user.id)
 
         setState({
           initialising: false,
-          signedIn: true
+          signedIn: true,
+          userId: data.signUp.user.id
         })
       }
     }
