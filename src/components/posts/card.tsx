@@ -1,5 +1,5 @@
 import { useNavigation } from '@react-navigation/native'
-import { uniq } from 'lodash'
+import { compact, uniq } from 'lodash'
 import millify from 'millify'
 import moment from 'moment'
 import React, { FunctionComponent } from 'react'
@@ -65,11 +65,13 @@ export const PostCard: FunctionComponent<Props> = ({ link = true, post }) => {
         <Text style={styles.body}>{post.body}</Text>
         <View style={styles.meta}>
           <Text style={styles.location}>
-            {uniq([
-              post.location.city,
-              post.location.state,
-              post.location.country
-            ]).join(', ')}
+            {uniq(
+              compact([
+                post.location.city,
+                post.location.state,
+                post.location.country
+              ])
+            ).join(', ')}
           </Text>
           <Text style={styles.time}>{moment(post.createdAt).fromNow()}</Text>
           <View style={styles.comments}>
