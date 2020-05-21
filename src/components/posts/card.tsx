@@ -6,7 +6,7 @@ import React, { FunctionComponent } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import Image from 'react-native-fast-image'
 
-import { img_ui_heart } from '../../assets'
+import { img_ui_comments, img_ui_heart } from '../../assets'
 import { Post } from '../../graphql/types'
 import { usePost } from '../../hooks'
 import { useAuth } from '../../store'
@@ -16,8 +16,8 @@ import { Spinner } from '../spinner'
 import { Touchable } from '../touchable'
 
 interface Props {
-  post: Post
   link?: boolean
+  post: Post
 }
 
 export const PostCard: FunctionComponent<Props> = ({ link = true, post }) => {
@@ -72,6 +72,10 @@ export const PostCard: FunctionComponent<Props> = ({ link = true, post }) => {
             ]).join(', ')}
           </Text>
           <Text style={styles.time}>{moment(post.createdAt).fromNow()}</Text>
+          <View style={styles.comments}>
+            <Image source={img_ui_comments} style={styles.icon} />
+            <Text style={styles.count}>{post.comments}</Text>
+          </View>
         </View>
       </Details>
     </View>
@@ -87,6 +91,16 @@ const styles = StyleSheet.create({
     ...typography.regular,
     color: colors.foreground
   },
+  comments: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    marginLeft: layout.margin
+  },
+  count: {
+    ...typography.small,
+    color: colors.foregroundLight,
+    marginLeft: layout.padding
+  },
   details: {
     flex: 1,
     justifyContent: 'space-between',
@@ -96,6 +110,11 @@ const styles = StyleSheet.create({
     height: layout.icon,
     opacity: 0.2,
     width: layout.icon
+  },
+  icon: {
+    height: layout.icon * 0.8,
+    opacity: 0.2,
+    width: layout.icon * 0.8
   },
   label: {
     ...typography.small,
@@ -135,6 +154,6 @@ const styles = StyleSheet.create({
   time: {
     ...typography.small,
     color: colors.foregroundLight,
-    marginLeft: layout.padding
+    marginLeft: layout.margin
   }
 })

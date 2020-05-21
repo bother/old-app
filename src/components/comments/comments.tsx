@@ -8,6 +8,7 @@ import { useAuth } from '../../store'
 import { colors, layout, typography } from '../../styles'
 import { Avatar } from '../avatar'
 import { Error } from '../error'
+import { PostCard } from '../posts'
 import { Refresher } from '../refresher'
 import { Touchable } from '../touchable'
 import { Reply } from './reply'
@@ -38,10 +39,15 @@ export const Comments: FunctionComponent<Props> = ({
 
   return (
     <>
-      <Text style={styles.title}>Comments</Text>
       <FlatList
         ListEmptyComponent={
           <Error image={img_hero_not_found} message="No comments yet" />
+        }
+        ListHeaderComponent={
+          <>
+            <PostCard link={false} post={post} />
+            <Text style={styles.title}>Comments</Text>
+          </>
         }
         contentContainerStyle={styles.content}
         data={comments}
@@ -104,7 +110,8 @@ const styles = StyleSheet.create({
     paddingVertical: layout.padding
   },
   content: {
-    flexGrow: 1
+    flexGrow: 1,
+    paddingVertical: layout.padding
   },
   details: {
     flex: 1,

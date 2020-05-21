@@ -8,6 +8,7 @@ const POPULAR_POSTS = gql`
     popular {
       id
       body
+      comments
       liked
       likes
       location {

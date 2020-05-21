@@ -11,6 +11,7 @@ const NEARBY_POSTS = gql`
     nearby(coordinates: $coordinates, before: $before) {
       id
       body
+      comments
       liked
       likes
       location {

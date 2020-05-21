@@ -10,6 +10,7 @@ const LATEST_POSTS = gql`
     latest(before: $before) {
       id
       body
+      comments
       liked
       likes
       location {

@@ -14,7 +14,7 @@ import {
 import { Coordinates } from '../types'
 
 const FETCH_POST = gql`
-  query fetchPost($id: String!) {
+  query post($id: String!) {
     fetchPost(id: $id) {
       id
       body
@@ -25,14 +25,15 @@ const FETCH_POST = gql`
         state
         country
       }
-      comments {
+      comments
+      user {
         id
-        body
-        user {
-          id
-        }
-        createdAt
       }
+      createdAt
+    }
+    fetchComments(postId: $id) {
+      id
+      body
       user {
         id
       }
@@ -43,6 +44,7 @@ const FETCH_POST = gql`
 
 interface QueryFetchPostPayload {
   fetchPost: Post
+  fetchComments: Comment[]
 }
 
 const LIKE_POST = gql`
@@ -175,9 +177,12 @@ export const usePost = () => {
           }
 
           const data = update(post, {
+            fetchComments: {
+              $push: [response.data.createComment]
+            },
             fetchPost: {
               comments: {
-                $push: [response.data.createComment]
+                $set: post.fetchPost.comments + 1
               }
             }
           })
@@ -196,6 +201,7 @@ export const usePost = () => {
   )
 
   return {
+    comments: fetchQuery.data?.fetchComments ?? [],
     createPost,
     creating: createMutation.loading,
     fetchPost,

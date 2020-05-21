@@ -12,11 +12,17 @@ export type Scalars = {
 
 export type Query = {
   __typename?: 'Query';
+  fetchComments: Array<Comment>;
   nearby: Array<Post>;
   latest: Array<Post>;
   popular: Array<Post>;
   fetchPost: Post;
   profile: User;
+};
+
+
+export type QueryFetchCommentsArgs = {
+  postId: Scalars['String'];
 };
 
 
@@ -35,13 +41,22 @@ export type QueryFetchPostArgs = {
   id: Scalars['String'];
 };
 
+export type Comment = {
+  __typename?: 'Comment';
+  id: Scalars['ID'];
+  body: Scalars['String'];
+  post: Post;
+  user: User;
+  createdAt: Scalars['DateTime'];
+};
+
 export type Post = {
   __typename?: 'Post';
   id: Scalars['ID'];
   body: Scalars['String'];
   location: Location;
   likes: Scalars['Int'];
-  comments: Array<Comment>;
+  comments: Scalars['Int'];
   user: User;
   createdAt: Scalars['DateTime'];
   updatedAt: Scalars['DateTime'];
@@ -55,15 +70,6 @@ export type Location = {
   country: Scalars['String'];
 };
 
-export type Comment = {
-  __typename?: 'Comment';
-  id: Scalars['ID'];
-  body: Scalars['String'];
-  post: Post;
-  user: User;
-  createdAt: Scalars['DateTime'];
-};
-
 export type User = {
   __typename?: 'User';
   id: Scalars['ID'];
@@ -74,10 +80,16 @@ export type User = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  createComment: Comment;
   createPost: Post;
   likePost: Post;
-  createComment: Comment;
   signUp: AuthResult;
+};
+
+
+export type MutationCreateCommentArgs = {
+  body: Scalars['String'];
+  postId: Scalars['String'];
 };
 
 
@@ -89,12 +101,6 @@ export type MutationCreatePostArgs = {
 
 export type MutationLikePostArgs = {
   id: Scalars['String'];
-};
-
-
-export type MutationCreateCommentArgs = {
-  body: Scalars['String'];
-  postId: Scalars['String'];
 };
 
 export type AuthResult = {
