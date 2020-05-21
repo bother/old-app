@@ -1,5 +1,5 @@
 import moment from 'moment'
-import React, { FunctionComponent, useRef } from 'react'
+import React, { FunctionComponent, useRef, useState } from 'react'
 import { FlatList, StyleSheet, Text, View } from 'react-native'
 
 import { img_hero_not_found } from '../../assets'
@@ -28,6 +28,8 @@ export const Comments: FunctionComponent<Props> = ({
 }) => {
   const list = useRef<FlatList>(null)
 
+  const [replied, setReplied] = useState(false)
+
   return (
     <>
       <Text style={styles.title}>Comments</Text>
@@ -37,11 +39,15 @@ export const Comments: FunctionComponent<Props> = ({
         }
         contentContainerStyle={styles.content}
         data={comments}
-        onContentSizeChange={() =>
+        onContentSizeChange={() => {
+          if (!replied) {
+            return
+          }
+
           list.current?.scrollToEnd({
             animated: true
           })
-        }
+        }}
         ref={list}
         refreshControl={<Refresher onRefresh={refetch} refreshing={loading} />}
         renderItem={({ item }) => (
@@ -58,7 +64,14 @@ export const Comments: FunctionComponent<Props> = ({
           </View>
         )}
       />
-      <Reply loading={replying} onReply={async (body) => onReply(body)} />
+      <Reply
+        loading={replying}
+        onReply={(body) => {
+          onReply(body)
+
+          setReplied(true)
+        }}
+      />
     </>
   )
 }
