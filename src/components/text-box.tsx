@@ -1,19 +1,25 @@
 import React, { forwardRef } from 'react'
 import {
   Dimensions,
+  StyleProp,
   StyleSheet,
   TextInput,
   TextInputProps,
-  View
+  View,
+  ViewStyle
 } from 'react-native'
 
 import { colors, layout, typography } from '../styles'
 
-export const TextBox = forwardRef<TextInput, TextInputProps>(
-  ({ style, ...props }, ref) => {
+interface Props {
+  containerStyle?: StyleProp<ViewStyle>
+}
+
+export const TextBox = forwardRef<TextInput, Props & TextInputProps>(
+  ({ containerStyle, style, ...props }, ref) => {
     if (props.multiline) {
       return (
-        <View style={styles.main}>
+        <View style={[styles.main, containerStyle]}>
           <TextInput
             placeholderTextColor={colors.foregroundLight}
             ref={ref}
@@ -43,10 +49,10 @@ const styles = StyleSheet.create({
   main: {
     backgroundColor: colors.backgroundDark,
     borderRadius: layout.radius,
-    paddingVertical: layout.padding * 1.5
+    paddingVertical: layout.padding
   },
   multiline: {
-    ...typography.base,
+    ...typography.regular,
     height: height / 4
   },
   textBox: {
