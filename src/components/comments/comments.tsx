@@ -3,7 +3,7 @@ import React, { FunctionComponent, useRef, useState } from 'react'
 import { FlatList, StyleSheet, Text, View } from 'react-native'
 
 import { img_hero_not_found } from '../../assets'
-import { Comment } from '../../graphql/types'
+import { Comment, Post } from '../../graphql/types'
 import { useAuth } from '../../store'
 import { colors, layout, typography } from '../../styles'
 import { Avatar } from '../avatar'
@@ -15,6 +15,7 @@ import { Reply } from './reply'
 interface Props {
   comments: Comment[]
   loading: boolean
+  post: Post
   replying: boolean
 
   refetch: () => void
@@ -25,6 +26,7 @@ export const Comments: FunctionComponent<Props> = ({
   comments,
   loading,
   onReply,
+  post,
   refetch,
   replying
 }) => {
@@ -58,7 +60,7 @@ export const Comments: FunctionComponent<Props> = ({
           <View style={styles.item}>
             <Touchable>
               <Avatar
-                seed={item.user.id + item.id}
+                seed={item.user.id + post.id}
                 style={styles.avatar}
                 user={userId}
               />

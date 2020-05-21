@@ -44,6 +44,7 @@ export const Post: FunctionComponent<Props> = ({
           comments={post.comments}
           loading={fetching}
           onReply={(body) => reply(id, body)}
+          post={post}
           refetch={refetch}
           replying={replying}
         />
