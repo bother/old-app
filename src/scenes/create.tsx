@@ -48,7 +48,10 @@ export const Create: FunctionComponent<Props> = ({
                     return
                   }
 
-                  if (body.length > maxLength) {
+                  if (
+                    body.length < maxLength * 0.3 ||
+                    body.length > maxLength
+                  ) {
                     return
                   }
 
@@ -104,11 +107,11 @@ export const Create: FunctionComponent<Props> = ({
             styles.label,
             {
               color:
-                percent > 100
+                percent > 100 || percent < 10
                   ? colors.counter.red
-                  : percent > 90
+                  : percent > 90 || percent < 20
                   ? colors.counter.orange
-                  : percent > 80
+                  : percent > 80 || percent < 30
                   ? colors.counter.yellow
                   : colors.counter.green
             }
