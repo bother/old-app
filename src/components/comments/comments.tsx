@@ -74,9 +74,9 @@ const styles = StyleSheet.create({
   comment: {
     alignSelf: 'flex-start',
     backgroundColor: colors.background,
-    borderRadius: layout.radius,
+    borderRadius: layout.radius * 1.5,
     maxWidth: '80%',
-    paddingHorizontal: layout.padding * 1.3,
+    paddingHorizontal: layout.padding * 1.2,
     paddingVertical: layout.padding
   },
   content: {

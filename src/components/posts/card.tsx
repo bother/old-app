@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
   main: {
     alignItems: 'stretch',
     backgroundColor: colors.background,
-    borderRadius: layout.radius,
+    borderRadius: layout.radius * 2,
     flexDirection: 'row',
     marginHorizontal: layout.margin,
     marginVertical: layout.padding,
