@@ -28,6 +28,7 @@ export type QueryFetchCommentsArgs = {
 
 export type QueryNearbyArgs = {
   before?: Maybe<Scalars['String']>;
+  distance: Scalars['Int'];
   coordinates: Array<Scalars['Float']>;
 };
 
@@ -66,7 +67,7 @@ export type Post = {
 export type Location = {
   __typename?: 'Location';
   city: Scalars['String'];
-  state: Scalars['String'];
+  state?: Maybe<Scalars['String']>;
   country: Scalars['String'];
 };
 

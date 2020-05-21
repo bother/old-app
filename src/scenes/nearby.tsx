@@ -1,10 +1,10 @@
 import { RouteProp } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
-import React, { FunctionComponent, useEffect } from 'react'
+import React, { FunctionComponent, useEffect, useState } from 'react'
 
 import { img_hero_location } from '../assets'
 import { Error, Spinner } from '../components'
-import { PostList } from '../components/posts'
+import { Distance, PostList } from '../components/posts'
 import { useLocation, useNearby } from '../hooks'
 import { PostsParams } from '../navigators/posts'
 
@@ -18,15 +18,17 @@ export const Nearby: FunctionComponent<Props> = () => {
 
   const { fetchNext, fetchPosts, loading, posts, refetch } = useNearby()
 
+  const [distance, setDistance] = useState(50)
+
   useEffect(() => {
     fetchLocation()
   }, [fetchLocation])
 
   useEffect(() => {
     if (coordinates) {
-      fetchPosts(coordinates)
+      fetchPosts(coordinates, distance)
     }
-  }, [coordinates, fetchPosts])
+  }, [coordinates, distance, fetchPosts])
 
   if (fetching) {
     return <Spinner full />
@@ -44,6 +46,12 @@ export const Nearby: FunctionComponent<Props> = () => {
   return (
     <PostList
       fetchNext={fetchNext}
+      header={
+        <Distance
+          distance={distance}
+          onChange={(distance) => setDistance(distance)}
+        />
+      }
       loading={loading}
       posts={posts}
       refetch={refetch}

@@ -7,8 +7,8 @@ import { Post, QueryNearbyArgs } from '../graphql/types'
 import { Coordinates } from '../types'
 
 const NEARBY_POSTS = gql`
-  query nearby($coordinates: [Float!]!, $before: String) {
-    nearby(coordinates: $coordinates, before: $before) {
+  query nearby($coordinates: [Float!]!, $distance: Int!, $before: String) {
+    nearby(coordinates: $coordinates, distance: $distance, before: $before) {
       id
       body
       comments
@@ -38,10 +38,11 @@ export const useNearby = () => {
   >(NEARBY_POSTS)
 
   const fetchPosts = useCallback(
-    ({ latitude, longitude }: Coordinates) =>
+    ({ latitude, longitude }: Coordinates, distance: number) =>
       fetch({
         variables: {
-          coordinates: [longitude, latitude]
+          coordinates: [longitude, latitude],
+          distance
         }
       }),
     [fetch]

@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react'
+import React, { FunctionComponent, ReactElement } from 'react'
 import { FlatList, StyleSheet } from 'react-native'
 
 import { img_hero_not_found } from '../../assets'
@@ -10,6 +10,7 @@ import { Spinner } from '../spinner'
 import { PostCard } from './card'
 
 interface Props {
+  header?: ReactElement
   loading: boolean
   posts: Post[]
 
@@ -19,6 +20,7 @@ interface Props {
 
 export const PostList: FunctionComponent<Props> = ({
   fetchNext,
+  header,
   loading,
   posts,
   refetch
@@ -31,6 +33,7 @@ export const PostList: FunctionComponent<Props> = ({
         <Error image={img_hero_not_found} message="No posts found" />
       )
     }
+    ListHeaderComponent={header}
     contentContainerStyle={styles.content}
     data={posts}
     onEndReached={fetchNext}
