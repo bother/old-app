@@ -6,6 +6,7 @@ import { Post } from '../../graphql/types'
 import { layout } from '../../styles'
 import { Error } from '../error'
 import { Refresher } from '../refresher'
+import { Spinner } from '../spinner'
 import { PostCard } from './card'
 
 interface Props {
@@ -24,7 +25,11 @@ export const PostList: FunctionComponent<Props> = ({
 }) => (
   <FlatList
     ListEmptyComponent={
-      <Error image={img_hero_not_found} message="No posts found" />
+      loading ? (
+        <Spinner full />
+      ) : (
+        <Error image={img_hero_not_found} message="No posts found" />
+      )
     }
     contentContainerStyle={styles.content}
     data={posts}
