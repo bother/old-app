@@ -8,6 +8,7 @@ import { colors, layout, typography } from '../../styles'
 import { Avatar } from '../avatar'
 import { Error } from '../error'
 import { Refresher } from '../refresher'
+import { Touchable } from '../touchable'
 import { Reply } from './reply'
 
 interface Props {
@@ -52,7 +53,9 @@ export const Comments: FunctionComponent<Props> = ({
         refreshControl={<Refresher onRefresh={refetch} refreshing={loading} />}
         renderItem={({ item }) => (
           <View style={styles.item}>
-            <Avatar seed={item.user.id} />
+            <Touchable>
+              <Avatar seed={item.id + item.user.id} style={styles.avatar} />
+            </Touchable>
             <View style={styles.details}>
               <View style={styles.comment}>
                 <Text style={styles.body}>{item.body}</Text>
@@ -77,6 +80,9 @@ export const Comments: FunctionComponent<Props> = ({
 }
 
 const styles = StyleSheet.create({
+  avatar: {
+    backgroundColor: colors.primaryDark
+  },
   body: {
     ...typography.small
   },

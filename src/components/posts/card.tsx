@@ -10,6 +10,7 @@ import { img_ui_heart } from '../../assets'
 import { Post } from '../../graphql/types'
 import { usePost } from '../../hooks'
 import { colors, layout, typography } from '../../styles'
+import { Avatar } from '../avatar'
 import { Spinner } from '../spinner'
 import { Touchable } from '../touchable'
 
@@ -23,26 +24,31 @@ export const PostCard: FunctionComponent<Props> = ({ link = true, post }) => {
 
   const { likePost, liking } = usePost()
 
-  const Main = link ? Touchable : View
+  const Details = link ? Touchable : View
 
   return (
     <View style={styles.main}>
-      <Touchable onPress={() => likePost(post.id)} style={styles.likes}>
-        <Text style={styles.label}>
-          {millify(post.likes, {
-            precision: 0
-          })}
-        </Text>
-        {liking ? (
-          <Spinner />
-        ) : (
-          <Image
-            source={img_ui_heart}
-            style={[styles.heart, post.liked && styles.liked]}
-          />
-        )}
-      </Touchable>
-      <Main
+      <View style={styles.sidebar}>
+        <Touchable onPress={() => likePost(post.id)} style={styles.likes}>
+          <Text style={styles.label}>
+            {millify(post.likes, {
+              precision: 0
+            })}
+          </Text>
+          {liking ? (
+            <Spinner />
+          ) : (
+            <Image
+              source={img_ui_heart}
+              style={[styles.heart, post.liked && styles.liked]}
+            />
+          )}
+        </Touchable>
+        <Touchable>
+          <Avatar seed={post.id + post.user.id} style={styles.avatar} />
+        </Touchable>
+      </View>
+      <Details
         onPress={() =>
           navigate('Post', {
             id: post.id
@@ -60,19 +66,23 @@ export const PostCard: FunctionComponent<Props> = ({ link = true, post }) => {
           </Text>
           <Text style={styles.time}>{moment(post.createdAt).fromNow()}</Text>
         </View>
-      </Main>
+      </Details>
     </View>
   )
 }
 
 const styles = StyleSheet.create({
+  avatar: {
+    backgroundColor: colors.background,
+    margin: layout.margin
+  },
   body: {
     ...typography.regular,
     color: colors.foreground
   },
   details: {
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: 'space-between',
     padding: layout.margin
   },
   heart: {
@@ -90,7 +100,6 @@ const styles = StyleSheet.create({
   },
   likes: {
     alignItems: 'center',
-    backgroundColor: colors.backgroundDark,
     justifyContent: 'center',
     padding: layout.margin
   },
@@ -111,6 +120,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
     marginTop: layout.padding
+  },
+  sidebar: {
+    backgroundColor: colors.backgroundDark,
+    justifyContent: 'space-between'
   },
   time: {
     ...typography.small,
