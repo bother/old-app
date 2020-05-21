@@ -37,6 +37,11 @@ export const Comments: FunctionComponent<Props> = ({
         }
         contentContainerStyle={styles.content}
         data={comments}
+        onContentSizeChange={() =>
+          list.current?.scrollToEnd({
+            animated: true
+          })
+        }
         ref={list}
         refreshControl={<Refresher onRefresh={refetch} refreshing={loading} />}
         renderItem={({ item }) => (
@@ -53,16 +58,7 @@ export const Comments: FunctionComponent<Props> = ({
           </View>
         )}
       />
-      <Reply
-        loading={replying}
-        onReply={async (body) => {
-          await onReply(body)
-
-          list.current?.scrollToEnd({
-            animated: true
-          })
-        }}
-      />
+      <Reply loading={replying} onReply={async (body) => onReply(body)} />
     </>
   )
 }
