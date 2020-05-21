@@ -1,6 +1,7 @@
 import React, { FunctionComponent } from 'react'
 import {
   ActivityIndicator,
+  StyleProp,
   StyleSheet,
   Text,
   TextStyle,
@@ -14,7 +15,7 @@ interface Props {
   label: string
   loading?: boolean
   small?: boolean
-  style?: ViewStyle | ViewStyle[]
+  style?: StyleProp<ViewStyle>
   styleLabel?: TextStyle
 
   onPress: () => void

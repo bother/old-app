@@ -1,11 +1,11 @@
 import React, { FunctionComponent } from 'react'
-import { StyleSheet, ViewStyle } from 'react-native'
+import { StyleProp, StyleSheet, ViewStyle } from 'react-native'
 import Image from 'react-native-fast-image'
 
 interface Props {
   seed: string
   size?: 'small' | 'large'
-  style?: ViewStyle
+  style?: StyleProp<ViewStyle>
 }
 
 export const Avatar: FunctionComponent<Props> = ({ seed, size, style }) => (
