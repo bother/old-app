@@ -17,23 +17,25 @@ interface Props {
 export const Reply: FunctionComponent<Props> = ({ loading, onReply }) => {
   const [body, setBody] = useState<string>()
 
+  const reply = () => {
+    if (body) {
+      onReply(body)
+
+      setBody(undefined)
+    }
+  }
+
   return (
     <View style={styles.main}>
       <TextBox
         onChangeText={(body) => setBody(body)}
+        onSubmitEditing={reply}
         placeholder="Say something nice"
+        returnKeyType="send"
         style={styles.input}
         value={body}
       />
-      <Touchable
-        onPress={() => {
-          if (body) {
-            onReply(body)
-
-            setBody(undefined)
-          }
-        }}
-        style={styles.button}>
+      <Touchable onPress={reply} style={styles.button}>
         {loading ? (
           <Spinner />
         ) : (
