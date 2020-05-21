@@ -6,7 +6,7 @@ import React, { FunctionComponent } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import Image from 'react-native-fast-image'
 
-import { img_ui_comments, img_ui_heart } from '../../assets'
+import { img_ui_comments, img_ui_heart, img_ui_time } from '../../assets'
 import { Post } from '../../graphql/types'
 import { usePost } from '../../hooks'
 import { useAuth } from '../../store'
@@ -73,7 +73,12 @@ export const PostCard: FunctionComponent<Props> = ({ link = true, post }) => {
               ])
             ).join(', ')}
           </Text>
-          <Text style={styles.time}>{moment(post.createdAt).fromNow()}</Text>
+          <View style={styles.comments}>
+            <Image source={img_ui_time} style={styles.icon} />
+            <Text style={styles.count}>
+              {moment(post.createdAt).fromNow(true)}
+            </Text>
+          </View>
           <View style={styles.comments}>
             <Image source={img_ui_comments} style={styles.icon} />
             <Text style={styles.count}>{post.comments}</Text>
@@ -152,10 +157,5 @@ const styles = StyleSheet.create({
   sidebar: {
     backgroundColor: colors.backgroundDark,
     justifyContent: 'space-between'
-  },
-  time: {
-    ...typography.small,
-    color: colors.foregroundLight,
-    marginLeft: layout.margin
   }
 })
