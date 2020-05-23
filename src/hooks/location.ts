@@ -1,7 +1,8 @@
 import Geolocation from '@react-native-community/geolocation'
 import { useCallback, useState } from 'react'
-import { Alert, Platform } from 'react-native'
+import { Platform } from 'react-native'
 
+import { dialog } from '../lib'
 import { Coordinates } from '../types'
 
 export const useLocation = () => {
@@ -32,7 +33,7 @@ export const useLocation = () => {
         if (error.code === error.PERMISSION_DENIED) {
           setAllowed(false)
         } else {
-          Alert.alert('Location error', error.message)
+          dialog.alert('Location error', error.message)
         }
       }
     )

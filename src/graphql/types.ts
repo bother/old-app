@@ -83,6 +83,7 @@ export type Mutation = {
   __typename?: 'Mutation';
   createComment: Comment;
   createPost: Post;
+  flagPost: Scalars['Boolean'];
   likePost: Post;
   signUp: AuthResult;
 };
@@ -97,6 +98,12 @@ export type MutationCreateCommentArgs = {
 export type MutationCreatePostArgs = {
   coordinates: Array<Scalars['Float']>;
   body: Scalars['String'];
+};
+
+
+export type MutationFlagPostArgs = {
+  reason: Scalars['String'];
+  id: Scalars['String'];
 };
 
 

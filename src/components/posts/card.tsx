@@ -23,9 +23,13 @@ interface Props {
 export const PostCard: FunctionComponent<Props> = ({ link = true, post }) => {
   const { navigate } = useNavigation()
 
-  const [{ userId }] = useAuth()
+  const [{ ignored, userId }] = useAuth()
 
   const { likePost, liking } = usePost()
+
+  if (ignored.includes(post.id)) {
+    return null
+  }
 
   const Details = link ? Touchable : View
 

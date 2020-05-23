@@ -7,10 +7,12 @@ import {
   Comment,
   MutationCreateCommentArgs,
   MutationCreatePostArgs,
+  MutationFlagPostArgs,
   MutationLikePostArgs,
   Post,
   QueryFetchPostArgs
 } from '../graphql/types'
+import { useAuth } from '../store'
 import { Coordinates } from '../types'
 
 const FETCH_POST = gql`
@@ -62,6 +64,16 @@ interface MutationLikePostPayload {
   likePost: Post
 }
 
+const FLAG_POST = gql`
+  mutation flagPost($id: String!, $reason: String!) {
+    flagPost(id: $id, reason: $reason)
+  }
+`
+
+interface MutationFlagPostPayload {
+  flagPost: boolean
+}
+
 const CREATE_POST = gql`
   mutation createPost($body: String!, $coordinates: [Float!]!) {
     createPost(body: $body, coordinates: $coordinates) {
@@ -92,6 +104,8 @@ interface MutationCreateCommentPayload {
 }
 
 export const usePost = () => {
+  const [, { ignorePost }] = useAuth()
+
   const [fetch, fetchQuery] = useLazyQuery<
     QueryFetchPostPayload,
     QueryFetchPostArgs
@@ -101,6 +115,11 @@ export const usePost = () => {
     MutationLikePostPayload,
     MutationLikePostArgs
   >(LIKE_POST)
+
+  const [flag, flagMutation] = useMutation<
+    MutationFlagPostPayload,
+    MutationFlagPostArgs
+  >(FLAG_POST)
 
   const [create, createMutation] = useMutation<
     MutationCreatePostPayload,
@@ -130,6 +149,20 @@ export const usePost = () => {
         }
       }),
     [like]
+  )
+
+  const flagPost = useCallback(
+    (id: string, reason: string) =>
+      flag({
+        update() {
+          ignorePost(id)
+        },
+        variables: {
+          id,
+          reason
+        }
+      }),
+    [flag, ignorePost]
   )
 
   const createPost = useCallback(
@@ -206,6 +239,8 @@ export const usePost = () => {
     creating: createMutation.loading,
     fetchPost,
     fetching: fetchQuery.loading,
+    flagPost,
+    flagging: flagMutation.loading,
     likePost,
     liking: likeMutation.loading,
     post: fetchQuery.data?.fetchPost,

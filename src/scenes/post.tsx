@@ -23,6 +23,8 @@ export const Post: FunctionComponent<Props> = ({
     comments,
     fetchPost,
     fetching,
+    flagPost,
+    flagging,
     post,
     refetch,
     reply,
@@ -43,7 +45,11 @@ export const Post: FunctionComponent<Props> = ({
 
   return (
     <>
-      <Header post={post} />
+      <Header
+        flagging={flagging}
+        onFlag={(id, reason) => flagPost(id, reason)}
+        post={post}
+      />
       <Comments
         comments={comments}
         loading={fetching}
