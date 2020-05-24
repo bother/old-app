@@ -37,6 +37,8 @@ export const Comments: FunctionComponent<Props> = ({
 
   const [replied, setReplied] = useState(false)
 
+  const Chat = post.user.id === userId ? View : Touchable
+
   return (
     <>
       <FlatList
@@ -64,14 +66,14 @@ export const Comments: FunctionComponent<Props> = ({
         refreshControl={<Refresher onRefresh={refetch} refreshing={loading} />}
         renderItem={({ item }) => (
           <View style={styles.item}>
-            <Touchable>
+            <Chat>
               <Avatar
                 seed={item.user.id + post.id}
                 style={styles.avatar}
                 type="comment"
                 user={userId}
               />
-            </Touchable>
+            </Chat>
             <View style={styles.details}>
               <View style={styles.comment}>
                 <Text style={styles.body}>{item.body}</Text>
