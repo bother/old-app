@@ -1,8 +1,8 @@
 import React, { FunctionComponent } from 'react'
-import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native'
+import { StyleProp, StyleSheet, ViewStyle } from 'react-native'
 import Image from 'react-native-fast-image'
 
-import { colors } from '../styles'
+import { img_ui_user } from '../assets'
 
 interface Props {
   seed: string
@@ -24,7 +24,9 @@ export const Avatar: FunctionComponent<Props> = ({
       }}
       style={[style, size === 'large' ? styles.large : styles.small]}
     />
-    {user && seed.indexOf(user) === 0 && <View style={styles.user} />}
+    {user && seed.indexOf(user) === 0 && (
+      <Image source={img_ui_user} style={styles.user} />
+    )}
   </>
 )
 
@@ -40,8 +42,6 @@ const styles = StyleSheet.create({
     width: 30
   },
   user: {
-    backgroundColor: colors.counter.green,
-    borderRadius: 10,
     bottom: 15,
     height: 10,
     position: 'absolute',

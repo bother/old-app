@@ -32,6 +32,7 @@ export const PostCard: FunctionComponent<Props> = ({ link = true, post }) => {
   }
 
   const Details = link ? Touchable : View
+  const Chat = post.user.id === userId ? View : Touchable
 
   return (
     <View style={styles.main}>
@@ -51,13 +52,13 @@ export const PostCard: FunctionComponent<Props> = ({ link = true, post }) => {
             />
           )}
         </Touchable>
-        <Touchable>
+        <Chat>
           <Avatar
             seed={post.user.id + post.id}
             style={styles.avatar}
             user={userId}
           />
-        </Touchable>
+        </Chat>
       </View>
       <Details
         onPress={() =>
