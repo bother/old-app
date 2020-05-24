@@ -68,6 +68,7 @@ export const Comments: FunctionComponent<Props> = ({
               <Avatar
                 seed={item.user.id + post.id}
                 style={styles.avatar}
+                type="comment"
                 user={userId}
               />
             </Touchable>

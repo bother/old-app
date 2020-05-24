@@ -3,6 +3,7 @@ import { StackNavigationProp } from '@react-navigation/stack'
 import React, { FunctionComponent, useEffect } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 
+import { Avatar } from '../components'
 import { PostList } from '../components/posts'
 import { useProfile } from '../hooks'
 import { ProfileParams } from '../navigators/profile'
@@ -24,7 +25,8 @@ export const Profile: FunctionComponent<Props> = () => {
     <PostList
       header={
         user ? (
-          <View style={styles.main}>
+          <View>
+            <Avatar seed={user.id} size="large" style={styles.avatar} />
             <Text style={styles.title}>Your rating</Text>
             <View style={styles.rating}>
               <Text style={styles.label}>{user.rating.toPrecision(2)}</Text>
@@ -41,28 +43,34 @@ export const Profile: FunctionComponent<Props> = () => {
 }
 
 const styles = StyleSheet.create({
+  avatar: {
+    alignSelf: 'center',
+    marginTop: layout.margin
+  },
   label: {
     ...typography.bold,
     color: colors.foreground,
-    fontSize: 40
+    fontSize: 40,
+    textAlign: 'center'
   },
-  main: {},
   posts: {
-    marginBottom: layout.padding,
-    marginTop: layout.margin
+    alignSelf: 'center',
+    marginBottom: layout.padding
   },
   rating: {
     backgroundColor: colors.background,
-    borderRadius: layout.radius,
+    borderRadius: layout.radius * 2,
     marginHorizontal: layout.margin,
     paddingHorizontal: layout.margin,
     paddingVertical: layout.padding
   },
   title: {
+    alignSelf: 'center',
     ...typography.medium,
     color: colors.foreground,
     fontSize: 20,
     marginBottom: layout.margin,
-    marginHorizontal: layout.margin
+    marginHorizontal: layout.margin,
+    marginTop: layout.margin * 2
   }
 })

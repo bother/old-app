@@ -56,6 +56,7 @@ export const PostCard: FunctionComponent<Props> = ({ link = true, post }) => {
           <Avatar
             seed={post.user.id + post.id}
             style={styles.avatar}
+            type="post"
             user={userId}
           />
         </Chat>
