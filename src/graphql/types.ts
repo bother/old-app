@@ -18,6 +18,7 @@ export type Query = {
   popular: Array<Post>;
   fetchPost: Post;
   profile: User;
+  posts: Array<Post>;
 };
 
 
@@ -40,6 +41,11 @@ export type QueryLatestArgs = {
 
 export type QueryFetchPostArgs = {
   id: Scalars['String'];
+};
+
+
+export type QueryPostsArgs = {
+  before?: Maybe<Scalars['String']>;
 };
 
 export type Comment = {
@@ -74,8 +80,7 @@ export type Location = {
 export type User = {
   __typename?: 'User';
   id: Scalars['ID'];
-  createdAt: Scalars['DateTime'];
-  updatedAt: Scalars['DateTime'];
+  rating: Scalars['Float'];
 };
 
 
