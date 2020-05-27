@@ -5,6 +5,7 @@ export { default as img_hero_not_found } from './img/hero/not_found.png'
 
 export { default as img_nav_create } from './img/nav/create.png'
 export { default as img_nav_feed } from './img/nav/feed.png'
+export { default as img_nav_notifications } from './img/nav/notifications.png'
 export { default as img_nav_profile } from './img/nav/profile.png'
 
 export { default as img_ui_back } from './img/ui/back.png'

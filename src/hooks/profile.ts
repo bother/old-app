@@ -2,19 +2,20 @@ import { useLazyQuery } from '@apollo/react-hooks'
 import { gql } from 'apollo-boost'
 import { useCallback } from 'react'
 
-import { Post, User } from '../graphql/types'
+import { Post, Profile } from '../graphql/types'
 
-const PROFILE = gql`
+export const PROFILE = gql`
   query profile {
     profile {
       id
+      notifications
       rating
     }
   }
 `
 
-interface QueryProfilePayload {
-  profile: User
+export interface QueryProfilePayload {
+  profile: Profile
 }
 
 const POSTS = gql`
@@ -61,9 +62,13 @@ export const useProfile = () => {
 
   return {
     fetch,
+    fetchPosts,
+    fetchProfile,
     loading: profileQuery.loading || postsQuery.loading,
     posts: postsQuery.data?.posts ?? [],
     refetch,
+    refetchPosts: postsQuery.refetch,
+    refetchProfile: profileQuery.refetch,
     user: profileQuery.data?.profile
   }
 }

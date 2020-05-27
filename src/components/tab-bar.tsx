@@ -1,22 +1,33 @@
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs'
 import { CommonActions } from '@react-navigation/native'
 import React, { FunctionComponent, useEffect, useState } from 'react'
-import { Keyboard, Platform, StyleSheet, View } from 'react-native'
+import { Keyboard, Platform, StyleSheet, Text, View } from 'react-native'
 import Image, { Source } from 'react-native-fast-image'
 import { useSafeArea } from 'react-native-safe-area-context'
 
-import { img_nav_create, img_nav_feed, img_nav_profile } from '../assets'
-import { colors, layout } from '../styles'
+import {
+  img_nav_create,
+  img_nav_feed,
+  img_nav_notifications,
+  img_nav_profile
+} from '../assets'
+import { colors, layout, typography } from '../styles'
 import { Touchable } from './touchable'
 
 const icons: Record<string, Source> = {
   Create: img_nav_create,
   Feed: img_nav_feed,
+  Notifications: img_nav_notifications,
   Profile: img_nav_profile
 }
 
-export const TabBar: FunctionComponent<BottomTabBarProps> = ({
+interface Props {
+  notifications: number
+}
+
+export const TabBar: FunctionComponent<Props & BottomTabBarProps> = ({
   navigation: { dispatch, emit },
+  notifications,
   state: { index, key, routes }
 }) => {
   const { bottom } = useSafeArea()
@@ -74,11 +85,17 @@ export const TabBar: FunctionComponent<BottomTabBarProps> = ({
               })
             }
           }}
-          style={styles.button}>
-          <Image
-            source={icons[route.name]}
-            style={[styles.icon, index === active && styles.active]}
-          />
+          style={styles.link}>
+          <View style={[styles.button, index === active && styles.active]}>
+            <Image source={icons[route.name]} style={styles.icon} />
+            {route.name === 'Notifications' && notifications > 0 && (
+              <View style={styles.notifications}>
+                <Text style={styles.count}>
+                  {notifications > 99 ? 99 : notifications}
+                </Text>
+              </View>
+            )}
+          </View>
         </Touchable>
       ))}
     </View>
@@ -90,18 +107,35 @@ const styles = StyleSheet.create({
     opacity: 1
   },
   button: {
-    alignItems: 'center',
-    flex: 1,
-    justifyContent: 'center'
+    opacity: 0.2
+  },
+  count: {
+    ...typography.tiny,
+    color: colors.background
   },
   icon: {
     height: layout.icon,
-    margin: layout.margin,
-    opacity: 0.2,
     width: layout.icon
+  },
+  link: {
+    alignItems: 'center',
+    flex: 1,
+    justifyContent: 'center',
+    padding: layout.margin
   },
   main: {
     backgroundColor: colors.primary,
     flexDirection: 'row'
+  },
+  notifications: {
+    alignItems: 'center',
+    backgroundColor: colors.counter.red,
+    borderRadius: 16,
+    bottom: -8,
+    height: 16,
+    justifyContent: 'center',
+    position: 'absolute',
+    right: -8,
+    width: 16
   }
 })

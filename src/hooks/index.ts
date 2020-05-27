@@ -1,5 +1,6 @@
 export { useLocation } from './location'
 
+export { useNotifications } from './notifications'
 export { useProfile } from './profile'
 
 export { usePost } from './post'

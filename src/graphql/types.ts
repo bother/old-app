@@ -13,11 +13,12 @@ export type Scalars = {
 export type Query = {
   __typename?: 'Query';
   fetchComments: Array<Comment>;
+  notifications: Array<Notification>;
   nearby: Array<Post>;
   latest: Array<Post>;
   popular: Array<Post>;
   fetchPost: Post;
-  profile: User;
+  profile: Profile;
   posts: Array<Post>;
 };
 
@@ -85,9 +86,28 @@ export type User = {
 };
 
 
+export type Notification = {
+  __typename?: 'Notification';
+  id: Scalars['ID'];
+  action: Scalars['String'];
+  targetType: Scalars['String'];
+  targetId: Scalars['String'];
+  unread: Scalars['Boolean'];
+  createdAt: Scalars['DateTime'];
+  updatedAt: Scalars['DateTime'];
+};
+
+export type Profile = {
+  __typename?: 'Profile';
+  id: Scalars['ID'];
+  notifications: Scalars['Int'];
+  rating: Scalars['Float'];
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   createComment: Comment;
+  markNotificationAsRead: Scalars['Boolean'];
   createPost: Post;
   flagPost: Scalars['Boolean'];
   likePost: Post;
@@ -98,6 +118,11 @@ export type Mutation = {
 export type MutationCreateCommentArgs = {
   body: Scalars['String'];
   postId: Scalars['String'];
+};
+
+
+export type MutationMarkNotificationAsReadArgs = {
+  id: Scalars['String'];
 };
 
 
@@ -121,15 +146,4 @@ export type AuthResult = {
   __typename?: 'AuthResult';
   token: Scalars['String'];
   user: User;
-};
-
-export type Notification = {
-  __typename?: 'Notification';
-  id: Scalars['ID'];
-  action: Scalars['String'];
-  targetType: Scalars['String'];
-  targetId: Scalars['String'];
-  unread: Scalars['Boolean'];
-  user: User;
-  createdAt: Scalars['DateTime'];
 };
