@@ -49,8 +49,8 @@ const styles = StyleSheet.create({
     right: -5
   },
   icon: {
-    height: 10,
-    width: 10
+    height: 15,
+    width: 15
   },
   large: {
     borderRadius: 100,
@@ -60,7 +60,6 @@ const styles = StyleSheet.create({
   pill: {
     backgroundColor: colors.background,
     borderRadius: 10,
-    padding: 2,
     position: 'absolute'
   },
   post: {

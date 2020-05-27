@@ -6,7 +6,12 @@ import React, { FunctionComponent } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import Image from 'react-native-fast-image'
 
-import { img_ui_comments, img_ui_heart, img_ui_time } from '../../assets'
+import {
+  img_ui_comments,
+  img_ui_heart,
+  img_ui_time,
+  img_ui_views
+} from '../../assets'
 import { Post } from '../../graphql/types'
 import { usePost } from '../../hooks'
 import { useAuth } from '../../store'
@@ -69,21 +74,23 @@ export const PostCard: FunctionComponent<Props> = ({ link = true, post }) => {
         }
         style={styles.details}>
         <Text style={styles.body}>{post.body}</Text>
+        <Text style={styles.location}>
+          {uniq(
+            compact([
+              post.location.city,
+              post.location.state,
+              post.location.country
+            ])
+          ).join(', ')}
+        </Text>
         <View style={styles.meta}>
-          <Text style={styles.location}>
-            {uniq(
-              compact([
-                post.location.city,
-                post.location.state,
-                post.location.country
-              ])
-            ).join(', ')}
-          </Text>
           <View style={styles.comments}>
             <Image source={img_ui_time} style={styles.icon} />
-            <Text style={styles.count}>
-              {moment(post.createdAt).fromNow(true)}
-            </Text>
+            <Text style={styles.count}>{moment(post.createdAt).fromNow()}</Text>
+          </View>
+          <View style={styles.comments}>
+            <Image source={img_ui_views} style={styles.icon} />
+            <Text style={styles.count}>{post.views}</Text>
           </View>
           <View style={styles.comments}>
             <Image source={img_ui_comments} style={styles.icon} />
@@ -102,7 +109,8 @@ const styles = StyleSheet.create({
   },
   body: {
     ...typography.regular,
-    color: colors.foreground
+    color: colors.foreground,
+    marginBottom: 'auto'
   },
   comments: {
     alignItems: 'center',
@@ -116,7 +124,6 @@ const styles = StyleSheet.create({
   },
   details: {
     flex: 1,
-    justifyContent: 'space-between',
     padding: layout.margin
   },
   heart: {
@@ -144,7 +151,8 @@ const styles = StyleSheet.create({
   },
   location: {
     ...typography.small,
-    color: colors.foregroundLight
+    color: colors.foregroundLight,
+    marginTop: layout.padding
   },
   main: {
     alignItems: 'stretch',
@@ -158,6 +166,7 @@ const styles = StyleSheet.create({
   meta: {
     alignItems: 'center',
     flexDirection: 'row',
+    marginLeft: -layout.margin,
     marginTop: layout.padding
   },
   sidebar: {

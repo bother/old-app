@@ -63,6 +63,7 @@ export type Post = {
   body: Scalars['String'];
   location: Location;
   likes: Scalars['Int'];
+  views: Scalars['Int'];
   comments: Scalars['Int'];
   user: User;
   createdAt: Scalars['DateTime'];
@@ -120,4 +121,15 @@ export type AuthResult = {
   __typename?: 'AuthResult';
   token: Scalars['String'];
   user: User;
+};
+
+export type Notification = {
+  __typename?: 'Notification';
+  id: Scalars['ID'];
+  action: Scalars['String'];
+  targetType: Scalars['String'];
+  targetId: Scalars['String'];
+  unread: Scalars['Boolean'];
+  user: User;
+  createdAt: Scalars['DateTime'];
 };

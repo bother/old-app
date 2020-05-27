@@ -13,12 +13,13 @@ const POPULAR_POSTS = gql`
       likes
       location {
         city
-        state
         country
+        state
       }
       user {
         id
       }
+      views
       createdAt
     }
   }

@@ -25,6 +25,7 @@ export const Create: FunctionComponent<Props> = ({
   navigation: { navigate, setOptions }
 }) => {
   const maxLength = 280
+  const minLength = maxLength * 0.3
 
   const { allowed, coordinates, fetchLocation, fetching } = useLocation()
 
@@ -48,10 +49,7 @@ export const Create: FunctionComponent<Props> = ({
                     return
                   }
 
-                  if (
-                    body.length < maxLength * 0.3 ||
-                    body.length > maxLength
-                  ) {
+                  if (body.length < minLength || body.length > maxLength) {
                     return
                   }
 
@@ -69,7 +67,7 @@ export const Create: FunctionComponent<Props> = ({
         />
       )
     })
-  }, [body, coordinates, createPost, creating, navigate, setOptions])
+  }, [body, coordinates, createPost, creating, minLength, navigate, setOptions])
 
   useEffect(() => {
     fetchLocation()

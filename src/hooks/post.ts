@@ -20,17 +20,18 @@ const FETCH_POST = gql`
     fetchPost(id: $id) {
       id
       body
+      comments
       liked
       likes
       location {
         city
-        state
         country
+        state
       }
-      comments
       user {
         id
       }
+      views
       createdAt
     }
     fetchComments(postId: $id) {
