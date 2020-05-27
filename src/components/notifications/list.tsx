@@ -42,6 +42,6 @@ const styles = StyleSheet.create({
     flexGrow: 1
   },
   main: {
-    paddingBottom: layout.padding
+    paddingVertical: layout.padding
   }
 })

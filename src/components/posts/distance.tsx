@@ -39,7 +39,8 @@ const styles = StyleSheet.create({
   main: {
     backgroundColor: colors.primaryDark,
     flexDirection: 'row',
-    marginBottom: layout.padding
+    marginBottom: layout.padding,
+    marginTop: -layout.padding
   },
   value: {
     ...typography.base,
