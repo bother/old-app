@@ -90,11 +90,14 @@ export const useNotifications = () => {
           })
 
           if (profile) {
+            const unread = data.notifications.filter(({ unread }) => unread)
+              .length
+
             proxy.writeQuery({
               data: update(profile, {
                 profile: {
                   notifications: {
-                    $set: profile.profile.notifications - 1
+                    $set: unread
                   }
                 }
               }),
