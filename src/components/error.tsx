@@ -25,13 +25,13 @@ const styles = StyleSheet.create({
   main: {
     alignItems: 'center',
     flex: 1,
-    justifyContent: 'center'
+    justifyContent: 'center',
+    padding: layout.margin * 2
   },
   message: {
     ...typography.regular,
     color: colors.foreground,
-    marginHorizontal: layout.margin * 2,
-    marginTop: layout.margin,
+    marginTop: layout.padding,
     textAlign: 'center'
   }
 })
