@@ -34,6 +34,7 @@ const POSTS = gql`
       user {
         id
       }
+      views
       createdAt
     }
   }
