@@ -1,11 +1,12 @@
 import { useNavigation } from '@react-navigation/native'
 import moment from 'moment'
 import React, { FunctionComponent } from 'react'
-import { StyleSheet, Text } from 'react-native'
+import { StyleSheet, Text, View } from 'react-native'
 
 import { Notification } from '../../graphql/types'
 import { useNotifications } from '../../hooks'
 import { colors, layout, typography } from '../../styles'
+import { Avatar } from '../avatar'
 import { Touchable } from '../touchable'
 
 interface Props {
@@ -31,14 +32,17 @@ export const NotificationCard: FunctionComponent<Props> = ({
         }
       }}
       style={styles.main}>
-      <Text style={[styles.body, notification.unread && styles.unread]}>
-        {notification.action === 'comment'
-          ? 'Someone commented on your post.'
-          : '¯_(ツ)_/¯'}
-      </Text>
-      <Text style={styles.time}>
-        {moment(notification.updatedAt).fromNow()}
-      </Text>
+      <Avatar seed={notification.actor + notification.targetId} />
+      <View style={styles.details}>
+        <Text style={[styles.body, notification.unread && styles.unread]}>
+          {notification.action === 'comment'
+            ? 'Someone commented on your post.'
+            : '¯_(ツ)_/¯'}
+        </Text>
+        <Text style={styles.time}>
+          {moment(notification.updatedAt).fromNow()}
+        </Text>
+      </View>
     </Touchable>
   )
 }
@@ -50,9 +54,15 @@ const styles = StyleSheet.create({
     lineHeight: typography.regular.fontSize * layout.lineHeight,
     marginBottom: 'auto'
   },
+  details: {
+    flex: 1,
+    marginLeft: layout.margin
+  },
   main: {
+    alignItems: 'center',
     backgroundColor: colors.background,
     borderRadius: layout.radius * 2,
+    flexDirection: 'row',
     marginHorizontal: layout.margin,
     padding: layout.margin
   },

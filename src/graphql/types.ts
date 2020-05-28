@@ -90,6 +90,7 @@ export type Notification = {
   __typename?: 'Notification';
   id: Scalars['ID'];
   action: Scalars['String'];
+  actor: Scalars['String'];
   targetType: Scalars['String'];
   targetId: Scalars['String'];
   unread: Scalars['Boolean'];

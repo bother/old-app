@@ -14,6 +14,7 @@ const NOTIFICATIONS = gql`
     notifications {
       id
       action
+      actor
       targetId
       targetType
       unread
