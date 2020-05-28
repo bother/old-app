@@ -37,7 +37,9 @@
     "react-native-reanimated": "^1.8.0",
     "react-native-safe-area-context": "^1.0.2",
     "react-native-screens": "^2.7.0",
+    "react-native-share": "^3.3.2",
     "react-native-tab-view": "^2.14.0",
+    "react-native-view-shot": "^3.1.2",
     "react-sweet-state": "^2.2.0"
   },
   "devDependencies": {
@@ -50,6 +52,7 @@
     "@types/lodash": "^4.14.151",
     "@types/react-native": "^0.62.10",
     "@types/react-native-dotenv": "^0.2.0",
+    "@types/react-native-share": "^3.1.0",
     "@typescript-eslint/eslint-plugin": "^2.34.0",
     "@typescript-eslint/parser": "^2.34.0",
     "eslint": "^7.0.0",

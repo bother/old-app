@@ -1,7 +1,8 @@
 import { useNavigation } from '@react-navigation/native'
-import React, { FunctionComponent } from 'react'
+import React, { FunctionComponent, useState } from 'react'
 import { StyleSheet, View } from 'react-native'
 import Image from 'react-native-fast-image'
+import Share from 'react-native-share'
 
 import { img_ui_back, img_ui_report, img_ui_share } from '../../assets'
 import { Post } from '../../graphql/types'
@@ -9,6 +10,7 @@ import { dialog } from '../../lib'
 import { colors, layout } from '../../styles'
 import { Spinner } from '../spinner'
 import { Touchable } from '../touchable'
+import { Shot } from './shot'
 
 interface Props {
   flagging: boolean
@@ -24,31 +26,48 @@ export const Header: FunctionComponent<Props> = ({
 }) => {
   const { goBack } = useNavigation()
 
+  const [sharing, setSharing] = useState(false)
+
+  const onShot = async (url: string) => {
+    setSharing(false)
+
+    Share.open({
+      url
+    })
+  }
+
   return (
-    <View style={styles.main}>
-      <Touchable onPress={() => goBack()} style={styles.back}>
-        <Image source={img_ui_back} style={styles.icon} />
-      </Touchable>
-      <Touchable onPress={() => goBack()}>
-        <Image source={img_ui_share} style={styles.icon} />
-      </Touchable>
-      {flagging ? (
-        <Spinner />
-      ) : (
-        <Touchable
-          onPress={async () => {
-            const reason = await dialog.flag()
-
-            if (reason) {
-              onFlag(post.id, reason)
-
-              goBack()
-            }
-          }}>
-          <Image source={img_ui_report} style={styles.icon} />
+    <>
+      <View style={styles.main}>
+        <Touchable onPress={() => goBack()} style={styles.back}>
+          <Image source={img_ui_back} style={styles.icon} />
         </Touchable>
-      )}
-    </View>
+        {sharing ? (
+          <Spinner style={styles.icon} />
+        ) : (
+          <Touchable onPress={() => setSharing(true)}>
+            <Image source={img_ui_share} style={styles.icon} />
+          </Touchable>
+        )}
+        {flagging ? (
+          <Spinner style={styles.icon} />
+        ) : (
+          <Touchable
+            onPress={async () => {
+              const reason = await dialog.flag()
+
+              if (reason) {
+                onFlag(post.id, reason)
+
+                goBack()
+              }
+            }}>
+            <Image source={img_ui_report} style={styles.icon} />
+          </Touchable>
+        )}
+      </View>
+      {sharing && <Shot onShot={(uri) => onShot(uri)} post={post} />}
+    </>
   )
 }
 

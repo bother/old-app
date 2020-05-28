@@ -2,6 +2,7 @@ export const colors = {
   accent: '#79977b',
   background: '#fff',
   backgroundDark: '#f6f7f8',
+  backgroundDarker: '#ecf0f1',
   counter: {
     green: '#4cd964',
     orange: '#ff9500',
