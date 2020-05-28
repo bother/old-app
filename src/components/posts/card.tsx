@@ -168,7 +168,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
     marginLeft: -layout.margin,
-    marginTop: layout.padding * 1.5
+    marginTop: layout.padding
   },
   sidebar: {
     backgroundColor: colors.backgroundDark,
