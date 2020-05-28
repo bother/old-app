@@ -86,15 +86,15 @@ export const PostCard: FunctionComponent<Props> = ({ link = true, post }) => {
         <View style={styles.meta}>
           <View style={styles.item}>
             <Image source={img_ui_time} style={styles.icon} />
-            <Text style={styles.count}>{moment(post.createdAt).fromNow()}</Text>
+            <Text style={styles.value}>{moment(post.createdAt).fromNow()}</Text>
           </View>
           <View style={styles.item}>
             <Image source={img_ui_views} style={styles.icon} />
-            <Text style={styles.count}>{post.views}</Text>
+            <Text style={styles.value}>{post.views}</Text>
           </View>
           <View style={styles.item}>
             <Image source={img_ui_comments} style={styles.icon} />
-            <Text style={styles.count}>{post.comments}</Text>
+            <Text style={styles.value}>{post.comments}</Text>
           </View>
         </View>
       </Details>
@@ -112,11 +112,6 @@ const styles = StyleSheet.create({
     color: colors.foreground,
     lineHeight: typography.regular.fontSize * layout.lineHeight,
     marginBottom: 'auto'
-  },
-  count: {
-    ...typography.small,
-    color: colors.foregroundLight,
-    marginLeft: layout.padding
   },
   details: {
     flex: 1,
@@ -167,10 +162,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
     marginLeft: -layout.margin,
-    marginTop: layout.padding
+    marginTop: layout.margin
   },
   sidebar: {
     backgroundColor: colors.backgroundDark,
     justifyContent: 'space-between'
+  },
+  value: {
+    ...typography.tiny,
+    color: colors.foregroundLight,
+    marginLeft: layout.padding
   }
 })
