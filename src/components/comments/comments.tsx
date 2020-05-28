@@ -38,8 +38,6 @@ export const Comments: FunctionComponent<Props> = ({
 
   const [replied, setReplied] = useState(false)
 
-  const Chat = post.user.id === userId ? View : Touchable
-
   return (
     <>
       <FlatList
@@ -66,26 +64,30 @@ export const Comments: FunctionComponent<Props> = ({
         }}
         ref={list}
         refreshControl={<Refresher onRefresh={refetch} refreshing={loading} />}
-        renderItem={({ item }) => (
-          <View style={styles.item}>
-            <Chat>
-              <Avatar
-                seed={item.user.id + post.id}
-                style={styles.avatar}
-                type="comment"
-                user={userId}
-              />
-            </Chat>
-            <View style={styles.details}>
-              <View style={styles.comment}>
-                <Text style={styles.body}>{item.body}</Text>
+        renderItem={({ item }) => {
+          const Chat = item.user.id === userId ? View : Touchable
+
+          return (
+            <View style={styles.item}>
+              <Chat>
+                <Avatar
+                  seed={item.user.id + post.id}
+                  style={styles.avatar}
+                  type="comment"
+                  user={userId}
+                />
+              </Chat>
+              <View style={styles.details}>
+                <View style={styles.comment}>
+                  <Text style={styles.body}>{item.body}</Text>
+                </View>
+                <Text style={styles.time}>
+                  {moment(item.createdAt).fromNow()}
+                </Text>
               </View>
-              <Text style={styles.time}>
-                {moment(item.createdAt).fromNow()}
-              </Text>
             </View>
-          </View>
-        )}
+          )
+        }}
       />
       <Reply
         loading={replying}
