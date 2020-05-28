@@ -31,9 +31,12 @@ export const Header: FunctionComponent<Props> = ({
   const onShot = async (url: string) => {
     setSharing(false)
 
-    Share.open({
-      url
-    })
+    try {
+      Share.open({
+        url
+      })
+    } finally {
+    }
   }
 
   return (
