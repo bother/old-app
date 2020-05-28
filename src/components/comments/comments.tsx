@@ -10,6 +10,7 @@ import { Avatar } from '../avatar'
 import { Error } from '../error'
 import { PostCard } from '../posts'
 import { Refresher } from '../refresher'
+import { Separator } from '../separator'
 import { Touchable } from '../touchable'
 import { Reply } from './reply'
 
@@ -42,6 +43,7 @@ export const Comments: FunctionComponent<Props> = ({
   return (
     <>
       <FlatList
+        ItemSeparatorComponent={Separator}
         ListEmptyComponent={
           <Error image={img_hero_not_found} message="No comments yet" />
         }
@@ -115,7 +117,7 @@ const styles = StyleSheet.create({
   },
   content: {
     flexGrow: 1,
-    paddingVertical: layout.padding
+    paddingVertical: layout.margin
   },
   details: {
     flex: 1,
@@ -124,8 +126,7 @@ const styles = StyleSheet.create({
   item: {
     alignItems: 'center',
     flexDirection: 'row',
-    marginHorizontal: layout.margin,
-    marginVertical: layout.padding
+    marginHorizontal: layout.margin
   },
   time: {
     ...typography.tiny,

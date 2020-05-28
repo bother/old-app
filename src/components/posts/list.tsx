@@ -6,6 +6,7 @@ import { Post } from '../../graphql/types'
 import { layout } from '../../styles'
 import { Error } from '../error'
 import { Refresher } from '../refresher'
+import { Separator } from '../separator'
 import { Spinner } from '../spinner'
 import { PostCard } from './card'
 
@@ -26,6 +27,7 @@ export const PostList: FunctionComponent<Props> = ({
   refetch
 }) => (
   <FlatList
+    ItemSeparatorComponent={Separator}
     ListEmptyComponent={
       loading ? (
         <Spinner full />
@@ -39,15 +41,12 @@ export const PostList: FunctionComponent<Props> = ({
     onEndReached={fetchNext}
     refreshControl={<Refresher onRefresh={refetch} refreshing={loading} />}
     renderItem={({ item }) => <PostCard post={item} />}
-    style={styles.main}
   />
 )
 
 const styles = StyleSheet.create({
   content: {
-    flexGrow: 1
-  },
-  main: {
-    paddingVertical: layout.padding
+    flexGrow: 1,
+    paddingVertical: layout.margin
   }
 })

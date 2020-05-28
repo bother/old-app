@@ -161,7 +161,6 @@ const styles = StyleSheet.create({
     borderRadius: layout.radius * 2,
     flexDirection: 'row',
     marginHorizontal: layout.margin,
-    marginVertical: layout.padding,
     overflow: 'hidden'
   },
   meta: {

@@ -39,8 +39,8 @@ const styles = StyleSheet.create({
   main: {
     backgroundColor: colors.primaryDark,
     flexDirection: 'row',
-    marginBottom: layout.padding,
-    marginTop: -layout.padding
+    marginBottom: layout.margin,
+    marginTop: -layout.margin
   },
   value: {
     ...typography.regular,

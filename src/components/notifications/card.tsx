@@ -54,7 +54,6 @@ const styles = StyleSheet.create({
     backgroundColor: colors.background,
     borderRadius: layout.radius * 2,
     marginHorizontal: layout.margin,
-    marginVertical: layout.padding,
     padding: layout.margin
   },
   time: {
