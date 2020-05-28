@@ -84,15 +84,15 @@ export const PostCard: FunctionComponent<Props> = ({ link = true, post }) => {
           ).join(', ')}
         </Text>
         <View style={styles.meta}>
-          <View style={styles.comments}>
+          <View style={styles.item}>
             <Image source={img_ui_time} style={styles.icon} />
             <Text style={styles.count}>{moment(post.createdAt).fromNow()}</Text>
           </View>
-          <View style={styles.comments}>
+          <View style={styles.item}>
             <Image source={img_ui_views} style={styles.icon} />
             <Text style={styles.count}>{post.views}</Text>
           </View>
-          <View style={styles.comments}>
+          <View style={styles.item}>
             <Image source={img_ui_comments} style={styles.icon} />
             <Text style={styles.count}>{post.comments}</Text>
           </View>
@@ -110,12 +110,8 @@ const styles = StyleSheet.create({
   body: {
     ...typography.regular,
     color: colors.foreground,
+    lineHeight: typography.regular.fontSize * layout.lineHeight,
     marginBottom: 'auto'
-  },
-  comments: {
-    alignItems: 'center',
-    flexDirection: 'row',
-    marginLeft: layout.margin
   },
   count: {
     ...typography.small,
@@ -135,6 +131,11 @@ const styles = StyleSheet.create({
     height: layout.icon * 0.8,
     opacity: 0.2,
     width: layout.icon * 0.8
+  },
+  item: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    marginLeft: layout.margin
   },
   label: {
     ...typography.small,
@@ -167,7 +168,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
     marginLeft: -layout.margin,
-    marginTop: layout.padding
+    marginTop: layout.padding * 1.5
   },
   sidebar: {
     backgroundColor: colors.backgroundDark,

@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
     height: height / 4
   },
   textBox: {
-    ...typography.base,
+    ...typography.regular,
     backgroundColor: colors.backgroundDark,
     borderRadius: layout.radius,
     color: colors.foreground,

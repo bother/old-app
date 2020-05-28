@@ -61,10 +61,11 @@ const styles = StyleSheet.create({
   body: {
     ...typography.regular,
     color: colors.foreground,
+    lineHeight: typography.regular.fontSize * layout.lineHeight,
     marginBottom: 'auto'
   },
   bother: {
-    ...typography.base,
+    ...typography.regular,
     color: colors.foregroundLight,
     fontSize: typography.small.fontSize
   },

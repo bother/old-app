@@ -47,6 +47,7 @@ const styles = StyleSheet.create({
   body: {
     ...typography.regular,
     color: colors.foregroundLight,
+    lineHeight: typography.regular.fontSize * layout.lineHeight,
     marginBottom: 'auto'
   },
   main: {

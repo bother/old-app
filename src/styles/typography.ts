@@ -1,10 +1,4 @@
-const lineHeight = 1.5
-
 export const typography = {
-  base: {
-    fontFamily: 'Inter-Regular',
-    fontSize: 16
-  },
   bold: {
     fontFamily: 'Inter-SemiBold'
   },
@@ -13,27 +7,22 @@ export const typography = {
   },
   regular: {
     fontFamily: 'Inter-Regular',
-    fontSize: 16,
-    lineHeight: 16 * lineHeight
+    fontSize: 16
   },
   small: {
     fontFamily: 'Inter-Regular',
-    fontSize: 12,
-    lineHeight: 12 * lineHeight
+    fontSize: 12
   },
   subtitle: {
     fontFamily: 'Inter-Medium',
-    fontSize: 20,
-    lineHeight: 20 * lineHeight
+    fontSize: 20
   },
   tiny: {
     fontFamily: 'Inter-Regular',
-    fontSize: 10,
-    lineHeight: 10 * lineHeight
+    fontSize: 10
   },
   title: {
     fontFamily: 'Inter-SemiBold',
-    fontSize: 32,
-    lineHeight: 32 * lineHeight
+    fontSize: 32
   }
 }

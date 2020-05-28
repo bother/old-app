@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
     marginTop: -layout.padding
   },
   value: {
-    ...typography.base,
+    ...typography.regular,
     opacity: 0.5
   }
 })

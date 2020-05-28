@@ -102,7 +102,8 @@ const styles = StyleSheet.create({
     backgroundColor: colors.primaryDark
   },
   body: {
-    ...typography.small
+    ...typography.small,
+    lineHeight: typography.small.fontSize * layout.lineHeight
   },
   comment: {
     alignSelf: 'flex-start',

@@ -4,6 +4,7 @@ export const layout = {
   header: 16 + 16 + 20,
   hero: 100,
   icon: 20,
+  lineHeight: 1.5,
   margin: 16,
   padding: 8,
   radius: 4,
