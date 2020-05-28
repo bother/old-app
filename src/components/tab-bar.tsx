@@ -1,7 +1,7 @@
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs'
 import { CommonActions } from '@react-navigation/native'
 import React, { FunctionComponent, useEffect, useState } from 'react'
-import { Keyboard, Platform, StyleSheet, Text, View } from 'react-native'
+import { Keyboard, StyleSheet, Text, View } from 'react-native'
 import Image, { Source } from 'react-native-fast-image'
 import { useSafeArea } from 'react-native-safe-area-context'
 
@@ -35,26 +35,14 @@ export const TabBar: FunctionComponent<Props & BottomTabBarProps> = ({
   const [visible, setVisible] = useState(true)
 
   useEffect(() => {
-    Keyboard.addListener(
-      Platform.OS === 'ios' ? 'keyboardWillHide' : 'keyboardDidHide',
-      () => setVisible(true)
-    )
-    Keyboard.addListener(
-      Platform.OS === 'ios' ? 'keyboardWillShow' : 'keyboardDidShow',
-      () => setVisible(false)
-    )
+    Keyboard.addListener('keyboardWillHide', () => setVisible(true))
+    Keyboard.addListener('keyboardWillShow', () => setVisible(false))
 
     return () => {
-      Keyboard.removeListener(
-        Platform.OS === 'ios' ? 'keyboardWillHide' : 'keyboardDidHide',
-        () => setVisible(true)
-      )
-      Keyboard.removeListener(
-        Platform.OS === 'ios' ? 'keyboardWillShow' : 'keyboardDidShow',
-        () => setVisible(false)
-      )
+      Keyboard.removeListener('keyboardWillHide', () => setVisible(true))
+      Keyboard.removeListener('keyboardWillShow', () => setVisible(false))
     }
-  })
+  }, [])
 
   if (!visible) {
     return null

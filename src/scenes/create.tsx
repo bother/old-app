@@ -91,6 +91,7 @@ export const Create: FunctionComponent<Props> = ({
   return (
     <Layout style={styles.main}>
       <TextBox
+        blurOnSubmit
         containerStyle={styles.input}
         maxLength={maxLength * 2}
         multiline

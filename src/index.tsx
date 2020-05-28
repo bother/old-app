@@ -3,7 +3,7 @@ import { NavigationContainer } from '@react-navigation/native'
 import React, { FunctionComponent, useEffect } from 'react'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 
-import { Spinner } from './components'
+import { KeyboardView, Spinner } from './components'
 import { client } from './graphql'
 import { MainNavigator } from './navigators'
 import { Landing } from './scenes'
@@ -20,15 +20,17 @@ export const Bother: FunctionComponent = () => {
   return (
     <SafeAreaProvider>
       <ApolloProvider client={client}>
-        <NavigationContainer theme={NavigatorTheme}>
-          {signedIn ? (
-            <MainNavigator />
-          ) : initialising ? (
-            <Landing />
-          ) : (
-            <Spinner full />
-          )}
-        </NavigationContainer>
+        <KeyboardView>
+          <NavigationContainer theme={NavigatorTheme}>
+            {signedIn ? (
+              <MainNavigator />
+            ) : initialising ? (
+              <Landing />
+            ) : (
+              <Spinner full />
+            )}
+          </NavigationContainer>
+        </KeyboardView>
       </ApolloProvider>
     </SafeAreaProvider>
   )
