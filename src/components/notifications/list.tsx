@@ -25,11 +25,13 @@ export const NotificationList: FunctionComponent<Props> = ({
   <FlatList
     ItemSeparatorComponent={Separator}
     ListEmptyComponent={
-      loading ? (
-        <Spinner full />
-      ) : (
-        <Error image={img_hero_not_found} message="No notifications" />
-      )
+      notifications.length === 0 ? (
+        loading ? (
+          <Spinner full />
+        ) : (
+          <Error image={img_hero_not_found} message="No notifications" />
+        )
+      ) : null
     }
     contentContainerStyle={styles.content}
     data={notifications}

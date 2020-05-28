@@ -29,11 +29,13 @@ export const PostList: FunctionComponent<Props> = ({
   <FlatList
     ItemSeparatorComponent={Separator}
     ListEmptyComponent={
-      loading ? (
-        <Spinner full />
-      ) : (
-        <Error image={img_hero_not_found} message="No posts found" />
-      )
+      posts.length === 0 ? (
+        loading ? (
+          <Spinner full />
+        ) : (
+          <Error image={img_hero_not_found} message="No posts found" />
+        )
+      ) : null
     }
     ListHeaderComponent={header}
     contentContainerStyle={styles.content}

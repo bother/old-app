@@ -31,7 +31,7 @@ export const Profile: FunctionComponent<Props> = () => {
             <View style={styles.rating}>
               <Text style={styles.label}>{user.rating.toPrecision(2)}</Text>
             </View>
-            <Text style={[styles.title, styles.posts]}>Your posts</Text>
+            <Text style={styles.title}>Your posts</Text>
           </View>
         ) : undefined
       }
@@ -52,10 +52,6 @@ const styles = StyleSheet.create({
     color: colors.foreground,
     fontSize: 40,
     textAlign: 'center'
-  },
-  posts: {
-    alignSelf: 'center',
-    marginBottom: layout.padding
   },
   rating: {
     backgroundColor: colors.background,
