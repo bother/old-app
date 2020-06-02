@@ -12,5 +12,5 @@ export const NavigatorTheme = {
     primary: colors.primary,
     text: colors.foreground
   },
-  dark: true
+  dark: false
 }
