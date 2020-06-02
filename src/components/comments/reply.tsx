@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
     flex: 1
   },
   main: {
-    backgroundColor: colors.primaryDark,
+    backgroundColor: colors.highlight,
     flexDirection: 'row'
   }
 })

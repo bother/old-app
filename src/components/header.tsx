@@ -9,10 +9,12 @@ import { colors, layout, typography } from '../styles'
 import { Touchable } from './touchable'
 
 interface Props {
+  background: string
   right?: ReactChild
 }
 
 export const Header: FunctionComponent<Props & StackHeaderProps> = ({
+  background,
   navigation: { goBack },
   previous,
   right,
@@ -35,6 +37,7 @@ export const Header: FunctionComponent<Props & StackHeaderProps> = ({
       style={[
         styles.main,
         {
+          backgroundColor: background,
           height: layout.header + top,
           opacity,
           paddingTop: top
@@ -96,7 +99,6 @@ const styles = StyleSheet.create({
   },
   main: {
     alignItems: 'center',
-    backgroundColor: colors.primary,
     flexDirection: 'row',
     justifyContent: 'center'
   },

@@ -38,6 +38,7 @@ export const Create: FunctionComponent<Props> = ({
       header: (props) => (
         <Header
           {...props}
+          background={colors.screen.create}
           right={
             creating ? (
               <Spinner />
@@ -131,6 +132,7 @@ const styles = StyleSheet.create({
     right: 0
   },
   input: {
+    borderRadius: layout.radius * 2,
     flex: 1
   },
   label: {

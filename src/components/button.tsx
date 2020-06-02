@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
   },
   main: {
     alignItems: 'center',
-    backgroundColor: colors.accent,
+    backgroundColor: colors.highlight,
     borderRadius: layout.radius,
     flexDirection: 'row',
     height: layout.button,

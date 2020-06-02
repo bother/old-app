@@ -7,7 +7,7 @@ import { useSafeArea } from 'react-native-safe-area-context'
 
 import { Header } from '../components'
 import { Post, Profile } from '../scenes'
-import { layout } from '../styles'
+import { colors, layout } from '../styles'
 
 export type ProfileParams = {
   Profile: undefined
@@ -22,12 +22,19 @@ export const ProfileNavigator: FunctionComponent = () => {
   const { top } = useSafeArea()
 
   return (
-    <Navigator>
+    <Navigator
+      screenOptions={{
+        cardStyle: {
+          backgroundColor: colors.screen.profile
+        }
+      }}>
       <Screen
         component={Profile}
         name="Profile"
         options={{
-          header: (props) => <Header {...props} />,
+          header: (props) => (
+            <Header {...props} background={colors.screen.profile} />
+          ),
           headerStyle: {
             height: layout.header + top
           },

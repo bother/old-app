@@ -1,5 +1,4 @@
 export const colors = {
-  accent: '#79977b',
   background: '#fff',
   backgroundDark: '#f6f7f8',
   backgroundDarker: '#ecf0f1',
@@ -11,6 +10,14 @@ export const colors = {
   },
   foreground: '#000',
   foregroundLight: '#666',
+  highlight: 'rgba(0, 0, 0, 0.05)',
   primary: '#c5e3c7',
-  primaryDark: '#b8d6ba'
+  primaryDark: '#b8d6ba',
+  screen: {
+    create: '#f6e5d0',
+    messages: '#dde8e9',
+    notifications: '#dde8e9',
+    posts: '#c5e3c7',
+    profile: '#bfe1dd'
+  }
 }

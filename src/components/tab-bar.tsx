@@ -48,11 +48,25 @@ export const TabBar: FunctionComponent<Props & BottomTabBarProps> = ({
     return null
   }
 
+  const route = routes[index].name
+
+  const backgroundColor =
+    route === 'Feed'
+      ? colors.screen.posts
+      : route === 'Create'
+      ? colors.screen.create
+      : route === 'Notifications'
+      ? colors.screen.notifications
+      : route === 'Messages'
+      ? colors.screen.messages
+      : colors.screen.profile
+
   return (
     <View
       style={[
         styles.main,
         {
+          backgroundColor,
           paddingBottom: bottom
         }
       ]}>
@@ -112,7 +126,6 @@ const styles = StyleSheet.create({
     padding: layout.margin
   },
   main: {
-    backgroundColor: colors.primary,
     flexDirection: 'row'
   },
   notifications: {

@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
     width: layout.icon
   },
   main: {
-    backgroundColor: colors.primaryDark,
+    backgroundColor: colors.highlight,
     flexDirection: 'row'
   }
 })

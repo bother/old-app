@@ -7,7 +7,7 @@ import { useSafeArea } from 'react-native-safe-area-context'
 
 import { Header } from '../components'
 import { Notifications, Post } from '../scenes'
-import { layout } from '../styles'
+import { colors, layout } from '../styles'
 
 export type NotificationsParams = {
   Notifications: undefined
@@ -22,12 +22,19 @@ export const NotificationsNavigator: FunctionComponent = () => {
   const { top } = useSafeArea()
 
   return (
-    <Navigator>
+    <Navigator
+      screenOptions={{
+        cardStyle: {
+          backgroundColor: colors.screen.notifications
+        }
+      }}>
       <Screen
         component={Notifications}
         name="Notifications"
         options={{
-          header: (props) => <Header {...props} />,
+          header: (props) => (
+            <Header {...props} background={colors.screen.notifications} />
+          ),
           headerStyle: {
             height: layout.header + top
           },

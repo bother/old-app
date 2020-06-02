@@ -53,7 +53,8 @@ const styles = StyleSheet.create({
   },
   multiline: {
     ...typography.regular,
-    height: height / 4
+    height: height / 4,
+    lineHeight: typography.regular.fontSize * layout.lineHeight
   },
   textBox: {
     ...typography.regular,
