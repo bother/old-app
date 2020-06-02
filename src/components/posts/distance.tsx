@@ -37,9 +37,11 @@ const styles = StyleSheet.create({
     padding: layout.margin
   },
   main: {
-    backgroundColor: colors.primaryDark,
+    backgroundColor: colors.background,
+    borderRadius: layout.radius * 2,
     flexDirection: 'row',
     marginBottom: layout.margin,
+    marginHorizontal: layout.margin,
     marginTop: -layout.margin
   },
   value: {
