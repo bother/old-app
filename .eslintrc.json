@@ -17,14 +17,21 @@
     "prettier"
   ],
   "rules": {
-    "@typescript-eslint/camelcase": [
+    "@typescript-eslint/explicit-member-accessibility": "off",
+    "@typescript-eslint/explicit-module-boundary-types": [
       "error",
       {
-        "allow": ["color_*", "img_*", "data_*"]
+        "allowedNames": [
+          "useLocation",
+          "useNotifications",
+          "useProfile",
+          "usePost",
+          "useLatest",
+          "useNearby",
+          "usePopular"
+        ]
       }
     ],
-    "@typescript-eslint/explicit-function-return-type": "off",
-    "@typescript-eslint/explicit-member-accessibility": "off",
     "@typescript-eslint/no-empty-function": [
       "error",
       {

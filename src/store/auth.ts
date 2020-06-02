@@ -1,13 +1,15 @@
 import AsyncStorage from '@react-native-community/async-storage'
+import messaging from '@react-native-firebase/messaging'
 import { gql } from 'apollo-boost'
+import { getUniqueId } from 'react-native-device-info'
 import { createHook, createStore, StoreActionApi } from 'react-sweet-state'
 
 import { client } from '../graphql'
-import { AuthResult } from '../graphql/types'
+import { AuthResult, MutationSignUpArgs } from '../graphql/types'
 
 export const SIGN_UP = gql`
-  mutation signUp {
-    signUp {
+  mutation signUp($deviceId: String!, $pushToken: String) {
+    signUp(deviceId: $deviceId, pushToken: $pushToken) {
       token
       user {
         id
@@ -40,6 +42,8 @@ const actions = {
     })
   },
   initialise: () => async ({ setState }: StoreApi) => {
+    await messaging().requestPermission()
+
     const token = await AsyncStorage.getItem('@token')
     const userId = await AsyncStorage.getItem('@userId')
 
@@ -50,10 +54,19 @@ const actions = {
         userId
       })
     } else {
-      const { data } = await client.mutate<{
-        signUp: AuthResult
-      }>({
-        mutation: SIGN_UP
+      const pushToken = await messaging().getToken()
+
+      const { data } = await client.mutate<
+        {
+          signUp: AuthResult
+        },
+        MutationSignUpArgs
+      >({
+        mutation: SIGN_UP,
+        variables: {
+          deviceId: getUniqueId(),
+          pushToken
+        }
       })
 
       if (data) {

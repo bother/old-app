@@ -143,6 +143,12 @@ export type MutationLikePostArgs = {
   id: Scalars['String'];
 };
 
+
+export type MutationSignUpArgs = {
+  deviceId: Scalars['String'];
+  pushToken?: Maybe<Scalars['String']>;
+};
+
 export type AuthResult = {
   __typename?: 'AuthResult';
   token: Scalars['String'];

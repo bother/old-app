@@ -69,3 +69,8 @@ buck-out/
 #
 .env
 .env.production
+
+# Firebase
+#
+GoogleService-Info.plist
+google-services.json
