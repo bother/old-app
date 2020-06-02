@@ -80,6 +80,12 @@ const actions = {
         })
       }
     }
+  },
+  signOut: () => async ({ setState }: StoreApi) => {
+    await AsyncStorage.removeItem('@token')
+    await AsyncStorage.removeItem('@userId')
+
+    setState(initialState)
   }
 }
 

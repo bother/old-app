@@ -7,7 +7,7 @@ export const client = new ApolloClient({
   onError(error) {
     error.graphQLErrors?.forEach((error) => {
       if (error?.extensions?.code === 'UNAUTHENTICATED') {
-        AsyncStorage.removeItem('@token')
+        mitter.emit('signout')
       }
     })
   },

@@ -1,17 +1,26 @@
-import React, { FunctionComponent } from 'react'
+import React, { FunctionComponent, useEffect } from 'react'
 import { StyleSheet } from 'react-native'
 import Image from 'react-native-fast-image'
 
 import { img_bother } from '../assets'
 import { Layout, Spinner } from '../components'
+import { useAuth } from '../store'
 import { colors, layout } from '../styles'
 
-export const Landing: FunctionComponent = () => (
-  <Layout style={styles.main}>
-    <Image source={img_bother} style={styles.logo} />
-    <Spinner />
-  </Layout>
-)
+export const Landing: FunctionComponent = () => {
+  const [, { initialise }] = useAuth()
+
+  useEffect(() => {
+    initialise()
+  }, [initialise])
+
+  return (
+    <Layout style={styles.main}>
+      <Image source={img_bother} style={styles.logo} />
+      <Spinner />
+    </Layout>
+  )
+}
 
 const styles = StyleSheet.create({
   logo: {
