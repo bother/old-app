@@ -11,7 +11,7 @@ import {
   img_nav_notifications,
   img_nav_profile
 } from '../assets'
-import { colors, layout, typography } from '../styles'
+import { colors, layout, navTheme, typography } from '../styles'
 import { Touchable } from './touchable'
 
 const icons: Record<string, Source> = {
@@ -50,23 +50,12 @@ export const TabBar: FunctionComponent<Props & BottomTabBarProps> = ({
 
   const route = routes[index].name
 
-  const backgroundColor =
-    route === 'Feed'
-      ? colors.screen.posts
-      : route === 'Create'
-      ? colors.screen.create
-      : route === 'Notifications'
-      ? colors.screen.notifications
-      : route === 'Messages'
-      ? colors.screen.messages
-      : colors.screen.profile
-
   return (
     <View
       style={[
         styles.main,
         {
-          backgroundColor,
+          backgroundColor: navTheme(route).colors.background,
           paddingBottom: bottom
         }
       ]}>

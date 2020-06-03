@@ -1,7 +1,7 @@
 import { RouteProp } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import React, { FunctionComponent, useEffect, useState } from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { Keyboard, StyleSheet, Text, View } from 'react-native'
 
 import { img_hero_location, img_ui_check } from '../assets'
 import {
@@ -46,6 +46,8 @@ export const Create: FunctionComponent<Props> = ({
               <HeaderButton
                 icon={img_ui_check}
                 onPress={async () => {
+                  Keyboard.dismiss()
+
                   if (!body || !coordinates) {
                     return
                   }

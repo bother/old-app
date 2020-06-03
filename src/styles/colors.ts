@@ -15,9 +15,9 @@ export const colors = {
   primaryDark: '#b8d6ba',
   screen: {
     create: '#f6e5d0',
+    feed: '#c5e3c7',
     messages: '#dde8e9',
     notifications: '#dde8e9',
-    posts: '#c5e3c7',
     profile: '#bfe1dd'
   }
 }

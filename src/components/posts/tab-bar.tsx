@@ -72,7 +72,6 @@ const styles = StyleSheet.create({
   },
   main: {
     alignItems: 'center',
-    backgroundColor: colors.primary,
     flexDirection: 'row'
   }
 })

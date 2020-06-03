@@ -5,6 +5,7 @@ import {
 import React, { FunctionComponent } from 'react'
 
 import { Post } from '../scenes'
+import { colors } from '../styles'
 import { PostsNavigator } from './posts'
 
 export type FeedParams = {
@@ -17,14 +18,22 @@ export type FeedParams = {
 const { Navigator, Screen } = createStackNavigator<FeedParams>()
 
 export const FeedNavigator: FunctionComponent = () => (
-  <Navigator headerMode="none" mode="modal">
+  <Navigator
+    headerMode="none"
+    mode="modal"
+    screenOptions={{
+      cardStyle: {
+        backgroundColor: colors.screen.feed
+      }
+    }}>
     <Screen component={PostsNavigator} name="Posts" />
     <Screen
       component={Post}
       name="Post"
       options={{
         ...TransitionPresets.ModalPresentationIOS,
-        cardOverlayEnabled: true
+        cardOverlayEnabled: true,
+        headerShown: false
       }}
     />
   </Navigator>
