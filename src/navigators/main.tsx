@@ -5,6 +5,7 @@ import { TabBar } from '../components'
 import { useProfile } from '../hooks'
 import { CreateNavigator } from './create'
 import { FeedNavigator } from './feed'
+import { MessagesNavigator } from './messages'
 import { NotificationsNavigator } from './notifications'
 import { ProfileNavigator } from './profile'
 
@@ -25,6 +26,7 @@ export const MainNavigator: FunctionComponent = () => {
       <Screen component={FeedNavigator} name="Feed" />
       <Screen component={CreateNavigator} name="Create" />
       <Screen component={NotificationsNavigator} name="Notifications" />
+      <Screen component={MessagesNavigator} name="Messages" />
       <Screen component={ProfileNavigator} name="Profile" />
     </Navigator>
   )

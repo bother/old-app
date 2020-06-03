@@ -1,10 +1,12 @@
 export { default as img_bother } from './img/bother.png'
 
+export { default as img_hero_hello } from './img/hero/hello.png'
 export { default as img_hero_location } from './img/hero/location.png'
 export { default as img_hero_not_found } from './img/hero/not_found.png'
 
 export { default as img_nav_create } from './img/nav/create.png'
 export { default as img_nav_feed } from './img/nav/feed.png'
+export { default as img_nav_messages } from './img/nav/messages.png'
 export { default as img_nav_notifications } from './img/nav/notifications.png'
 export { default as img_nav_profile } from './img/nav/profile.png'
 

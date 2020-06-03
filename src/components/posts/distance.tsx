@@ -41,8 +41,7 @@ const styles = StyleSheet.create({
     borderRadius: layout.radius * 2,
     flexDirection: 'row',
     marginBottom: layout.margin,
-    marginHorizontal: layout.margin,
-    marginTop: -layout.margin
+    marginHorizontal: layout.margin
   },
   value: {
     ...typography.regular,

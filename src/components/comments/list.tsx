@@ -1,18 +1,16 @@
-import moment from 'moment'
 import React, { FunctionComponent, useRef, useState } from 'react'
-import { FlatList, StyleSheet, Text, View } from 'react-native'
+import { FlatList, StyleSheet, Text } from 'react-native'
 
 import { img_hero_not_found } from '../../assets'
 import { Comment, Post } from '../../graphql/types'
 import { useAuth } from '../../store'
-import { colors, layout, typography } from '../../styles'
-import { Avatar } from '../avatar'
+import { layout, typography } from '../../styles'
 import { Error } from '../error'
 import { PostCard } from '../posts'
 import { Refresher } from '../refresher'
+import { Reply } from '../reply'
 import { Separator } from '../separator'
-import { Touchable } from '../touchable'
-import { Reply } from './reply'
+import { CommentCard } from './card'
 
 interface Props {
   comments: Comment[]
@@ -24,7 +22,7 @@ interface Props {
   onReply: (body: string) => Promise<unknown>
 }
 
-export const Comments: FunctionComponent<Props> = ({
+export const CommentList: FunctionComponent<Props> = ({
   comments,
   loading,
   onReply,
@@ -64,30 +62,9 @@ export const Comments: FunctionComponent<Props> = ({
         }}
         ref={list}
         refreshControl={<Refresher onRefresh={refetch} refreshing={loading} />}
-        renderItem={({ item }) => {
-          const Chat = item.user.id === userId ? View : Touchable
-
-          return (
-            <View style={styles.item}>
-              <Chat>
-                <Avatar
-                  seed={item.user.id + post.id}
-                  style={styles.avatar}
-                  type="comment"
-                  user={userId}
-                />
-              </Chat>
-              <View style={styles.details}>
-                <View style={styles.comment}>
-                  <Text style={styles.body}>{item.body}</Text>
-                </View>
-                <Text style={styles.time}>
-                  {moment(item.createdAt).fromNow()}
-                </Text>
-              </View>
-            </View>
-          )
-        }}
+        renderItem={({ item }) => (
+          <CommentCard comment={item} post={post} userId={userId} />
+        )}
       />
       <Reply
         loading={replying}
@@ -102,38 +79,9 @@ export const Comments: FunctionComponent<Props> = ({
 }
 
 const styles = StyleSheet.create({
-  avatar: {
-    backgroundColor: colors.primaryDark
-  },
-  body: {
-    ...typography.small,
-    lineHeight: typography.small.fontSize * layout.lineHeight
-  },
-  comment: {
-    alignSelf: 'flex-start',
-    backgroundColor: colors.background,
-    borderRadius: layout.radius * 1.5,
-    maxWidth: '80%',
-    paddingHorizontal: layout.padding * 1.2,
-    paddingVertical: layout.padding
-  },
   content: {
     flexGrow: 1,
     paddingVertical: layout.margin
-  },
-  details: {
-    flex: 1,
-    marginLeft: layout.margin
-  },
-  item: {
-    alignItems: 'center',
-    flexDirection: 'row',
-    marginHorizontal: layout.margin
-  },
-  time: {
-    ...typography.tiny,
-    color: colors.foregroundLight,
-    marginTop: layout.padding
   },
   title: {
     ...typography.subtitle,

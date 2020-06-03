@@ -18,6 +18,9 @@ export type Query = {
   latest: Array<Post>;
   popular: Array<Post>;
   fetchPost: Post;
+  threads: Array<Thread>;
+  thread: Thread;
+  findThread: Thread;
   profile: Profile;
   posts: Array<Post>;
 };
@@ -42,6 +45,16 @@ export type QueryLatestArgs = {
 
 export type QueryFetchPostArgs = {
   id: Scalars['String'];
+};
+
+
+export type QueryThreadArgs = {
+  id: Scalars['String'];
+};
+
+
+export type QueryFindThreadArgs = {
+  postId: Scalars['String'];
 };
 
 
@@ -98,6 +111,17 @@ export type Notification = {
   updatedAt: Scalars['DateTime'];
 };
 
+export type Thread = {
+  __typename?: 'Thread';
+  id: Scalars['ID'];
+  last: Scalars['String'];
+  post: Post;
+  sender: User;
+  receiver: User;
+  createdAt: Scalars['DateTime'];
+  updatedAt: Scalars['DateTime'];
+};
+
 export type Profile = {
   __typename?: 'Profile';
   id: Scalars['ID'];
@@ -112,6 +136,7 @@ export type Mutation = {
   createPost: Post;
   flagPost: Scalars['Boolean'];
   likePost: Post;
+  createThread: Thread;
   signUp: AuthResult;
 };
 
@@ -144,6 +169,12 @@ export type MutationLikePostArgs = {
 };
 
 
+export type MutationCreateThreadArgs = {
+  postId: Scalars['String'];
+  body: Scalars['String'];
+};
+
+
 export type MutationSignUpArgs = {
   deviceId: Scalars['String'];
   pushToken?: Maybe<Scalars['String']>;
@@ -151,6 +182,7 @@ export type MutationSignUpArgs = {
 
 export type AuthResult = {
   __typename?: 'AuthResult';
+  firebaseToken: Scalars['String'];
   token: Scalars['String'];
   user: User;
 };

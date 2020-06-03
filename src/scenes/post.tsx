@@ -4,7 +4,7 @@ import React, { FunctionComponent, useEffect } from 'react'
 
 import { img_hero_not_found } from '../assets'
 import { Error, Spinner } from '../components'
-import { Comments } from '../components/comments'
+import { CommentList } from '../components/comments'
 import { Header } from '../components/posts'
 import { usePost } from '../hooks'
 import { FeedParams } from '../navigators/feed'
@@ -50,7 +50,7 @@ export const Post: FunctionComponent<Props> = ({
         onFlag={(id, reason) => flagPost(id, reason)}
         post={post}
       />
-      <Comments
+      <CommentList
         comments={comments}
         loading={fetching}
         onReply={(body) => reply(id, body)}

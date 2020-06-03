@@ -7,11 +7,16 @@ import { Layout } from './layout'
 
 interface Props {
   image: Source
+  inverted?: boolean
   message: string
 }
 
-export const Error: FunctionComponent<Props> = ({ image, message }) => (
-  <Layout style={styles.main}>
+export const Error: FunctionComponent<Props> = ({
+  image,
+  inverted,
+  message
+}) => (
+  <Layout style={[styles.main, inverted && styles.inverted]}>
     <Image source={image} style={styles.image} />
     <Text style={styles.message}>{message}</Text>
   </Layout>
@@ -21,6 +26,13 @@ const styles = StyleSheet.create({
   image: {
     height: layout.hero,
     width: layout.hero
+  },
+  inverted: {
+    transform: [
+      {
+        scaleY: -1
+      }
+    ]
   },
   main: {
     alignItems: 'center',

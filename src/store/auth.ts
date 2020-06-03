@@ -1,4 +1,5 @@
 import AsyncStorage from '@react-native-community/async-storage'
+import auth from '@react-native-firebase/auth'
 import messaging from '@react-native-firebase/messaging'
 import { gql } from 'apollo-boost'
 import { getUniqueId } from 'react-native-device-info'
@@ -10,6 +11,7 @@ import { AuthResult, MutationSignUpArgs } from '../graphql/types'
 export const SIGN_UP = gql`
   mutation signUp($deviceId: String!, $pushToken: String) {
     signUp(deviceId: $deviceId, pushToken: $pushToken) {
+      firebaseToken
       token
       user {
         id
@@ -70,6 +72,8 @@ const actions = {
       })
 
       if (data) {
+        await auth().signInWithCustomToken(data.signUp.firebaseToken)
+
         await AsyncStorage.setItem('@token', data.signUp.token)
         await AsyncStorage.setItem('@userId', data.signUp.user.id)
 

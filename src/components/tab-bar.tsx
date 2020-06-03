@@ -8,6 +8,7 @@ import { useSafeArea } from 'react-native-safe-area-context'
 import {
   img_nav_create,
   img_nav_feed,
+  img_nav_messages,
   img_nav_notifications,
   img_nav_profile
 } from '../assets'
@@ -17,6 +18,7 @@ import { Touchable } from './touchable'
 const icons: Record<string, Source> = {
   Create: img_nav_create,
   Feed: img_nav_feed,
+  Messages: img_nav_messages,
   Notifications: img_nav_notifications,
   Profile: img_nav_profile
 }

@@ -2,11 +2,11 @@ import React, { FunctionComponent, useState } from 'react'
 import { StyleSheet, View } from 'react-native'
 import Image from 'react-native-fast-image'
 
-import { img_ui_reply } from '../../assets'
-import { colors, layout } from '../../styles'
-import { Spinner } from '../spinner'
-import { TextBox } from '../text-box'
-import { Touchable } from '../touchable'
+import { img_ui_reply } from '../assets'
+import { colors, layout } from '../styles'
+import { Spinner } from './spinner'
+import { TextBox } from './text-box'
+import { Touchable } from './touchable'
 
 interface Props {
   loading: boolean

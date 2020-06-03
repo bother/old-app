@@ -2,6 +2,8 @@ import AsyncStorage from '@react-native-community/async-storage'
 import ApolloClient, { InMemoryCache } from 'apollo-boost'
 import { API_URI } from 'react-native-dotenv'
 
+import { mitter } from '../lib'
+
 export const client = new ApolloClient({
   cache: new InMemoryCache(),
   onError(error) {

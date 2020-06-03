@@ -22,13 +22,15 @@
       "error",
       {
         "allowedNames": [
-          "useLocation",
-          "useNotifications",
-          "useProfile",
-          "usePost",
           "useLatest",
+          "useLocation",
+          "useMessages",
           "useNearby",
-          "usePopular"
+          "useNotifications",
+          "usePopular",
+          "usePost",
+          "useProfile",
+          "useThread"
         ]
       }
     ],

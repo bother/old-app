@@ -16,7 +16,7 @@ export const colors = {
   screen: {
     create: '#f6e5d0',
     feed: '#c5e3c7',
-    messages: '#dde8e9',
+    messages: '#e8e8dc',
     notifications: '#dde8e9',
     profile: '#bfe1dd'
   }

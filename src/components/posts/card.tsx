@@ -57,7 +57,17 @@ export const PostCard: FunctionComponent<Props> = ({ link = true, post }) => {
             />
           )}
         </Touchable>
-        <Chat>
+        <Chat
+          onPress={() =>
+            navigate('Messages', {
+              initial: false,
+              params: {
+                post: post.id,
+                user: post.user.id
+              },
+              screen: 'Thread'
+            })
+          }>
           <Avatar
             seed={post.user.id + post.id}
             style={styles.avatar}

@@ -1,2 +1,2 @@
-export { Comments } from './comments'
-export { Reply } from './reply'
+export { CommentCard } from './card'
+export { CommentList } from './list'
