@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
     marginRight: layout.margin
   },
   body: {
-    backgroundColor: colors.primaryDark,
+    backgroundColor: colors.accent,
     borderRadius: layout.radius * 5,
     maxWidth: width * 0.7,
     paddingHorizontal: layout.padding * layout.lineHeight,

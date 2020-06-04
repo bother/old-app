@@ -37,7 +37,7 @@ export const CommentCard: FunctionComponent<Props> = ({
 
 const styles = StyleSheet.create({
   avatar: {
-    backgroundColor: colors.primaryDark
+    backgroundColor: colors.accent
   },
   body: {
     ...typography.small,
