@@ -1,9 +1,9 @@
 import { useNavigation } from '@react-navigation/native'
 import { StackHeaderProps } from '@react-navigation/stack'
 import React, { FunctionComponent, useEffect } from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { AppState, AppStateStatus, StyleSheet, Text, View } from 'react-native'
 
-import { Reply, Spinner } from '../../components'
+import { Reply } from '../../components'
 import { Thread } from '../../graphql/types'
 import { useThread } from '../../hooks'
 import { colors, layout, typography } from '../../styles'
@@ -18,8 +18,8 @@ export const Chat: FunctionComponent<Props> = ({ thread }) => {
   const { setOptions } = useNavigation()
 
   const {
-    loading,
     messages,
+    refetch,
     reply,
     replying,
     subscribe,
@@ -40,6 +40,20 @@ export const Chat: FunctionComponent<Props> = ({ thread }) => {
   }, [subscribe, thread.ended])
 
   useEffect(() => {
+    const handler = (state: AppStateStatus) => {
+      if (state === 'active') {
+        refetch()
+      }
+    }
+
+    AppState.addEventListener('change', handler)
+
+    return () => {
+      AppState.removeEventListener('change', handler)
+    }
+  }, [refetch])
+
+  useEffect(() => {
     setOptions({
       header: (props: StackHeaderProps) => (
         <ThreadHeader {...props} thread={thread} />
@@ -47,10 +61,6 @@ export const Chat: FunctionComponent<Props> = ({ thread }) => {
       headerShown: true
     })
   }, [setOptions, thread])
-
-  if (loading) {
-    return <Spinner full />
-  }
 
   return (
     <>

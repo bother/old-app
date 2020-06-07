@@ -1,3 +1,4 @@
+import CameraRoll from '@react-native-community/cameraroll'
 import axios from 'axios'
 import FormData from 'form-data'
 import { UPLOAD_KEY } from 'react-native-dotenv'
@@ -49,6 +50,10 @@ class Image {
     } catch {
       return null
     }
+  }
+
+  async download(uri: string): Promise<void> {
+    await CameraRoll.save(uri)
   }
 }
 

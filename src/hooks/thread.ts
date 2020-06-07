@@ -67,7 +67,7 @@ interface SubscriptionNewMessagePayload {
 export const useThread = (threadId: string) => {
   const [uploading, setUploading] = useState(false)
 
-  const { data, loading, subscribeToMore } = useQuery<
+  const { data, loading, refetch, subscribeToMore } = useQuery<
     QueryMessagesPayload,
     QueryMessagesArgs
   >(MESSAGES, {
@@ -190,6 +190,7 @@ export const useThread = (threadId: string) => {
   return {
     loading,
     messages: data?.messages ?? [],
+    refetch,
     reply,
     replying: sendMutation.loading,
     subscribe,
