@@ -8,12 +8,12 @@ import { onError } from 'apollo-link-error'
 import { HttpLink } from 'apollo-link-http'
 import { WebSocketLink } from 'apollo-link-ws'
 import { getMainDefinition } from 'apollo-utilities'
-// import { API_URI, WS_URI } from 'react-native-dotenv'
-
-const API_URI = 'http://192.168.86.20:4005'
-const WS_URI = 'ws://192.168.86.20:4005'
+import { API_URI, WS_URI } from 'react-native-dotenv'
 
 import { mitter } from '../lib'
+
+// const API_URI = 'http://192.168.86.20:4005'
+// const WS_URI = 'ws://192.168.86.20:4005'
 
 const errorLink = onError((error) => {
   error.graphQLErrors?.forEach((error) => {
