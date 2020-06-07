@@ -84,8 +84,8 @@ const styles = StyleSheet.create({
   button: {
     alignItems: 'center',
     alignSelf: 'center',
-    backgroundColor: colors.foreground,
-    borderRadius: layout.radius,
+    backgroundColor: colors.overlay,
+    borderRadius: layout.radius * 2,
     flexDirection: 'row',
     justifyContent: 'center',
     paddingHorizontal: layout.margin * 0.6,
@@ -116,7 +116,7 @@ const styles = StyleSheet.create({
     top: 0
   },
   spinner: {
-    borderRadius: 100
+    borderRadius: 200
   },
   zoomed: {
     flex: 1,
