@@ -1,5 +1,5 @@
 import { useLazyQuery, useMutation } from '@apollo/react-hooks'
-import { gql } from 'apollo-boost'
+import gql from 'graphql-tag'
 import update from 'immutability-helper'
 import { useCallback } from 'react'
 

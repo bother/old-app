@@ -1,27 +1,34 @@
 import { useLazyQuery, useMutation } from '@apollo/react-hooks'
-import { gql } from 'apollo-boost'
+import gql from 'graphql-tag'
+import update from 'immutability-helper'
 import { useCallback } from 'react'
 
 import {
   MutationCreateThreadArgs,
+  MutationEndThreadArgs,
   QueryFindThreadArgs,
   QueryThreadArgs,
   Thread
 } from '../graphql/types'
 
-const THREADS = gql`
+export const THREADS = gql`
   query threads {
     threads {
       id
-      last
-      post {
-        id
+      ended
+      last {
+        body
       }
-      sender {
+      post {
         id
       }
       receiver {
         id
+        rating
+      }
+      sender {
+        id
+        rating
       }
       createdAt
       updatedAt
@@ -29,7 +36,7 @@ const THREADS = gql`
   }
 `
 
-interface QueryThreadsPayload {
+export interface QueryThreadsPayload {
   threads: Thread[]
 }
 
@@ -37,15 +44,20 @@ const THREAD = gql`
   query thread($id: String!) {
     thread(id: $id) {
       id
-      last
-      post {
-        id
+      ended
+      last {
+        body
       }
-      sender {
+      post {
         id
       }
       receiver {
         id
+        rating
+      }
+      sender {
+        id
+        rating
       }
       createdAt
       updatedAt
@@ -61,15 +73,20 @@ const FIND_THREAD = gql`
   query findThread($postId: String!) {
     findThread(postId: $postId) {
       id
-      last
-      post {
-        id
+      ended
+      last {
+        body
       }
-      sender {
+      post {
         id
       }
       receiver {
         id
+        rating
+      }
+      sender {
+        id
+        rating
       }
       createdAt
       updatedAt
@@ -93,6 +110,15 @@ interface MutationCreateThreadPayload {
   createThread: Thread
 }
 
+export const END_THREAD = gql`
+  mutation endThread($id: String!) {
+    endThread(id: $id)
+  }
+`
+
+export interface MutationEndThreadPayload {
+  endThread: boolean
+}
 export const useMessages = () => {
   const [fetch, { data, loading, refetch }] = useLazyQuery<QueryThreadsPayload>(
     THREADS
@@ -112,6 +138,11 @@ export const useMessages = () => {
     MutationCreateThreadPayload,
     MutationCreateThreadArgs
   >(CREATE_THREAD)
+
+  const [end, endMutation] = useMutation<
+    MutationEndThreadPayload,
+    MutationEndThreadArgs
+  >(END_THREAD)
 
   const fetchThread = useCallback(
     (id: string) =>
@@ -147,9 +178,49 @@ export const useMessages = () => {
     [create]
   )
 
+  const endThread = useCallback(
+    (id: string) =>
+      end({
+        update(proxy) {
+          const threads = proxy.readQuery<QueryThreadsPayload>({
+            query: THREADS
+          })
+
+          if (!threads) {
+            return
+          }
+
+          const index = threads.threads.findIndex((thread) => thread.id === id)
+
+          if (index < 0) {
+            return
+          }
+
+          proxy.writeQuery<QueryThreadsPayload>({
+            data: update(threads, {
+              threads: {
+                [index]: {
+                  ended: {
+                    $set: true
+                  }
+                }
+              }
+            }),
+            query: THREADS
+          })
+        },
+        variables: {
+          id
+        }
+      }),
+    [end]
+  )
+
   return {
     createThread,
     creating: createMutation.loading,
+    endThread,
+    ending: endMutation.loading,
     fetch,
     fetchThread,
     findThread,

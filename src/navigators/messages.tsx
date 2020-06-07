@@ -1,12 +1,10 @@
-import {
-  createStackNavigator,
-  TransitionPresets
-} from '@react-navigation/stack'
+import { createStackNavigator } from '@react-navigation/stack'
 import React, { FunctionComponent } from 'react'
 import { useSafeArea } from 'react-native-safe-area-context'
 
 import { Header } from '../components'
-import { Messages, Post, Thread } from '../scenes'
+import { Thread as ThreadType } from '../graphql/types'
+import { Messages, Thread } from '../scenes'
 import { colors, layout } from '../styles'
 
 export type MessagesParams = {
@@ -15,9 +13,7 @@ export type MessagesParams = {
     id?: string
     post?: string
     user?: string
-  }
-  Post: {
-    id: string
+    thread?: ThreadType
   }
 }
 
@@ -50,21 +46,6 @@ export const MessagesNavigator: FunctionComponent = () => {
         component={Thread}
         name="Thread"
         options={{
-          header: (props) => (
-            <Header {...props} background={colors.screen.messages} />
-          ),
-          headerStyle: {
-            height: layout.header + top
-          },
-          title: 'Thread'
-        }}
-      />
-      <Screen
-        component={Post}
-        name="Post"
-        options={{
-          ...TransitionPresets.ModalPresentationIOS,
-          cardOverlayEnabled: true,
           headerShown: false
         }}
       />

@@ -21,6 +21,7 @@ export type Query = {
   threads: Array<Thread>;
   thread: Thread;
   findThread: Thread;
+  messages: Array<Message>;
   profile: Profile;
   posts: Array<Post>;
 };
@@ -55,6 +56,11 @@ export type QueryThreadArgs = {
 
 export type QueryFindThreadArgs = {
   postId: Scalars['String'];
+};
+
+
+export type QueryMessagesArgs = {
+  threadId: Scalars['String'];
 };
 
 
@@ -114,10 +120,20 @@ export type Notification = {
 export type Thread = {
   __typename?: 'Thread';
   id: Scalars['ID'];
-  last: Scalars['String'];
+  last: Message;
   post: Post;
   sender: User;
   receiver: User;
+  ended: Scalars['Boolean'];
+  createdAt: Scalars['DateTime'];
+  updatedAt: Scalars['DateTime'];
+};
+
+export type Message = {
+  __typename?: 'Message';
+  id: Scalars['ID'];
+  body: Scalars['String'];
+  user: User;
   createdAt: Scalars['DateTime'];
   updatedAt: Scalars['DateTime'];
 };
@@ -137,6 +153,8 @@ export type Mutation = {
   flagPost: Scalars['Boolean'];
   likePost: Post;
   createThread: Thread;
+  endThread: Scalars['Boolean'];
+  sendMessage: Message;
   signUp: AuthResult;
 };
 
@@ -175,6 +193,17 @@ export type MutationCreateThreadArgs = {
 };
 
 
+export type MutationEndThreadArgs = {
+  id: Scalars['String'];
+};
+
+
+export type MutationSendMessageArgs = {
+  threadId: Scalars['String'];
+  body: Scalars['String'];
+};
+
+
 export type MutationSignUpArgs = {
   deviceId: Scalars['String'];
   pushToken?: Maybe<Scalars['String']>;
@@ -182,7 +211,16 @@ export type MutationSignUpArgs = {
 
 export type AuthResult = {
   __typename?: 'AuthResult';
-  firebaseToken: Scalars['String'];
   token: Scalars['String'];
   user: User;
+};
+
+export type Subscription = {
+  __typename?: 'Subscription';
+  newMessage: Message;
+};
+
+
+export type SubscriptionNewMessageArgs = {
+  threadId: Scalars['String'];
 };

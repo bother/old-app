@@ -1,73 +1,152 @@
-import firestore from '@react-native-firebase/firestore'
-import moment from 'moment'
-import { useCallback, useState } from 'react'
+import { useMutation, useQuery } from '@apollo/react-hooks'
+import gql from 'graphql-tag'
+import update from 'immutability-helper'
+import { useCallback } from 'react'
 
-import { useAuth } from '../store'
-import { Message } from '../types'
+import { client } from '../graphql'
+import {
+  Message,
+  MutationSendMessageArgs,
+  QueryMessagesArgs,
+  SubscriptionNewMessageArgs
+} from '../graphql/types'
+import { QueryThreadsPayload, THREADS } from './messages'
 
-export const useThread = () => {
-  const [{ userId }] = useAuth()
+const MESSAGES = gql`
+  query messages($threadId: String!) {
+    messages(threadId: $threadId) {
+      id
+      body
+      user {
+        id
+      }
+      createdAt
+    }
+  }
+`
 
-  const [loading, setLoading] = useState(false)
-  const [replying, setReplying] = useState(false)
+interface QueryMessagesPayload {
+  messages: Message[]
+}
 
-  const [messages, setMessages] = useState<Message[]>([])
+const SEND_MESSAGE = gql`
+  mutation sendMessage($threadId: String!, $body: String!) {
+    sendMessage(threadId: $threadId, body: $body) {
+      id
+      body
+      user {
+        id
+      }
+      createdAt
+    }
+  }
+`
 
-  const fetch = useCallback((id: string) => {
-    setLoading(true)
+interface MutationSendMessagePayload {
+  sendMessage: Message
+}
 
-    const unsubscribe = firestore()
-      .collection('messages')
-      .where('thread', '==', id)
-      .orderBy('createdAt', 'desc')
-      .onSnapshot(
-        ({ docs }) => {
-          const messages = docs.map((doc) => {
-            const data = doc.data()
+const NEW_MESSAGE = gql`
+  subscription newMessage($threadId: String!) {
+    newMessage(threadId: $threadId) {
+      id
+      body
+      user {
+        id
+      }
+      createdAt
+    }
+  }
+`
 
-            return {
-              body: data.body,
-              createdAt: data.createdAt.toDate().toISOString(),
-              id: doc.id,
-              receiver: data.receiver,
-              sender: data.sender
+interface SubscriptionNewMessagePayload {
+  newMessage: Message
+}
+
+export const useThread = (threadId: string) => {
+  const { data, loading, subscribeToMore } = useQuery<
+    QueryMessagesPayload,
+    QueryMessagesArgs
+  >(MESSAGES, {
+    variables: {
+      threadId
+    }
+  })
+
+  const [send, sendMutation] = useMutation<
+    MutationSendMessagePayload,
+    MutationSendMessageArgs
+  >(SEND_MESSAGE, {
+    onError(error) {
+      if (error.message.includes('conversation is over')) {
+        const data = client.readQuery<QueryThreadsPayload>({
+          query: THREADS
+        })
+
+        if (!data) {
+          return
+        }
+
+        const index = data.threads.findIndex(({ id }) => id === threadId)
+
+        if (index < 0) {
+          return
+        }
+
+        client.writeQuery({
+          data: update(data, {
+            threads: {
+              [index]: {
+                ended: {
+                  $set: true
+                }
+              }
+            }
+          }),
+          query: THREADS
+        })
+      }
+    }
+  })
+
+  const subscribe = useCallback(
+    () =>
+      subscribeToMore<
+        SubscriptionNewMessagePayload,
+        SubscriptionNewMessageArgs
+      >({
+        document: NEW_MESSAGE,
+        updateQuery(previous, next) {
+          return update(previous, {
+            messages: {
+              $unshift: [next.subscriptionData.data.newMessage]
             }
           })
-
-          setMessages(messages)
-
-          setLoading(false)
         },
-        (error) => {
-          console.log('error', error)
+        variables: {
+          threadId
         }
-      )
-
-    return unsubscribe
-  }, [])
+      }),
+    [subscribeToMore, threadId]
+  )
 
   const reply = useCallback(
-    async (id: string, receiver: string, body: string) => {
-      setReplying(true)
-
-      firestore().collection('messages').add({
-        body,
-        createdAt: moment().toDate(),
-        receiver,
-        sender: userId,
-        thread: id
+    async (threadId: string, body: string) => {
+      await send({
+        variables: {
+          body,
+          threadId
+        }
       })
-
-      setReplying(false)
     },
-    [userId]
+    [send]
   )
 
   return {
-    fetch,
     loading,
-    messages,
+    messages: data?.messages ?? [],
     reply,
-    replying
+    replying: sendMutation.loading,
+    subscribe
   }
 }

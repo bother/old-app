@@ -2,9 +2,8 @@ import moment from 'moment'
 import React, { FunctionComponent } from 'react'
 import { Dimensions, StyleSheet, Text, View } from 'react-native'
 
-import { Thread } from '../../graphql/types'
+import { Message, Thread } from '../../graphql/types'
 import { colors, layout, typography } from '../../styles'
-import { Message } from '../../types'
 import { Avatar } from '../avatar'
 
 interface Props {
@@ -18,7 +17,7 @@ export const MessageCard: FunctionComponent<Props> = ({
   thread,
   userId
 }) => {
-  const mine = message.sender === userId
+  const mine = message.user.id === userId
 
   const time = moment(message.createdAt)
 
@@ -29,7 +28,7 @@ export const MessageCard: FunctionComponent<Props> = ({
     <View style={styles.main}>
       {!mine && (
         <Avatar
-          seed={message.sender + thread?.post.id}
+          seed={message.user.id + thread?.post.id}
           size="small"
           style={styles.avatar}
         />

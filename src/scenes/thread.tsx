@@ -2,9 +2,10 @@ import { RouteProp } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import React, { FunctionComponent, useEffect } from 'react'
 
-import { Reply, Spinner } from '../components'
-import { MessageList } from '../components/messages'
-import { useMessages, useThread } from '../hooks'
+import { img_hero_hello, img_hero_not_found } from '../assets'
+import { Error, Reply, Spinner } from '../components'
+import { Chat } from '../components/messages'
+import { useMessages } from '../hooks'
 import { MessagesParams } from '../navigators/messages'
 
 interface Props {
@@ -15,7 +16,7 @@ interface Props {
 export const Thread: FunctionComponent<Props> = ({
   navigation: { setParams },
   route: {
-    params: { id, post, user }
+    params: { id, post }
   }
 }) => {
   const {
@@ -23,21 +24,15 @@ export const Thread: FunctionComponent<Props> = ({
     creating,
     fetchThread,
     findThread,
-    loading: fetching,
+    loading,
     thread
   } = useMessages()
-
-  const { fetch, loading, messages, reply, replying } = useThread()
 
   useEffect(() => {
     if (id) {
       fetchThread(id)
-      fetch(id)
-    } else if (thread) {
-      fetchThread(thread.id)
-      fetch(thread.id)
     }
-  }, [fetch, fetchThread, id, thread])
+  }, [fetchThread, id])
 
   useEffect(() => {
     if (post) {
@@ -45,28 +40,31 @@ export const Thread: FunctionComponent<Props> = ({
     }
   }, [findThread, post])
 
-  if (fetching || loading) {
+  if (loading) {
     return <Spinner full />
   }
 
-  return (
-    <>
-      <MessageList messages={messages} thread={thread} />
-      <Reply
-        loading={creating || replying}
-        onReply={async (body) => {
-          if (id && thread) {
-            reply(id, thread.receiver.id, body)
-          } else if (post && user) {
-            const id = await createThread(post, body)
+  if (!thread) {
+    if (post) {
+      return (
+        <>
+          <Error image={img_hero_hello} message="Say hello!" />
+          <Reply
+            loading={creating}
+            onReply={async (body) => {
+              const id = await createThread(post, body)
 
-            setParams({
-              id,
-              user
-            })
-          }
-        }}
-      />
-    </>
-  )
+              setParams({
+                id
+              })
+            }}
+          />
+        </>
+      )
+    } else {
+      return <Error image={img_hero_not_found} message="Thread not found" />
+    }
+  }
+
+  return <Chat thread={thread} />
 }

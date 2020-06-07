@@ -6,14 +6,17 @@ import { useSafeArea } from 'react-native-safe-area-context'
 
 import { img_ui_back } from '../assets'
 import { colors, layout, typography } from '../styles'
+import { Avatar } from './avatar'
 import { Touchable } from './touchable'
 
 interface Props {
+  avatar?: string
   background: string
   right?: ReactChild
 }
 
 export const Header: FunctionComponent<Props & StackHeaderProps> = ({
+  avatar,
   background,
   navigation: { goBack },
   previous,
@@ -50,15 +53,19 @@ export const Header: FunctionComponent<Props & StackHeaderProps> = ({
           style={[styles.action, styles.back]}
         />
       )}
-      <Animated.Text
-        style={[
-          styles.title,
-          {
-            opacity
-          }
-        ]}>
-        {title}
-      </Animated.Text>
+      {avatar ? (
+        <Avatar seed={avatar} />
+      ) : (
+        <Animated.Text
+          style={[
+            styles.title,
+            {
+              opacity
+            }
+          ]}>
+          {title}
+        </Animated.Text>
+      )}
       {right && <View style={[styles.action, styles.right]}>{right}</View>}
     </Animated.View>
   )

@@ -2,16 +2,15 @@ import React, { FunctionComponent } from 'react'
 import { FlatList, StyleSheet } from 'react-native'
 
 import { img_hero_hello } from '../../assets'
-import { Thread } from '../../graphql/types'
+import { Message, Thread } from '../../graphql/types'
 import { useAuth } from '../../store'
 import { layout } from '../../styles'
-import { Message } from '../../types'
 import { Error } from '../error'
 import { MessageCard } from './card'
 
 interface Props {
   messages: Message[]
-  thread?: Thread
+  thread: Thread
 }
 
 export const MessageList: FunctionComponent<Props> = ({ messages, thread }) => {
