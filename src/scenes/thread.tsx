@@ -50,7 +50,6 @@ export const Thread: FunctionComponent<Props> = ({
         <>
           <Error image={img_hero_hello} message="Say hello!" />
           <Reply
-            loading={creating}
             onReply={async (body) => {
               const id = await createThread(post, body)
 
@@ -58,6 +57,7 @@ export const Thread: FunctionComponent<Props> = ({
                 id
               })
             }}
+            replying={creating}
           />
         </>
       )

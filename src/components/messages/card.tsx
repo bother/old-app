@@ -6,6 +6,7 @@ import { Dimensions, StyleSheet, Text, View } from 'react-native'
 import { Message, Thread } from '../../graphql/types'
 import { colors, layout, typography } from '../../styles'
 import { Avatar } from '../avatar'
+import { ZoomImage } from '../zoom-image'
 
 interface Props {
   message: Message
@@ -27,6 +28,7 @@ export const MessageCard: FunctionComponent<Props> = ({
   const differenceInDays = moment().diff(time, 'days')
   const differenceInHours = moment().diff(time, 'hours')
 
+  const isImage = message.body.indexOf('image:') === 0
   const onlyEmoji = message.body.replace(regex, '')?.length === 0
 
   return (
@@ -39,22 +41,30 @@ export const MessageCard: FunctionComponent<Props> = ({
         />
       )}
       <View style={[styles.message, mine && styles.right]}>
-        <View
-          style={[
-            styles.body,
-            mine && styles.mine,
-            onlyEmoji && styles.bodyEmoji
-          ]}>
-          <Text
-            selectable
+        {isImage ? (
+          <ZoomImage
+            source={{
+              uri: message.body.slice(6)
+            }}
+          />
+        ) : (
+          <View
             style={[
-              styles.bodyText,
-              mine && styles.textRight,
-              onlyEmoji && styles.bodyTextEmoji
+              styles.body,
+              mine && styles.mine,
+              onlyEmoji && styles.bodyEmoji
             ]}>
-            {message.body}
-          </Text>
-        </View>
+            <Text
+              selectable
+              style={[
+                styles.bodyText,
+                mine && styles.textRight,
+                onlyEmoji && styles.bodyTextEmoji
+              ]}>
+              {message.body}
+            </Text>
+          </View>
+        )}
         <Text style={styles.time}>
           {moment(message.createdAt).format(
             differenceInDays >= 7

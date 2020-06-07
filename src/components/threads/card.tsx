@@ -34,7 +34,11 @@ export const ThreadCard: FunctionComponent<Props> = ({ thread }) => {
         }
       />
       <View style={styles.details}>
-        <Text style={styles.body}>{thread.last.body}</Text>
+        <Text style={styles.body}>
+          {thread.last.body.indexOf('image:') === 0
+            ? 'Image'
+            : thread.last.body}
+        </Text>
         <Text style={styles.time}>{moment(thread.updatedAt).fromNow()}</Text>
       </View>
     </Touchable>

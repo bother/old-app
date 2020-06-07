@@ -67,12 +67,12 @@ export const CommentList: FunctionComponent<Props> = ({
         )}
       />
       <Reply
-        loading={replying}
         onReply={(body) => {
           onReply(body)
 
           setReplied(true)
         }}
+        replying={replying}
       />
     </>
   )

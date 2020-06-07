@@ -2,26 +2,48 @@ import React, { FunctionComponent, useState } from 'react'
 import { StyleSheet, View } from 'react-native'
 import Image from 'react-native-fast-image'
 
-import { img_ui_reply } from '../assets'
+import { img_ui_camera, img_ui_reply } from '../assets'
+import { image } from '../lib'
 import { colors, layout } from '../styles'
 import { Spinner } from './spinner'
 import { TextBox } from './text-box'
 import { Touchable } from './touchable'
 
 interface Props {
-  loading: boolean
+  replying: boolean
+  uploading?: boolean
 
   onReply: (body: string) => void
+  onUpload?: (uri: string) => void
 }
 
-export const Reply: FunctionComponent<Props> = ({ loading, onReply }) => {
+export const Reply: FunctionComponent<Props> = ({
+  onReply,
+  onUpload,
+  replying,
+  uploading
+}) => {
   const [body, setBody] = useState<string>()
 
   const reply = () => {
-    if (body) {
-      onReply(body)
+    if (replying || !body) {
+      return
+    }
 
-      setBody(undefined)
+    onReply(body)
+
+    setBody(undefined)
+  }
+
+  const upload = async () => {
+    if (uploading || !onUpload) {
+      return
+    }
+
+    const uri = await image.pick()
+
+    if (uri) {
+      onUpload(uri)
     }
   }
 
@@ -35,8 +57,17 @@ export const Reply: FunctionComponent<Props> = ({ loading, onReply }) => {
         style={styles.input}
         value={body}
       />
+      {onUpload && (
+        <Touchable onPress={upload} style={styles.button}>
+          {uploading ? (
+            <Spinner />
+          ) : (
+            <Image source={img_ui_camera} style={styles.icon} />
+          )}
+        </Touchable>
+      )}
       <Touchable onPress={reply} style={styles.button}>
-        {loading ? (
+        {replying ? (
           <Spinner />
         ) : (
           <Image source={img_ui_reply} style={styles.icon} />

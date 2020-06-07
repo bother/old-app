@@ -17,7 +17,15 @@ interface Props {
 export const Chat: FunctionComponent<Props> = ({ thread }) => {
   const { setOptions } = useNavigation()
 
-  const { loading, messages, reply, replying, subscribe } = useThread(thread.id)
+  const {
+    loading,
+    messages,
+    reply,
+    replying,
+    subscribe,
+    upload,
+    uploading
+  } = useThread(thread.id)
 
   useEffect(() => {
     let unsubscribe = () => {}
@@ -52,7 +60,12 @@ export const Chat: FunctionComponent<Props> = ({ thread }) => {
           <Text style={styles.message}>This conversation has ended.</Text>
         </View>
       ) : (
-        <Reply loading={replying} onReply={(body) => reply(thread.id, body)} />
+        <Reply
+          onReply={(body) => reply(thread.id, body)}
+          onUpload={(uri) => upload(thread.id, uri)}
+          replying={replying}
+          uploading={uploading}
+        />
       )}
     </>
   )

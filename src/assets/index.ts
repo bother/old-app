@@ -11,6 +11,7 @@ export { default as img_nav_notifications } from './img/nav/notifications.png'
 export { default as img_nav_profile } from './img/nav/profile.png'
 
 export { default as img_ui_back } from './img/ui/back.png'
+export { default as img_ui_camera } from './img/ui/camera.png'
 export { default as img_ui_check } from './img/ui/check.png'
 export { default as img_ui_comments } from './img/ui/comments.png'
 export { default as img_ui_end } from './img/ui/end.png'

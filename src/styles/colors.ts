@@ -12,6 +12,7 @@ export const colors = {
   foreground: '#000',
   foregroundLight: '#666',
   highlight: 'rgba(0, 0, 0, 0.05)',
+  overlay: 'rgba(0, 0, 0, 0.75)',
   primary: '#c5e3c7',
   screen: {
     create: '#f6e5d0',

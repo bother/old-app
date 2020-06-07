@@ -1,7 +1,7 @@
 import { useMutation, useQuery } from '@apollo/react-hooks'
 import gql from 'graphql-tag'
 import update from 'immutability-helper'
-import { useCallback } from 'react'
+import { useCallback, useState } from 'react'
 
 import { client } from '../graphql'
 import {
@@ -10,6 +10,7 @@ import {
   QueryMessagesArgs,
   SubscriptionNewMessageArgs
 } from '../graphql/types'
+import { image } from '../lib'
 import { QueryThreadsPayload, THREADS } from './messages'
 
 const MESSAGES = gql`
@@ -64,6 +65,8 @@ interface SubscriptionNewMessagePayload {
 }
 
 export const useThread = (threadId: string) => {
+  const [uploading, setUploading] = useState(false)
+
   const { data, loading, subscribeToMore } = useQuery<
     QueryMessagesPayload,
     QueryMessagesArgs
@@ -169,11 +172,28 @@ export const useThread = (threadId: string) => {
     [send]
   )
 
+  const upload = useCallback(
+    async (threadId: string, path: string) => {
+      setUploading(true)
+
+      const uri = await image.upload(path)
+
+      if (uri) {
+        await reply(threadId, `image:${uri}`)
+      }
+
+      setUploading(false)
+    },
+    [reply]
+  )
+
   return {
     loading,
     messages: data?.messages ?? [],
     reply,
     replying: sendMutation.loading,
-    subscribe
+    subscribe,
+    upload,
+    uploading
   }
 }
