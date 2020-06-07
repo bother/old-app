@@ -1,6 +1,7 @@
 import { useNavigation } from '@react-navigation/native'
+import { StackHeaderProps } from '@react-navigation/stack'
 import React, { FunctionComponent } from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { Animated, StyleSheet } from 'react-native'
 import Image from 'react-native-fast-image'
 import { useSafeArea } from 'react-native-safe-area-context'
 
@@ -9,7 +10,7 @@ import { Thread } from '../../graphql/types'
 import { useMessages } from '../../hooks'
 import { dialog } from '../../lib'
 import { useAuth } from '../../store'
-import { colors, layout, typography } from '../../styles'
+import { colors, layout } from '../../styles'
 import { Avatar } from '../avatar'
 import { Spinner } from '../spinner'
 import { Touchable } from '../touchable'
@@ -18,7 +19,12 @@ interface Props {
   thread: Thread
 }
 
-export const ThreadHeader: FunctionComponent<Props> = ({ thread }) => {
+export const ThreadHeader: FunctionComponent<StackHeaderProps & Props> = ({
+  scene: {
+    progress: { current, next }
+  },
+  thread
+}) => {
   const { top } = useSafeArea()
 
   const { goBack, navigate } = useNavigation()
@@ -27,11 +33,18 @@ export const ThreadHeader: FunctionComponent<Props> = ({ thread }) => {
 
   const { endThread, ending } = useMessages()
 
+  const opacity = Animated.add(current, next ? next : 0).interpolate({
+    inputRange: [0, 1, 2],
+    outputRange: [0, 1, 0]
+  })
+
   return (
-    <View
+    <Animated.View
       style={[
         styles.main,
         {
+          height: layout.header + top,
+          opacity,
           paddingTop: top
         }
       ]}>
@@ -44,13 +57,8 @@ export const ThreadHeader: FunctionComponent<Props> = ({ thread }) => {
             ? thread.receiver.id
             : thread.sender.id) + thread.post.id
         }
+        style={styles.avatar}
       />
-      <Text style={styles.rating}>
-        {(userId === thread.sender.id
-          ? thread.receiver.rating
-          : thread.sender.rating
-        ).toPrecision(2)}
-      </Text>
       <Touchable
         onPress={() =>
           navigate('Feed', {
@@ -86,11 +94,15 @@ export const ThreadHeader: FunctionComponent<Props> = ({ thread }) => {
           <Image source={img_ui_end} style={styles.icon} />
         </Touchable>
       )}
-    </View>
+    </Animated.View>
   )
 }
 
 const styles = StyleSheet.create({
+  avatar: {
+    backgroundColor: colors.highlight,
+    marginRight: 'auto'
+  },
   button: {
     alignItems: 'center',
     flexDirection: 'row'
@@ -104,11 +116,5 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: colors.highlight,
     flexDirection: 'row'
-  },
-  rating: {
-    ...typography.small,
-    ...typography.medium,
-    marginLeft: layout.margin,
-    marginRight: 'auto'
   }
 })

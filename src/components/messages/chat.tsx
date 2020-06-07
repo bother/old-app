@@ -1,3 +1,5 @@
+import { useNavigation } from '@react-navigation/native'
+import { StackHeaderProps } from '@react-navigation/stack'
 import React, { FunctionComponent, useEffect } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 
@@ -13,6 +15,8 @@ interface Props {
 }
 
 export const Chat: FunctionComponent<Props> = ({ thread }) => {
+  const { setOptions } = useNavigation()
+
   const { loading, messages, reply, replying, subscribe } = useThread(thread.id)
 
   useEffect(() => {
@@ -27,13 +31,21 @@ export const Chat: FunctionComponent<Props> = ({ thread }) => {
     }
   }, [subscribe, thread.ended])
 
+  useEffect(() => {
+    setOptions({
+      header: (props: StackHeaderProps) => (
+        <ThreadHeader {...props} thread={thread} />
+      ),
+      headerShown: true
+    })
+  }, [setOptions, thread])
+
   if (loading) {
     return <Spinner full />
   }
 
   return (
     <>
-      <ThreadHeader thread={thread} />
       <MessageList messages={messages} thread={thread} />
       {thread.ended ? (
         <View style={styles.footer}>

@@ -1,3 +1,4 @@
+import emoji from 'emoji-regex'
 import moment from 'moment'
 import React, { FunctionComponent } from 'react'
 import { Dimensions, StyleSheet, Text, View } from 'react-native'
@@ -12,6 +13,8 @@ interface Props {
   userId?: string
 }
 
+const regex = emoji()
+
 export const MessageCard: FunctionComponent<Props> = ({
   message,
   thread,
@@ -24,6 +27,8 @@ export const MessageCard: FunctionComponent<Props> = ({
   const differenceInDays = moment().diff(time, 'days')
   const differenceInHours = moment().diff(time, 'hours')
 
+  const onlyEmoji = message.body.replace(regex, '')?.length === 0
+
   return (
     <View style={styles.main}>
       {!mine && (
@@ -34,8 +39,21 @@ export const MessageCard: FunctionComponent<Props> = ({
         />
       )}
       <View style={[styles.message, mine && styles.right]}>
-        <View style={[styles.body, mine && styles.mine]}>
-          <Text style={styles.bodyText}>{message.body}</Text>
+        <View
+          style={[
+            styles.body,
+            mine && styles.mine,
+            onlyEmoji && styles.bodyEmoji
+          ]}>
+          <Text
+            selectable
+            style={[
+              styles.bodyText,
+              mine && styles.textRight,
+              onlyEmoji && styles.bodyTextEmoji
+            ]}>
+            {message.body}
+          </Text>
         </View>
         <Text style={styles.time}>
           {moment(message.createdAt).format(
@@ -64,10 +82,20 @@ const styles = StyleSheet.create({
     paddingHorizontal: layout.padding * layout.lineHeight,
     paddingVertical: layout.padding
   },
+  bodyEmoji: {
+    backgroundColor: 'transparent',
+    borderRadius: 0,
+    paddingHorizontal: 0,
+    paddingVertical: 0
+  },
   bodyText: {
     ...typography.regular,
     color: colors.foreground,
     lineHeight: typography.regular.fontSize * layout.lineHeight
+  },
+  bodyTextEmoji: {
+    fontSize: typography.regular.fontSize * 3,
+    lineHeight: typography.regular.fontSize * 2.3 * layout.lineHeight
   },
   main: {
     alignItems: 'center',
@@ -84,6 +112,9 @@ const styles = StyleSheet.create({
   right: {
     alignItems: 'flex-end',
     flex: 1
+  },
+  textRight: {
+    textAlign: 'right'
   },
   time: {
     ...typography.small,

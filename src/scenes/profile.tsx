@@ -23,6 +23,7 @@ export const Profile: FunctionComponent<Props> = () => {
 
   return (
     <PostList
+      background={colors.screen.profile}
       header={
         user ? (
           <View>
@@ -45,7 +46,7 @@ export const Profile: FunctionComponent<Props> = () => {
 const styles = StyleSheet.create({
   avatar: {
     alignSelf: 'center',
-    backgroundColor: colors.accent,
+    backgroundColor: colors.highlight,
     marginTop: layout.margin
   },
   label: {

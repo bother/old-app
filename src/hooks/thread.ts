@@ -132,6 +132,9 @@ export const useThread = (threadId: string) => {
                     [index]: {
                       last: {
                         $set: next.subscriptionData.data.newMessage
+                      },
+                      updatedAt: {
+                        $set: next.subscriptionData.data.newMessage.createdAt
                       }
                     }
                   }

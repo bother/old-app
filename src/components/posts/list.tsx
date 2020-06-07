@@ -3,7 +3,7 @@ import { FlatList, StyleSheet } from 'react-native'
 
 import { img_hero_not_found } from '../../assets'
 import { Post } from '../../graphql/types'
-import { layout } from '../../styles'
+import { colors, layout } from '../../styles'
 import { Error } from '../error'
 import { Refresher } from '../refresher'
 import { Separator } from '../separator'
@@ -11,6 +11,7 @@ import { Spinner } from '../spinner'
 import { PostCard } from './card'
 
 interface Props {
+  background?: string
   header?: ReactElement
   loading: boolean
   posts: Post[]
@@ -20,6 +21,7 @@ interface Props {
 }
 
 export const PostList: FunctionComponent<Props> = ({
+  background = colors.screen.feed,
   fetchNext,
   header,
   loading,
@@ -43,6 +45,9 @@ export const PostList: FunctionComponent<Props> = ({
     onEndReached={fetchNext}
     refreshControl={<Refresher onRefresh={refetch} refreshing={loading} />}
     renderItem={({ item }) => <PostCard post={item} />}
+    style={{
+      backgroundColor: background
+    }}
   />
 )
 
