@@ -19,14 +19,12 @@ export const SIGN_UP = gql`
 `
 
 interface State {
-  ignored: string[]
   initialising: boolean
   signedIn: boolean
   userId?: string
 }
 
 const initialState: State = {
-  ignored: [],
   initialising: true,
   signedIn: false
 }
@@ -34,13 +32,6 @@ const initialState: State = {
 type StoreApi = StoreActionApi<State>
 
 const actions = {
-  ignorePost: (id: string) => ({ getState, setState }: StoreApi) => {
-    const { ignored } = getState()
-
-    setState({
-      ignored: [...ignored, id]
-    })
-  },
   initialise: () => async ({ setState }: StoreApi) => {
     await messaging().requestPermission()
 

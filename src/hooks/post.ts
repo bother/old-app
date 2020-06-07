@@ -12,7 +12,6 @@ import {
   Post,
   QueryFetchPostArgs
 } from '../graphql/types'
-import { useAuth } from '../store'
 import { Coordinates } from '../types'
 
 const FETCH_POST = gql`
@@ -105,8 +104,6 @@ interface MutationCreateCommentPayload {
 }
 
 export const usePost = () => {
-  const [, { ignorePost }] = useAuth()
-
   const [fetch, fetchQuery] = useLazyQuery<
     QueryFetchPostPayload,
     QueryFetchPostArgs
@@ -155,15 +152,12 @@ export const usePost = () => {
   const flagPost = useCallback(
     (id: string, reason: string) =>
       flag({
-        update() {
-          ignorePost(id)
-        },
         variables: {
           id,
           reason
         }
       }),
-    [flag, ignorePost]
+    [flag]
   )
 
   const createPost = useCallback(

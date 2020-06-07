@@ -7,6 +7,7 @@ import { Error, Spinner } from '../components'
 import { CommentList } from '../components/comments'
 import { Header } from '../components/posts'
 import { usePost } from '../hooks'
+import { dialog } from '../lib'
 import { FeedParams } from '../navigators/feed'
 
 interface Props {
@@ -47,7 +48,14 @@ export const Post: FunctionComponent<Props> = ({
     <>
       <Header
         flagging={flagging}
-        onFlag={(id, reason) => flagPost(id, reason)}
+        onFlag={async (id, reason) => {
+          await flagPost(id, reason)
+
+          dialog.alert(
+            'Thank you',
+            'Thank you for reporting. You will see this post again.'
+          )
+        }}
         post={post}
       />
       <CommentList

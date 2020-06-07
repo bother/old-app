@@ -28,13 +28,9 @@ interface Props {
 export const PostCard: FunctionComponent<Props> = ({ link = true, post }) => {
   const { navigate } = useNavigation()
 
-  const [{ ignored, userId }] = useAuth()
+  const [{ userId }] = useAuth()
 
   const { likePost, liking } = usePost()
-
-  if (ignored.includes(post.id)) {
-    return null
-  }
 
   const Details = link ? Touchable : View
   const Chat = post.user.id === userId ? View : Touchable
@@ -78,8 +74,12 @@ export const PostCard: FunctionComponent<Props> = ({ link = true, post }) => {
       </View>
       <Details
         onPress={() =>
-          navigate('Post', {
-            id: post.id
+          navigate('Feed', {
+            initial: false,
+            params: {
+              id: post.id
+            },
+            screen: 'Post'
           })
         }
         style={styles.details}>

@@ -1,4 +1,4 @@
-import { RouteProp } from '@react-navigation/native'
+import { RouteProp, useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import React, { FunctionComponent, useEffect, useState } from 'react'
 import { Keyboard, StyleSheet, Text, View } from 'react-native'
@@ -22,8 +22,10 @@ interface Props {
 }
 
 export const Create: FunctionComponent<Props> = ({
-  navigation: { navigate, setOptions }
+  navigation: { setOptions }
 }) => {
+  const { navigate } = useNavigation()
+
   const maxLength = 280
   const minLength = maxLength * 0.3
 
@@ -58,8 +60,12 @@ export const Create: FunctionComponent<Props> = ({
 
                   const { id } = await createPost(body, coordinates)
 
-                  navigate('Post', {
-                    id
+                  navigate('Feed', {
+                    initial: false,
+                    params: {
+                      id
+                    },
+                    screen: 'Post'
                   })
 
                   setBody(undefined)

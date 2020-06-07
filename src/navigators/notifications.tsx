@@ -1,19 +1,13 @@
-import {
-  createStackNavigator,
-  TransitionPresets
-} from '@react-navigation/stack'
+import { createStackNavigator } from '@react-navigation/stack'
 import React, { FunctionComponent } from 'react'
 import { useSafeArea } from 'react-native-safe-area-context'
 
 import { Header } from '../components'
-import { Notifications, Post } from '../scenes'
+import { Notifications } from '../scenes'
 import { colors, layout } from '../styles'
 
 export type NotificationsParams = {
   Notifications: undefined
-  Post: {
-    id: string
-  }
 }
 
 const { Navigator, Screen } = createStackNavigator<NotificationsParams>()
@@ -39,15 +33,6 @@ export const NotificationsNavigator: FunctionComponent = () => {
             height: layout.header + top
           },
           title: 'Notifications'
-        }}
-      />
-      <Screen
-        component={Post}
-        name="Post"
-        options={{
-          ...TransitionPresets.ModalPresentationIOS,
-          cardOverlayEnabled: true,
-          headerShown: false
         }}
       />
     </Navigator>

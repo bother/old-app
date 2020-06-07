@@ -1,19 +1,13 @@
-import {
-  createStackNavigator,
-  TransitionPresets
-} from '@react-navigation/stack'
+import { createStackNavigator } from '@react-navigation/stack'
 import React, { FunctionComponent } from 'react'
 import { useSafeArea } from 'react-native-safe-area-context'
 
 import { Header } from '../components'
-import { Create, Post } from '../scenes'
+import { Create } from '../scenes'
 import { colors, layout } from '../styles'
 
 export type CreateParams = {
   Create: undefined
-  Post: {
-    id: string
-  }
 }
 
 const { Navigator, Screen } = createStackNavigator<CreateParams>()
@@ -39,15 +33,6 @@ export const CreateNavigator: FunctionComponent = () => {
             height: layout.header + top
           },
           title: 'Create'
-        }}
-      />
-      <Screen
-        component={Post}
-        name="Post"
-        options={{
-          headerShown: false,
-          ...TransitionPresets.ModalPresentationIOS,
-          cardOverlayEnabled: true
         }}
       />
     </Navigator>

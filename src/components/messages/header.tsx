@@ -70,8 +70,8 @@ export const ThreadHeader: FunctionComponent<Props> = ({ thread }) => {
         <Touchable
           onPress={async () => {
             const yes = await dialog.confirm(
-              'End chat',
-              'Are you sure you want to end this chat?'
+              'End conversation',
+              'Are you sure you want to end this conversation?'
             )
 
             if (!yes) {
