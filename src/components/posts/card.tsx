@@ -114,7 +114,6 @@ export const PostCard: FunctionComponent<Props> = ({ link = true, post }) => {
 
 const styles = StyleSheet.create({
   avatar: {
-    backgroundColor: colors.background,
     margin: layout.margin
   },
   body: {

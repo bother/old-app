@@ -25,7 +25,11 @@ export const Avatar: FunctionComponent<Props> = ({
       source={{
         uri: `https://api.adorable.io/avatar/${seed}`
       }}
-      style={[style, size === 'large' ? styles.large : styles.small]}
+      style={[
+        styles.main,
+        style,
+        size === 'large' ? styles.large : styles.small
+      ]}
     />
     {user && seed.indexOf(user) === 0 && (
       <View
@@ -56,6 +60,9 @@ const styles = StyleSheet.create({
     borderRadius: 100,
     height: 100,
     width: 100
+  },
+  main: {
+    backgroundColor: colors.highlight
   },
   pill: {
     backgroundColor: colors.background,

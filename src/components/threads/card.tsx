@@ -32,7 +32,6 @@ export const ThreadCard: FunctionComponent<Props> = ({ thread }) => {
             ? thread.sender.id
             : thread.receiver.id) + thread.post.id
         }
-        style={styles.avatar}
       />
       <View style={styles.details}>
         <Text style={styles.body}>{thread.last.body}</Text>
@@ -43,9 +42,6 @@ export const ThreadCard: FunctionComponent<Props> = ({ thread }) => {
 }
 
 const styles = StyleSheet.create({
-  avatar: {
-    backgroundColor: colors.backgroundDark
-  },
   body: {
     ...typography.regular,
     color: colors.foreground,

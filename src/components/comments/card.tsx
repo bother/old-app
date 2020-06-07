@@ -19,12 +19,7 @@ export const CommentCard: FunctionComponent<Props> = ({
 }) => (
   <View style={styles.main}>
     <View>
-      <Avatar
-        seed={comment.user.id + post.id}
-        style={styles.avatar}
-        type="comment"
-        user={userId}
-      />
+      <Avatar seed={comment.user.id + post.id} type="comment" user={userId} />
     </View>
     <View style={styles.details}>
       <View style={styles.comment}>
@@ -36,9 +31,6 @@ export const CommentCard: FunctionComponent<Props> = ({
 )
 
 const styles = StyleSheet.create({
-  avatar: {
-    backgroundColor: colors.accent
-  },
   body: {
     ...typography.small,
     lineHeight: typography.small.fontSize * layout.lineHeight

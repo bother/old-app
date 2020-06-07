@@ -100,7 +100,6 @@ export const ThreadHeader: FunctionComponent<StackHeaderProps & Props> = ({
 
 const styles = StyleSheet.create({
   avatar: {
-    backgroundColor: colors.highlight,
     marginRight: 'auto'
   },
   button: {

@@ -46,7 +46,6 @@ export const Profile: FunctionComponent<Props> = () => {
 const styles = StyleSheet.create({
   avatar: {
     alignSelf: 'center',
-    backgroundColor: colors.highlight,
     marginTop: layout.margin
   },
   label: {
