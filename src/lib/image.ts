@@ -46,7 +46,7 @@ class Image {
       })
 
       return url
-    } finally {
+    } catch {
       return null
     }
   }
