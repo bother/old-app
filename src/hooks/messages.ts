@@ -17,7 +17,12 @@ export const THREADS = gql`
       id
       ended
       last {
+        id
         body
+        user {
+          id
+        }
+        createdAt
       }
       post {
         id
@@ -46,7 +51,12 @@ const THREAD = gql`
       id
       ended
       last {
+        id
         body
+        user {
+          id
+        }
+        createdAt
       }
       post {
         id
@@ -75,7 +85,12 @@ const FIND_THREAD = gql`
       id
       ended
       last {
+        id
         body
+        user {
+          id
+        }
+        createdAt
       }
       post {
         id

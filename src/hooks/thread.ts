@@ -68,6 +68,7 @@ export const useThread = (threadId: string) => {
     QueryMessagesPayload,
     QueryMessagesArgs
   >(MESSAGES, {
+    fetchPolicy: 'cache-and-network',
     variables: {
       threadId
     }
@@ -117,6 +118,29 @@ export const useThread = (threadId: string) => {
       >({
         document: NEW_MESSAGE,
         updateQuery(previous, next) {
+          const data = client.readQuery<QueryThreadsPayload>({
+            query: THREADS
+          })
+
+          if (data) {
+            const index = data.threads.findIndex(({ id }) => id === threadId)
+
+            if (index >= 0) {
+              client.writeQuery({
+                data: update(data, {
+                  threads: {
+                    [index]: {
+                      last: {
+                        $set: next.subscriptionData.data.newMessage
+                      }
+                    }
+                  }
+                }),
+                query: THREADS
+              })
+            }
+          }
+
           return update(previous, {
             messages: {
               $unshift: [next.subscriptionData.data.newMessage]

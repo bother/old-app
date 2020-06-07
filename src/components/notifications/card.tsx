@@ -25,11 +25,35 @@ export const NotificationCard: FunctionComponent<Props> = ({
       onPress={() => {
         markAsRead(notification.id)
 
-        if (notification.targetType === 'post') {
-          navigate('Post', {
-            id: notification.targetId
-          })
+        const route =
+          notification.targetType === 'post'
+            ? 'Feed'
+            : notification.targetType === 'thread'
+            ? 'Messages'
+            : null
+
+        if (!route) {
+          return
         }
+
+        const screen =
+          notification.targetType === 'post'
+            ? 'Post'
+            : notification.targetType === 'thread'
+            ? 'Thread'
+            : null
+
+        if (!screen) {
+          return
+        }
+
+        navigate(route, {
+          initial: false,
+          params: {
+            id: notification.targetId
+          },
+          screen
+        })
       }}
       style={styles.main}>
       <Avatar seed={notification.actor + notification.targetId} />
@@ -37,6 +61,8 @@ export const NotificationCard: FunctionComponent<Props> = ({
         <Text style={[styles.body, notification.unread && styles.unread]}>
           {notification.action === 'comment'
             ? 'Someone commented on your post.'
+            : notification.action === 'message'
+            ? 'Someone sent you a message'
             : '¯_(ツ)_/¯'}
         </Text>
         <Text style={styles.time}>
