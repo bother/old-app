@@ -30,7 +30,8 @@
           "usePopular",
           "usePost",
           "useProfile",
-          "useThread"
+          "useThread",
+          "useThreads"
         ]
       }
     ],

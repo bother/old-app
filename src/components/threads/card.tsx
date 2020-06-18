@@ -25,10 +25,10 @@ export const ThreadCard: FunctionComponent<Props> = ({ thread }) => {
           id: thread.id
         })
       }
-      style={styles.main}>
+      style={[styles.main, thread.ended && styles.ended]}>
       <Avatar
         seed={
-          (thread.receiver.id === userId
+          (userId === thread.receiver.id
             ? thread.sender.id
             : thread.receiver.id) + thread.post.id
         }
@@ -55,6 +55,9 @@ const styles = StyleSheet.create({
   details: {
     flex: 1,
     marginLeft: layout.margin
+  },
+  ended: {
+    opacity: 0.5
   },
   main: {
     alignItems: 'center',

@@ -218,6 +218,7 @@ export type AuthResult = {
 export type Subscription = {
   __typename?: 'Subscription';
   newMessage: Message;
+  threadUpdated: Thread;
 };
 
 

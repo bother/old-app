@@ -1,9 +1,9 @@
-import { RouteProp } from '@react-navigation/native'
+import { RouteProp, useFocusEffect } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
-import React, { FunctionComponent, useEffect } from 'react'
+import React, { FunctionComponent, useCallback } from 'react'
 
 import { ThreadList } from '../components/threads'
-import { useMessages } from '../hooks'
+import { useThreads } from '../hooks'
 import { MessagesParams } from '../navigators/messages'
 
 interface Props {
@@ -12,11 +12,17 @@ interface Props {
 }
 
 export const Messages: FunctionComponent<Props> = () => {
-  const { fetch, loading, refetch, threads } = useMessages()
+  const { loading, refetch, subscribe, threads } = useThreads()
 
-  useEffect(() => {
-    fetch()
-  }, [fetch])
+  useFocusEffect(
+    useCallback(() => {
+      const unsubcribe = subscribe()
+
+      return () => {
+        unsubcribe()
+      }
+    }, [subscribe])
+  )
 
   return <ThreadList loading={loading} refetch={refetch} threads={threads} />
 }

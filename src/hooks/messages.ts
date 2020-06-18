@@ -1,4 +1,4 @@
-import { useLazyQuery, useMutation } from '@apollo/react-hooks'
+import { useLazyQuery, useMutation, useQuery } from '@apollo/react-hooks'
 import gql from 'graphql-tag'
 import update from 'immutability-helper'
 import { useCallback } from 'react'
@@ -29,11 +29,9 @@ export const THREADS = gql`
       }
       receiver {
         id
-        rating
       }
       sender {
         id
-        rating
       }
       createdAt
       updatedAt
@@ -63,11 +61,9 @@ const THREAD = gql`
       }
       receiver {
         id
-        rating
       }
       sender {
         id
-        rating
       }
       createdAt
       updatedAt
@@ -97,11 +93,9 @@ const FIND_THREAD = gql`
       }
       receiver {
         id
-        rating
       }
       sender {
         id
-        rating
       }
       createdAt
       updatedAt
@@ -134,11 +128,74 @@ export const END_THREAD = gql`
 export interface MutationEndThreadPayload {
   endThread: boolean
 }
-export const useMessages = () => {
-  const [fetch, { data, loading, refetch }] = useLazyQuery<QueryThreadsPayload>(
-    THREADS
+
+export const THREAD_UPDATED = gql`
+  subscription threadUpdated {
+    threadUpdated {
+      id
+      ended
+      last {
+        id
+        body
+        user {
+          id
+        }
+        createdAt
+      }
+      post {
+        id
+      }
+      receiver {
+        id
+      }
+      sender {
+        id
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`
+
+export interface SubscriptionThreadUpdatedPayload {
+  threadUpdated: Thread
+}
+
+export const useThreads = () => {
+  const { data, loading, refetch, subscribeToMore } = useQuery<
+    QueryThreadsPayload
+  >(THREADS)
+
+  const subscribe = useCallback(
+    () =>
+      subscribeToMore<SubscriptionThreadUpdatedPayload>({
+        document: THREAD_UPDATED,
+        updateQuery(previous, next) {
+          const thread = next.subscriptionData.data.threadUpdated
+
+          const index = previous.threads.findIndex(({ id }) => id === thread.id)
+
+          return update(previous, {
+            threads: {
+              [index]: {
+                $set: thread
+              }
+            }
+          })
+        }
+      }),
+    [subscribeToMore]
   )
 
+  return {
+    loading,
+    refetch,
+    subscribe,
+    threads: data ? data.threads : []
+  }
+}
+
+export const useMessages = () => {
   const [fetchOne, fetchOneQuery] = useLazyQuery<
     QueryThreadPayload,
     QueryThreadArgs
@@ -236,12 +293,9 @@ export const useMessages = () => {
     creating: createMutation.loading,
     endThread,
     ending: endMutation.loading,
-    fetch,
     fetchThread,
     findThread,
-    loading: loading || fetchOneQuery.loading || findOneQuery.loading,
-    refetch,
-    thread: fetchOneQuery.data?.thread || findOneQuery.data?.findThread,
-    threads: data ? data.threads : []
+    loading: fetchOneQuery.loading || findOneQuery.loading,
+    thread: fetchOneQuery.data?.thread || findOneQuery.data?.findThread
   }
 }

@@ -1,3 +1,4 @@
+import { orderBy } from 'lodash'
 import React, { FunctionComponent } from 'react'
 import { FlatList, StyleSheet } from 'react-native'
 
@@ -34,7 +35,7 @@ export const ThreadList: FunctionComponent<Props> = ({
       ) : null
     }
     contentContainerStyle={styles.content}
-    data={threads}
+    data={orderBy(threads, 'updatedAt', 'desc')}
     refreshControl={<Refresher onRefresh={refetch} refreshing={loading} />}
     renderItem={({ item }) => <ThreadCard thread={item} />}
   />
