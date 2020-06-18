@@ -30,7 +30,7 @@ export const ThreadCard: FunctionComponent<Props> = ({ thread }) => {
         seed={
           (userId === thread.receiver.id
             ? thread.sender.id
-            : thread.receiver.id) + thread.post.id
+            : thread.receiver.id) + thread.id
         }
       />
       <View style={styles.details}>
