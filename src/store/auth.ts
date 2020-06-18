@@ -1,31 +1,27 @@
 import AsyncStorage from '@react-native-community/async-storage'
 import messaging from '@react-native-firebase/messaging'
-import gql from 'graphql-tag'
 import { getUniqueId } from 'react-native-device-info'
 import { createHook, createStore, StoreActionApi } from 'react-sweet-state'
 
 import { client } from '../graphql'
-import { AuthResult, MutationSignUpArgs } from '../graphql/types'
-
-export const SIGN_UP = gql`
-  mutation signUp($deviceId: String!, $pushToken: String) {
-    signUp(deviceId: $deviceId, pushToken: $pushToken) {
-      token
-      user {
-        id
-      }
-    }
-  }
-`
+import { MutationSignUpArgs } from '../graphql/types'
+import {
+  MutationSignUpPayload,
+  PROFILE,
+  QueryProfilePayload,
+  SIGN_UP
+} from '../hooks/profile'
 
 interface State {
   initialising: boolean
+  notifications: number
   signedIn: boolean
   userId?: string
 }
 
 const initialState: State = {
   initialising: true,
+  notifications: 0,
   signedIn: false
 }
 
@@ -39,8 +35,13 @@ const actions = {
     const userId = await AsyncStorage.getItem('@userId')
 
     if (token && userId) {
+      const { data } = await client.query<QueryProfilePayload>({
+        query: PROFILE
+      })
+
       setState({
         initialising: false,
+        notifications: data.profile.notifications,
         signedIn: true,
         userId
       })
@@ -48,9 +49,7 @@ const actions = {
       const pushToken = await messaging().getToken()
 
       const { data } = await client.mutate<
-        {
-          signUp: AuthResult
-        },
+        MutationSignUpPayload,
         MutationSignUpArgs
       >({
         mutation: SIGN_UP,
@@ -77,6 +76,11 @@ const actions = {
     await AsyncStorage.removeItem('@userId')
 
     setState(initialState)
+  },
+  updateNotifications: (notifications: number) => ({ setState }: StoreApi) => {
+    setState({
+      notifications
+    })
   }
 }
 

@@ -12,6 +12,7 @@ import {
   img_nav_notifications,
   img_nav_profile
 } from '../assets'
+import { useAuth } from '../store'
 import { colors, layout, navTheme, typography } from '../styles'
 import { Touchable } from './touchable'
 
@@ -23,16 +24,13 @@ const icons: Record<string, Source> = {
   Profile: img_nav_profile
 }
 
-interface Props {
-  notifications: number
-}
-
-export const TabBar: FunctionComponent<Props & BottomTabBarProps> = ({
+export const TabBar: FunctionComponent<BottomTabBarProps> = ({
   navigation: { dispatch, emit },
-  notifications,
   state: { index, key, routes }
 }) => {
   const { bottom } = useSafeArea()
+
+  const [{ notifications }] = useAuth()
 
   const [visible, setVisible] = useState(true)
 

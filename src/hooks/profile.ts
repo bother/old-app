@@ -2,7 +2,22 @@ import { useLazyQuery } from '@apollo/react-hooks'
 import gql from 'graphql-tag'
 import { useCallback } from 'react'
 
-import { Post, Profile } from '../graphql/types'
+import { AuthResult, Post, Profile } from '../graphql/types'
+
+export const SIGN_UP = gql`
+  mutation signUp($deviceId: String!, $pushToken: String) {
+    signUp(deviceId: $deviceId, pushToken: $pushToken) {
+      token
+      user {
+        id
+      }
+    }
+  }
+`
+
+export interface MutationSignUpPayload {
+  signUp: AuthResult
+}
 
 export const PROFILE = gql`
   query profile {

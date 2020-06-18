@@ -7,7 +7,7 @@ import {
   MutationMarkNotificationAsReadArgs,
   Notification
 } from '../graphql/types'
-import { PROFILE, QueryProfilePayload } from './profile'
+import { useAuth } from '../store'
 
 const NOTIFICATIONS = gql`
   query notifications {
@@ -39,6 +39,8 @@ interface MutationMarkNotificationAsReadPayload {
 }
 
 export const useNotifications = () => {
+  const [, { updateNotifications }] = useAuth()
+
   const [fetch, fetchQuery] = useLazyQuery<QueryNotificationsPayload>(
     NOTIFICATIONS
   )
@@ -86,31 +88,16 @@ export const useNotifications = () => {
             data
           })
 
-          const profile = proxy.readQuery<QueryProfilePayload>({
-            query: PROFILE
-          })
+          const unread = data.notifications.filter(({ unread }) => unread)
+            .length
 
-          if (profile) {
-            const unread = data.notifications.filter(({ unread }) => unread)
-              .length
-
-            proxy.writeQuery({
-              data: update(profile, {
-                profile: {
-                  notifications: {
-                    $set: unread
-                  }
-                }
-              }),
-              query: PROFILE
-            })
-          }
+          updateNotifications(unread)
         },
         variables: {
           id
         }
       }),
-    [mark]
+    [mark, updateNotifications]
   )
 
   return {
