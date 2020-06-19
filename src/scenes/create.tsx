@@ -105,7 +105,9 @@ export const Create: FunctionComponent<Props> = ({
         maxLength={maxLength * 2}
         multiline
         onChangeText={(body) => setBody(body)}
-        placeholder="What bothers you?"
+        placeholder={
+          "What bothers you?\n\nShare your thoughts with kindness and without being offensive. Racism, inappropriate language, and other offenses will get you banned. Let's be civil.\n\nEnjoy sharing!"
+        }
         style={styles.input}
         value={body}
       />
