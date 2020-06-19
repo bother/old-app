@@ -16,7 +16,7 @@ export const Distance: FunctionComponent<Props> = ({ distance, onChange }) => (
       <Touchable
         key={index}
         onPress={() => onChange(value)}
-        style={[styles.link]}>
+        style={styles.link}>
         <Text style={[styles.value, distance === value && styles.active]}>
           {value} km
         </Text>
@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
   },
   link: {
     alignItems: 'center',
-    flex: 1,
+    flexGrow: 1,
     justifyContent: 'center',
     padding: layout.margin
   },
