@@ -18,6 +18,11 @@ export const ThreadCard: FunctionComponent<Props> = ({ thread }) => {
 
   const [{ userId }] = useAuth()
 
+  const time = moment(thread.updatedAt)
+
+  const differenceInDays = moment().diff(time, 'days')
+  const differenceInHours = moment().diff(time, 'hours')
+
   return (
     <Touchable
       onPress={() =>
@@ -39,7 +44,15 @@ export const ThreadCard: FunctionComponent<Props> = ({ thread }) => {
             ? 'Image'
             : thread.last.body}
         </Text>
-        <Text style={styles.time}>{moment(thread.updatedAt).fromNow()}</Text>
+        <Text style={styles.time}>
+          {moment(thread.updatedAt).format(
+            differenceInDays >= 7
+              ? 'MMM D LT'
+              : differenceInHours >= 24
+              ? 'ddd LT'
+              : 'LT'
+          )}
+        </Text>
       </View>
     </Touchable>
   )
