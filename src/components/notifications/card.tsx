@@ -61,6 +61,8 @@ export const NotificationCard: FunctionComponent<Props> = ({
         <Text style={[styles.body, notification.unread && styles.unread]}>
           {notification.action === 'comment'
             ? 'Someone commented on your post.'
+            : notification.action === 'like'
+            ? 'Someone liked on your post.'
             : notification.action === 'message'
             ? 'Someone sent you a message'
             : '¯_(ツ)_/¯'}
