@@ -1,5 +1,6 @@
 import { RouteProp, useFocusEffect } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
+import { orderBy } from 'lodash'
 import React, { FunctionComponent, useCallback } from 'react'
 
 import { ThreadList } from '../components/threads'
@@ -24,5 +25,11 @@ export const Messages: FunctionComponent<Props> = () => {
     }, [subscribe])
   )
 
-  return <ThreadList loading={loading} refetch={refetch} threads={threads} />
+  return (
+    <ThreadList
+      loading={loading}
+      refetch={refetch}
+      threads={orderBy(threads, 'updatedAt', 'desc')}
+    />
+  )
 }

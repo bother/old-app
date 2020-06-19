@@ -1,5 +1,6 @@
 import { RouteProp } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
+import { orderBy } from 'lodash'
 import React, { FunctionComponent, useEffect } from 'react'
 
 import { NotificationList } from '../components/notifications'
@@ -13,7 +14,7 @@ interface Props {
 }
 
 export const Notifications: FunctionComponent<Props> = () => {
-  const [, { updateNotifications }] = useAuth()
+  const [{ notifications: count }, { updateNotifications }] = useAuth()
 
   const { fetch, fetching, notifications, refetch } = useNotifications()
 
@@ -24,13 +25,15 @@ export const Notifications: FunctionComponent<Props> = () => {
   useEffect(() => {
     const unread = notifications.filter(({ unread }) => unread).length
 
-    updateNotifications(unread)
-  }, [notifications, updateNotifications])
+    if (unread !== count) {
+      updateNotifications(unread)
+    }
+  }, [count, notifications, updateNotifications])
 
   return (
     <NotificationList
       loading={fetching}
-      notifications={notifications}
+      notifications={orderBy(notifications, 'updatedAt', 'desc')}
       refetch={refetch}
     />
   )
