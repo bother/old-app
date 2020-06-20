@@ -17,12 +17,14 @@ export const Messages: FunctionComponent<Props> = () => {
 
   useFocusEffect(
     useCallback(() => {
+      refetch()
+
       const unsubcribe = subscribe()
 
       return () => {
         unsubcribe()
       }
-    }, [subscribe])
+    }, [refetch, subscribe])
   )
 
   return (
