@@ -1316,6 +1316,11 @@
   resolved "https://registry.yarnpkg.com/@react-native-community/masked-view/-/masked-view-0.1.10.tgz#5dda643e19e587793bc2034dd9bf7398ad43d401"
   integrity sha512-rk4sWFsmtOw8oyx8SD3KSvawwaK7gRBSEIy2TAwURyGt+3TizssXP1r8nx3zY+R7v2vYYHXZ+k2/GULAT/bcaQ==
 
+"@react-native-firebase/admob@^7.2.0":
+  version "7.2.0"
+  resolved "https://registry.yarnpkg.com/@react-native-firebase/admob/-/admob-7.2.0.tgz#74ee9aa66792bee5999b0ba398a94b110c86df42"
+  integrity sha512-DctL6j/VgAJTrwsgZsmnY8nvuA/Lensdsa53YordZKWcowvIxBF4B6A0HKJmR++Y7hOvEqw9AJG4GCGa8ou0Gg==
+
 "@react-native-firebase/app-types@6.7.2":
   version "6.7.2"
   resolved "https://registry.yarnpkg.com/@react-native-firebase/app-types/-/app-types-6.7.2.tgz#d2e1530af5702e00578914b41468898c10d3289c"
@@ -1334,6 +1339,11 @@
   version "7.1.6"
   resolved "https://registry.yarnpkg.com/@react-native-firebase/messaging/-/messaging-7.1.6.tgz#f02ce64d9c8ddcf2163dfc179c44a1d337787d86"
   integrity sha512-XHe65Wk1QbmFhSYU3UxshsSAg79c+dox74flpxff+bZwpCH95TLrmublo3R3eIqSqu3s82fU3dRvAjd6rYjHbw==
+
+"@react-native-firebase/remote-config@^7.1.4":
+  version "7.1.4"
+  resolved "https://registry.yarnpkg.com/@react-native-firebase/remote-config/-/remote-config-7.1.4.tgz#e0baa68622c3deff8386873800d9ffbc27eea46b"
+  integrity sha512-+eW+AYokIpIKfeqQcktlJZWqBo4SiApjqq8tpNyz0FTsYBKySyFYFOGohpjPgUY1IbuFhfP/ivfaSWVRrA2G+w==
 
 "@react-navigation/bottom-tabs@^5.5.2":
   version "5.5.2"

@@ -11,6 +11,7 @@ import {
   QueryProfilePayload,
   SIGN_UP
 } from '../hooks/profile'
+import { config } from '../lib'
 
 interface State {
   initialising: boolean
@@ -30,6 +31,8 @@ type StoreApi = StoreActionApi<State>
 const actions = {
   initialise: () => async ({ setState }: StoreApi) => {
     await messaging().requestPermission()
+
+    await config.init()
 
     const token = await AsyncStorage.getItem('@token')
     const userId = await AsyncStorage.getItem('@userId')

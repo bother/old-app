@@ -1,3 +1,4 @@
+export { config } from './config'
 export { dialog } from './dialog'
 export { image } from './image'
 export { mitter } from './mitter'

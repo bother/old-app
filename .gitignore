@@ -74,6 +74,7 @@ buck-out/
 #
 GoogleService-Info.plist
 google-services.json
+/firebase.json
 
 # Sentry
 #
