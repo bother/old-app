@@ -28,7 +28,7 @@
 			<key>CFBundleURLIconFile</key>
 			<string></string>
 			<key>CFBundleURLName</key>
-			<string>bother</string>
+			<string>Bother</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>bother</string>
@@ -37,6 +37,8 @@
 	</array>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
@@ -54,6 +56,8 @@
 	</dict>
 	<key>NSCameraUsageDescription</key>
 	<string>$(PRODUCT_NAME) would like to use your camera</string>
+	<key>NSLocationAlwaysUsageDescription </key>
+	<string>Share your location to find posts near you</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Share your location to find posts near you</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
