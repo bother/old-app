@@ -1,6 +1,6 @@
 import { BannerAd, BannerAdSize } from '@react-native-firebase/admob'
 import React, { FunctionComponent, ReactElement } from 'react'
-import { FlatList, StyleSheet, View } from 'react-native'
+import { FlatList, Platform, StyleSheet, View } from 'react-native'
 
 import { img_hero_not_found } from '../../assets'
 import { Post } from '../../graphql/types'
@@ -55,7 +55,10 @@ export const PostList: FunctionComponent<Props> = ({
             <View style={styles.ad}>
               <BannerAd
                 size={BannerAdSize.SMART_BANNER}
-                unitId={config.config.ads_unit_post}
+                unitId={Platform.select({
+                  android: config.config.ads_unit_android_post,
+                  ios: config.config.ads_unit_post
+                })}
               />
             </View>
           )}

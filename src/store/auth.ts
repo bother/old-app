@@ -51,6 +51,9 @@ const actions = {
     } else {
       const pushToken = await messaging().getToken()
 
+      await AsyncStorage.removeItem('@token')
+      await AsyncStorage.removeItem('@userId')
+
       const { data } = await client.mutate<
         MutationSignUpPayload,
         MutationSignUpArgs

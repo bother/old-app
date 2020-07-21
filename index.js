@@ -8,7 +8,8 @@ import { name } from './app.json'
 import { Bother } from './src'
 
 Sentry.init({
-  dsn: SENTRY_DSN
+  dsn: SENTRY_DSN,
+  enabled: !__DEV__
 })
 
 AppRegistry.registerComponent(name, () => Bother)

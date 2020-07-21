@@ -12,8 +12,8 @@ import { API_URI, WS_URI } from 'react-native-dotenv'
 
 import { mitter } from '../lib'
 
-// const API_URI = 'http://192.168.86.20:4005'
-// const WS_URI = 'ws://192.168.86.20:4005'
+// const API_URI = 'http://192.168.86.35:4005'
+// const WS_URI = 'ws://192.168.86.35:4005'
 
 const errorLink = onError((error) => {
   error.graphQLErrors?.forEach((error) => {

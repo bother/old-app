@@ -1,9 +1,10 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.google.gms.google-services'
 
 import com.android.build.OutputFile
 
 project.ext.react = [
-  enableHermes: true
+  enableHermes: false
 ]
 
 apply from: '../../node_modules/react-native/react.gradle'
@@ -28,6 +29,7 @@ android {
     targetSdkVersion rootProject.ext.targetSdkVersion
     versionCode 1
     versionName '1.0'
+    multiDexEnabled true
   }
   splits {
     abi {
@@ -56,13 +58,6 @@ android {
     }
   }
 
-  packagingOptions {
-    pickFirst 'lib/armeabi-v7a/libc++_shared.so'
-    pickFirst 'lib/arm64-v8a/libc++_shared.so'
-    pickFirst 'lib/x86/libc++_shared.so'
-    pickFirst 'lib/x86_64/libc++_shared.so'
-  }
-
   applicationVariants.all { variant ->
     variant.outputs.each { output ->
       def versionCodes = ['armeabi-v7a': 1, 'x86': 2, 'arm64-v8a': 3, 'x86_64': 4]
@@ -81,21 +76,23 @@ dependencies {
   //noinspection GradleDynamicVersion
   implementation 'com.facebook.react:react-native:+'
 
-  implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.0.0'
+  implementation 'androidx.multidex:multidex:2.0.1'
+  implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
 
   debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}") {
     exclude group: 'com.facebook.fbjni'
   }
+
   debugImplementation("com.facebook.flipper:flipper-network-plugin:${FLIPPER_VERSION}") {
     exclude group: 'com.facebook.flipper'
   }
+
   debugImplementation("com.facebook.flipper:flipper-fresco-plugin:${FLIPPER_VERSION}") {
     exclude group: 'com.facebook.flipper'
   }
 
   if (enableHermes) {
     def hermesPath = '../../node_modules/hermes-engine/android/'
-
     debugImplementation files(hermesPath + 'hermes-debug.aar')
     releaseImplementation files(hermesPath + 'hermes-release.aar')
   } else {
