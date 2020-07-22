@@ -8,11 +8,11 @@ import { useAuth } from '../store'
 import { colors, layout } from '../styles'
 
 export const Landing: FunctionComponent = () => {
-  const [, { initialise }] = useAuth()
+  const [, { init }] = useAuth()
 
   useEffect(() => {
-    initialise()
-  }, [initialise])
+    init()
+  }, [init])
 
   return (
     <Layout style={styles.main}>

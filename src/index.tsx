@@ -20,6 +20,12 @@ export const Bother: FunctionComponent = () => {
   useEffect(() => {
     mitter.on('signout', signOut)
 
+    return () => {
+      mitter.off('signout', signOut)
+    }
+  }, [signOut])
+
+  useEffect(() => {
     const unsubscribe = messaging().onNotificationOpenedApp((message) => {
       if (message.data?.deeplink) {
         const [, , action, id] = message.data.deeplink.split('/')
@@ -37,11 +43,9 @@ export const Bother: FunctionComponent = () => {
     })
 
     return () => {
-      mitter.off('signout', signOut)
-
       unsubscribe()
     }
-  }, [signOut])
+  }, [])
 
   return (
     <SafeAreaProvider>

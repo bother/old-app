@@ -29,7 +29,7 @@ const initialState: State = {
 type StoreApi = StoreActionApi<State>
 
 const actions = {
-  initialise: () => async ({ setState }: StoreApi) => {
+  init: () => async ({ setState }: StoreApi) => {
     await messaging().requestPermission()
 
     await config.init()
@@ -77,11 +77,13 @@ const actions = {
       }
     }
   },
-  signOut: () => async ({ setState }: StoreApi) => {
+  signOut: () => async ({ dispatch, setState }: StoreApi) => {
     await AsyncStorage.removeItem('@token')
     await AsyncStorage.removeItem('@userId')
 
     setState(initialState)
+
+    dispatch(actions.init())
   },
   updateNotifications: (notifications: number) => ({ setState }: StoreApi) => {
     setState({
