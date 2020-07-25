@@ -77,16 +77,13 @@ export const ThreadHeader: FunctionComponent<StackHeaderProps & Props> = ({
       ) : (
         <Touchable
           onPress={async () => {
-            const yes = await dialog.confirm(
-              'End conversation',
-              'Are you sure you want to end this conversation?'
-            )
+            const action = await dialog.endChat()
 
-            if (!yes) {
+            if (!action) {
               return
             }
 
-            await endThread(thread.id)
+            endThread(thread.id, action === 'block')
 
             goBack()
           }}

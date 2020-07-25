@@ -49,6 +49,30 @@ class Dialog {
       )
     )
   }
+
+  endChat(): Promise<string | null> {
+    return new Promise((resolve) =>
+      Alert.alert(
+        'End conversation',
+        'Would you like to end this chat or block this user?',
+        [
+          {
+            onPress: () => resolve(null),
+            style: 'cancel',
+            text: 'Cancel'
+          },
+          {
+            onPress: () => resolve('end'),
+            text: 'End conversation'
+          },
+          {
+            onPress: () => resolve('block'),
+            text: 'End and block'
+          }
+        ]
+      )
+    )
+  }
 }
 
 export const dialog = new Dialog()

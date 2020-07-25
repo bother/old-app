@@ -16,6 +16,7 @@ interface Props {
 }
 
 export const Post: FunctionComponent<Props> = ({
+  navigation: { pop },
   route: {
     params: { id }
   }
@@ -51,9 +52,11 @@ export const Post: FunctionComponent<Props> = ({
         onFlag={async (id, reason) => {
           await flagPost(id, reason)
 
+          pop()
+
           dialog.alert(
             'Thank you',
-            'Thank you for reporting. You will see this post again.'
+            'Thank you for reporting. You will not see this post again.'
           )
         }}
         post={post}

@@ -251,7 +251,7 @@ export const useMessages = () => {
   )
 
   const endThread = useCallback(
-    (id: string) =>
+    (id: string, block: boolean) =>
       end({
         update(proxy) {
           const threads = proxy.readQuery<QueryThreadsPayload>({
@@ -282,6 +282,7 @@ export const useMessages = () => {
           })
         },
         variables: {
+          block,
           id
         }
       }),

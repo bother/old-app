@@ -14,6 +14,7 @@ import {
 import { config } from '../lib'
 
 interface State {
+  hidden: string[]
   initialising: boolean
   notifications: number
   signedIn: boolean
@@ -21,6 +22,7 @@ interface State {
 }
 
 const initialState: State = {
+  hidden: [],
   initialising: true,
   notifications: 0,
   signedIn: false
@@ -29,6 +31,13 @@ const initialState: State = {
 type StoreApi = StoreActionApi<State>
 
 const actions = {
+  hide: (id: string) => ({ getState, setState }: StoreApi) => {
+    const { hidden } = getState()
+
+    setState({
+      hidden: [...hidden, id]
+    })
+  },
   init: () => async ({ setState }: StoreApi) => {
     await messaging().requestPermission()
 

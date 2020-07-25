@@ -196,6 +196,7 @@ export type MutationCreateThreadArgs = {
 
 export type MutationEndThreadArgs = {
   id: Scalars['String'];
+  block: Scalars['Boolean'];
 };
 
 
